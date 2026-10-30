@@ -3,7 +3,16 @@
 Data cleaning, feature engineering, model training, forecasting, and ONNX export
 for OMP oil palm yield prediction.
 
-**Current phase:** Phase -1 — agent/CLI/MCP harness.
+**Current phase:** Phase 0 complete — read-only database access verified.
+Next: Phase 1 — database inventory and data dictionary.
+
+## Phase status
+
+| Phase | Status |
+|---|---|
+| Phase -1 — agent/CLI/MCP harness | Complete |
+| Phase 0 — read-only database access | Complete |
+| Phase 1 — database inventory and data dictionary | Next |
 
 ## Quickstart
 
@@ -16,14 +25,23 @@ uv run omp-yield db schema --table OILPALM
 uv run omp-yield db query "SELECT TOP 5 NAME, UNIT, BLOCK, YEAR, Y_TOTAL_ton FROM OILPALM"
 ```
 
-For local development the CLI falls back to `docker-build/.env` when `.env`
-does not exist. Production should use a read-only account and environment
-variables.
+Credential resolution order:
+
+1. `OMP_ENV_FILE`
+2. project `.env`
+3. `~/.config/omp-yield/env`
+4. `docker-build/.env` (local demo fallback only)
+
+Recommended local setup:
 
 ```bash
-cp .env.example .env
-# edit .env with the omp_ds_readonly credentials created in Phase 0
+mkdir -p ~/.config/omp-yield
+cp .env.example ~/.config/omp-yield/env
+chmod 600 ~/.config/omp-yield/env
+# edit ~/.config/omp-yield/env with the omp_ds_readonly credentials
 ```
+
+Keep the password file outside the Syncthing-synced project tree where possible.
 
 ## Agent setup
 
@@ -36,6 +54,17 @@ cp .env.example .env
 The DS agent is primary because this project involves long, iterative sessions
 with approval gates. The reviewer subagent is used for independent leakage,
 validation, metric, and ONNX audits.
+
+## Database access
+
+Phase 0 created the least-privilege account `omp_ds_readonly` on
+`omp_as_demo`:
+
+- `db_datareader`
+- `VIEW DEFINITION`
+- no `sysadmin`, `db_owner`, `db_datawriter`, DDL, or `EXECUTE`
+
+The pipeline does not use `sa`. `sa` is only for local DB bootstrap.
 
 ## MCP tools
 
@@ -62,6 +91,13 @@ tests/
   test_sql.py
   test_config.py
   test_cli.py
+  test_mcp_contract.py
+  test_db_integration.py
+docs/
+  phase_minus_1.md
+  create_readonly_user.sql
+reports/
+  00_access.md
 .opencode/
   agents/
   skills/
@@ -76,12 +112,27 @@ tests/
 - The MCP server starts and exposes the same read-only tools.
 - Tests pass.
 
-## Phase -1 report
-
 See `docs/phase_minus_1.md` for the completed harness, verification output, and
 known limitations.
 
+## Phase 0 acceptance
+
+- `omp_ds_readonly` created with `db_datareader` and `VIEW DEFINITION`.
+- `db ping` reports login `omp_ds_readonly` and 2,909 `OILPALM` rows.
+- 274 tables and 207 `OILPALM` columns are visible.
+- Write attempts are rejected.
+- Integration tests pass against the read-only account.
+- Credentials live in `~/.config/omp-yield/env` (mode `600`), outside the
+  project tree.
+
+See `reports/00_access.md` for the access report and
+`docs/create_readonly_user.sql` for the idempotent bootstrap script.
+
 ## Next phase
 
-Phase 0 — create `omp_ds_readonly`, verify minimum-privilege access, and run the
-project scaffold checks against the demo database.
+Phase 1 — database inventory and data dictionary:
+
+1. Inventory all tables, columns, row counts, keys, and date ranges.
+2. Map join keys and measure match rates against `OILPALM`.
+3. Capture growth-period definitions and the estate/division hierarchy.
+4. Build the data dictionary and ERD.

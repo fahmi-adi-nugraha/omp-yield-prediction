@@ -107,14 +107,18 @@ $ opencode mcp list
 - Local development falls back to `~/.config/omp-yield/env`, then
   `docker-build/.env` when no project `.env` exists. Production should use
   environment variables or a managed secret store.
-- `sa` was the local account during Phase -1; Phase 0 creates
+- `sa` was the local account during Phase -1; Phase 0 created
   `omp_ds_readonly` and the CLI now uses it.
 
 ## Next
 
-Phase 0:
+Phase 0 is complete. The read-only account and verification are documented in
+`reports/00_access.md`; the bootstrap script is
+`docs/create_readonly_user.sql`.
 
-1. Create `omp_ds_readonly` with `db_datareader` and `VIEW DEFINITION`.
-2. Point `.env` at the read-only account.
-3. Verify `db ping`, `db schema`, and a rejected write.
-4. Capture the access report and proceed to DB inventory.
+Phase 1:
+
+1. Inventory all tables, columns, row counts, keys, and date ranges.
+2. Map join keys and measure match rates against `OILPALM`.
+3. Capture growth-period definitions and the estate/division hierarchy.
+4. Build the data dictionary and ERD.
