@@ -127,8 +127,3 @@ project. You own the pipeline from data retrieval through ONNX export.
 7. Keep raw data immutable. Write derived data only under `data/processed/` and
    artifacts only under `models/` or `reports/`.
 
-## Current phase
-
-Phase -1 is complete when the scaffold, read-only DB CLI/MCP tools, and agent
-skills exist. Phase 0 starts with creating the read-only database account and
-verifying access.
