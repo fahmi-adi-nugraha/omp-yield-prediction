@@ -1,0 +1,14 @@
+services:
+  db:
+    image: omp-hargy-sh-db:v297
+    build:
+      context: ./docker_omp_data/
+    container_name: omp-hargy-sh-db
+    env_file: .env
+    ports:
+      - ${OMP_DOCKER_DB_EXT_PORT}:1433
+    volumes:
+      - mssql-2025-omp-hargy-sh-db:/var/opt/mssql
+
+volumes:
+  mssql-2025-omp-hargy-sh-db:

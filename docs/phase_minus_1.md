@@ -1,0 +1,118 @@
+# Phase -1 — Agent and Tooling Harness
+
+Status: **complete**
+
+## What was created
+
+### Project scaffold
+
+- `pyproject.toml`, `uv.lock`, `.python-version` (Python 3.12)
+- `src/omp_yield/` package with:
+  - `config.py` — environment settings and MSSQL connection URL
+  - `db.py` — read-only ConnectorX/Polars client
+  - `sql.py` — single-statement read-only SQL guard
+  - `cli.py` — `omp-yield` CLI
+  - `mcp_server.py` — local MCP server
+- `tests/` — SQL guard, settings, and CLI tests
+- `.env.example`, `.gitignore`, `README.md`
+
+### Agent and skills
+
+- `.opencode/agents/data-science.md` — primary DS build agent
+- `.opencode/agents/ds-reviewer.md` — read-only review subagent
+- `.opencode/skills/omp-db-access/SKILL.md` — schema map, joins, safety
+- `.opencode/skills/omp-data-profiling/SKILL.md` — cleaning/leakage/lever audit
+- `opencode.jsonc` — default agent and `omp-yield` MCP server
+
+### Read-only database tools
+
+CLI:
+
+```bash
+uv run omp-yield db ping
+uv run omp-yield db tables
+uv run omp-yield db schema --table OILPALM
+uv run omp-yield db query "SELECT TOP 5 ... FROM OILPALM"
+```
+
+MCP tools:
+
+- `db_ping`
+- `db_tables`
+- `db_schema`
+- `db_query`
+
+## Verification performed
+
+### Connectivity
+
+```text
+database_name: omp_as_demo
+login_name: sa
+server_version: Microsoft SQL Server 2025 (RTM-CU6) 17.0.4055.5
+oilpalm_rows: 2909
+```
+
+`sa` is used only for local bootstrap. Phase 0 creates `omp_ds_readonly`.
+
+### Read-only guard
+
+```text
+$ uv run omp-yield db query "DELETE FROM OILPALM"
+Error: Only SELECT and WITH queries are allowed.
+exit=1
+```
+
+### Tests
+
+```text
+$ uv run pytest
+17 passed, 2 skipped
+
+$ OMP_RUN_INTEGRATION=1 uv run pytest tests/test_db_integration.py
+2 passed
+
+$ uv run ruff check .
+All checks passed!
+
+$ uv run mypy src tests
+Success: no issues found in 11 source files
+```
+
+### MCP server
+
+The local MCP server was started over stdio and queried with an MCP client:
+
+```text
+tools: ['db_ping', 'db_tables', 'db_schema', 'db_query']
+db_ping: ok=True, oilpalm_rows=2909
+db_schema('OILPALM'): 207 columns
+```
+
+OpenCode connects to it successfully:
+
+```text
+$ opencode mcp list
+✓ omp-yield  connected
+```
+
+## Known Phase -1 limitations
+
+- The client-side row limit fetches the result and truncates it in Polars. This
+  is acceptable for the current tables; a server-side or cursor-based limit can
+  be added later for large extracts.
+- No retry/backoff yet. DB connection errors are surfaced with context.
+- The MCP server has no authentication because it is a local stdio server. The
+  DB account itself must be read-only.
+- Local development falls back to `docker-build/.env` when `.env` is absent.
+  Production should use environment variables or a managed secret store.
+- `sa` is still the local account until Phase 0 creates `omp_ds_readonly`.
+
+## Next
+
+Phase 0:
+
+1. Create `omp_ds_readonly` with `db_datareader` and `VIEW DEFINITION`.
+2. Point `.env` at the read-only account.
+3. Verify `db ping`, `db schema`, and a rejected write.
+4. Capture the access report and proceed to DB inventory.

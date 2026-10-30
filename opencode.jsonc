@@ -1,0 +1,13 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "data-science",
+  "mcp": {
+    "servers": {
+      "omp-yield": {
+        "type": "local",
+        "command": ["uv", "run", "omp-yield-mcp"],
+        "cwd": "."
+      }
+    }
+  }
+}

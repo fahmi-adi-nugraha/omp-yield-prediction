@@ -1,0 +1,73 @@
+[project]
+name = "omp-yield-prediction"
+version = "0.1.0"
+description = "Data cleaning, feature engineering, model training, forecasting, and ONNX export for OMP oil palm yield prediction."
+requires-python = ">=3.12,<3.14"
+dependencies = [
+  "connectorx>=0.4.0",
+  "polars>=1.20.0",
+  "pyarrow>=18.0.0",
+  "pydantic>=2.10.0",
+  "pydantic-settings>=2.7.0",
+  "python-dotenv>=1.0.1",
+  "typer>=0.15.1",
+  "rich>=13.9.0",
+  "mcp>=2.0.0,<3",
+]
+
+[project.optional-dependencies]
+ds = [
+  "numpy>=1.26.0",
+  "scikit-learn>=1.6.0",
+  "marimo>=0.10.0",
+  "altair>=5.5.0",
+  "matplotlib>=3.9.0",
+  "shap>=0.46.0",
+  "onnx>=1.17.0",
+  "onnxruntime>=1.20.0",
+  "skl2onnx>=1.17.0",
+  "pandera[polars]>=0.22.0",
+]
+mlflow = ["mlflow>=2.19.0"]
+lightgbm = ["lightgbm>=4.5.0", "onnxmltools>=1.12.0"]
+
+[dependency-groups]
+dev = [
+  "pytest>=8.3.0",
+  "pytest-cov>=6.0.0",
+  "ruff>=0.8.0",
+  "mypy>=1.14.0",
+  "pre-commit>=4.0.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/omp_yield"]
+
+[project.scripts]
+omp-yield = "omp_yield.cli:app"
+omp-yield-mcp = "omp_yield.mcp_server:main"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_unused_ignores = true
+plugins = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+markers = [
+  "integration: tests that require the live OMP demo database",
+]

@@ -1,0 +1,38 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Data and generated artifacts
+data/raw/
+data/interim/
+data/processed/
+data/*.json
+models/*
+!models/.gitkeep
+mlruns/
+reports/*.html
+reports/*.parquet
+
+# Large vendor/database artifacts
+docker-build/docker_demo_data/*.bak
+
+# Tooling caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
