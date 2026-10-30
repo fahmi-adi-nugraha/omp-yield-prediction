@@ -21,7 +21,14 @@ def _load_local_env() -> None:
     """
 
     configured = os.getenv("OMP_ENV_FILE")
-    candidates = [Path(configured)] if configured else [Path(".env"), Path("docker-build/.env")]
+    if configured:
+        candidates = [Path(configured)]
+    else:
+        candidates = [
+            Path(".env"),
+            Path.home() / ".config" / "omp-yield" / "env",
+            Path("docker-build/.env"),
+        ]
     for path in candidates:
         if path.is_file():
             load_dotenv(path, override=False)

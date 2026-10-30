@@ -104,9 +104,11 @@ $ opencode mcp list
 - No retry/backoff yet. DB connection errors are surfaced with context.
 - The MCP server has no authentication because it is a local stdio server. The
   DB account itself must be read-only.
-- Local development falls back to `docker-build/.env` when `.env` is absent.
-  Production should use environment variables or a managed secret store.
-- `sa` is still the local account until Phase 0 creates `omp_ds_readonly`.
+- Local development falls back to `~/.config/omp-yield/env`, then
+  `docker-build/.env` when no project `.env` exists. Production should use
+  environment variables or a managed secret store.
+- `sa` was the local account during Phase -1; Phase 0 creates
+  `omp_ds_readonly` and the CLI now uses it.
 
 ## Next
 
