@@ -86,6 +86,11 @@ class Database:
             sql = base + " ORDER BY TABLE_SCHEMA, TABLE_NAME, ORDINAL_POSITION"
         return self._read(sql)
 
+    def read_frame(self, sql: str) -> pl.DataFrame:
+        """Run a read-only query without applying the interactive row limit."""
+
+        return self._read(sql)
+
     def query(self, sql: str, limit: int | None = None) -> pl.DataFrame:
         """Run a read-only query and truncate the result client-side."""
 

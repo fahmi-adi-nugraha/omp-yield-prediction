@@ -10,6 +10,7 @@ OMP yield pipeline.
 | `phase-minus-1-harness/` | Agent/CLI/MCP harness, verification, and known limitations |
 | `phase-0-access/` | Read-only account summary and bootstrap SQL |
 | `phase-1-inventory/` | Database inventory, data dictionary, ERD, and CSV artifacts |
+| `phase-2-extraction/` | Raw extraction snapshot summary and reproducibility notes |
 
 ## Phase -1
 
@@ -37,12 +38,19 @@ OMP yield pipeline.
 - `phase-1-inventory/data/oilpalm_dictionary.csv`
 - `../reports/01_db_inventory.html` — exported Marimo inventory notebook
 
+## Phase 2
+
+- `phase-2-extraction/README.md` — snapshot summary and reproducibility
+- `../reports/02_extract_report.md` — full extraction report
+- `config/extraction.yaml` — extraction table configuration
+
 ## Current status
 
 - Phase -1 — complete
 - Phase 0 — complete
 - Phase 1 — complete
-- Phase 2 — next: raw extraction and immutable snapshots
+- Phase 2 — complete
+- Phase 3 — next: cleaning, profiling, leakage audit, and feature decisions
 
 ## Credential files
 

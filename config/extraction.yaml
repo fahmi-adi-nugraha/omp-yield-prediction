@@ -1,0 +1,55 @@
+# Phase 2 extraction configuration.
+#
+# The extractor selects explicit columns from INFORMATION_SCHEMA for each table;
+# it never runs SELECT *. The selected columns are recorded in manifest.json.
+#
+# Snapshots are written under data/raw/<snapshot_id>/ and are intentionally
+# gitignored. Run with --snapshot-id for deterministic local tests.
+
+output_dir: data/raw
+compression: zstd
+
+tables:
+  # Core block-year panel and target
+  - OILPALM
+
+  # Nutrient application and recommendations (management levers)
+  - tbl_FN_nutActRec
+  - tbl_FN_fertActInorg_mts
+  - tbl_FN_fertActOrg_mts
+  - tbl_FN_fertRecInorg_mts
+  - tbl_FN_fertRecOrg_mts
+
+  # Harvest events and pest/disease context
+  - tbl_HRR_harvests
+  - tbl_PD_surveys
+  - tbl_PD_controlAct
+  - tbl_PCD_pesticideAct_dt
+  - tbl_PCD_pesticideRec_mts
+
+  # Weather, stand, soil, bunch counts, and budgets
+  - tbl_CW_weatherAndWater
+  - tbl_areasPalmsBIY_blk_mts
+  - tbl_SC_palmCensus
+  - tbl_FN_soilAnalysis
+  - tbl_BBC_bunchCounts
+  - tbl_BBC_forecastABW
+  - tbl_CB_cropBudgetMt
+  - tbl_CLA_auditResults
+
+  # Static block/site attributes and system lookup tables
+  - tbl_planting
+  - tbl_SC_areas
+  - tbl_suDivisions
+  - tbl_suFields
+  - tbl_sys_growthPeriods
+  - tbl_sys_maturityAges
+  - tbl_sys_nutrients
+  - tbl_SYS_fldDefs
+  - tbl_sys_UDE_fields
+
+excluded_tables:
+  - table: tbl_GIS_blocks
+    reason: "contains a SQL Server geometry column; not required for Phase 2 yield modeling"
+  - table: tbl_su_blocks
+    reason: "empty table"

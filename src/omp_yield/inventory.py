@@ -388,7 +388,7 @@ def _table(name: str) -> str:
 
 def _read(db: Database, sql: str) -> pl.DataFrame:
     # Inventory queries must not be truncated by the interactive row limit.
-    return db._read(sql)
+    return db.read_frame(sql)
 
 
 def table_inventory(db: Database) -> pl.DataFrame:
@@ -653,7 +653,7 @@ def oilpalm_dictionary(db: Database) -> pl.DataFrame:
 
     # Read explicit columns, not SELECT *.
     select_list = ", ".join(quote_ident(c) for c in col_names)
-    raw = db._read(f"SELECT {select_list} FROM {_table(OILPALM)}")
+    raw = db.read_frame(f"SELECT {select_list} FROM {_table(OILPALM)}")
 
     def missing(c: str) -> pl.Expr:
         blank = (pl.col(c).cast(pl.String).str.strip_chars() == "").fill_null(False)

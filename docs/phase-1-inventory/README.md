@@ -84,4 +84,7 @@ items:
 
 ## Next
 
-Phase 2 — raw extraction and immutable Parquet snapshots.
+Phase 2 is complete; see `../phase-2-extraction/README.md` and
+`../../reports/02_extract_report.md`.
+
+Phase 3 — cleaning, profiling, leakage audit, and feature decisions.

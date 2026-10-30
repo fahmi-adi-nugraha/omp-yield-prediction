@@ -1,10 +1,18 @@
 from __future__ import annotations
 
 import os
+from pathlib import Path
+from tempfile import TemporaryDirectory
 
 import pytest
 
 from omp_yield.db import Database
+from omp_yield.extract import (
+    ExtractionConfig,
+    extract_snapshot,
+    verify_snapshot,
+    write_extraction_report,
+)
 from omp_yield.inventory import (
     column_inventory,
     estate_hierarchy,
@@ -71,3 +79,56 @@ def test_oilpalm_dictionary_has_target_and_leakage_notes() -> None:
 
     sa_text = dictionary.filter(dictionary["column_name"] == "SA_TextClass").row(0, named=True)
     assert sa_text["null_pct"] > 99.0
+
+
+def _small_extraction_config(tmp: str) -> ExtractionConfig:
+    return ExtractionConfig(
+        tables=("OILPALM", "tbl_CW_weatherAndWater"),
+        output_dir=Path(tmp) / "raw",
+        compression="zstd",
+        excluded_tables=(),
+    )
+
+
+def test_extract_snapshot_manifest_and_report() -> None:
+    with TemporaryDirectory() as tmp:
+        result = extract_snapshot(
+            Database(),
+            _small_extraction_config(tmp),
+            snapshot_id="test-phase2",
+        )
+        assert result.snapshot_dir.exists()
+        assert (result.snapshot_dir / "manifest.json").is_file()
+        assert (result.snapshot_dir / "manifest.sha256").is_file()
+        assert (result.snapshot_dir / "OILPALM.parquet").is_file()
+        assert result.manifest["summary"]["table_count"] == 2
+        assert result.manifest["summary"]["row_count"] == 2938
+        assert all(t["verified"] for t in result.manifest["tables"])
+
+        report = write_extraction_report(result, Path(tmp) / "report.md")
+        text = report.read_text()
+        assert "Phase 2" in text
+        assert "Snapshot ID" in text
+
+        verification = verify_snapshot(result.snapshot_dir)
+        assert verification["manifest_ok"]
+        assert verification["all_ok"]
+
+
+def test_extract_snapshot_force_is_reproducible() -> None:
+    with TemporaryDirectory() as tmp:
+        cfg = _small_extraction_config(tmp)
+        first = extract_snapshot(Database(), cfg, snapshot_id="same-snapshot")
+        first_hashes = {
+            t["table"]: t["parquet_sha256"] for t in first.manifest["tables"]
+        }
+        second = extract_snapshot(
+            Database(),
+            cfg,
+            snapshot_id="same-snapshot",
+            force=True,
+        )
+        second_hashes = {
+            t["table"]: t["parquet_sha256"] for t in second.manifest["tables"]
+        }
+        assert first_hashes == second_hashes

@@ -112,13 +112,13 @@ $ opencode mcp list
 
 ## Next
 
-Phase 0 and Phase 1 are complete. See `../../reports/00_access.md`,
-`../phase-1-inventory/README.md`, and
-`../phase-1-inventory/db_inventory.md`.
+Phase 0, Phase 1, and Phase 2 are complete. See `../../reports/00_access.md`,
+`../phase-1-inventory/README.md`, `../phase-2-extraction/README.md`, and
+`../../reports/02_extract_report.md`.
 
-Phase 2:
+Phase 3:
 
-1. Extract each candidate table with explicit columns.
-2. Write Parquet snapshots under `data/raw/<snapshot_id>/`.
-3. Record query hashes, row counts, schemas, and SHA256 checksums in a manifest.
-4. Verify row counts and idempotent re-extraction.
+1. Profile the raw snapshot for duplicates, missingness, and outliers.
+2. Audit target leakage and candidate feature availability.
+3. Produce the feature-decision report and `config/features.yaml`.
+4. Obtain approval before feature engineering.

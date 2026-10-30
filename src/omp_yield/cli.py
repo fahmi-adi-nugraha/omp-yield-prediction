@@ -14,6 +14,12 @@ from rich.table import Table
 from omp_yield import __version__
 from omp_yield.config import Settings
 from omp_yield.db import Database, OmpDatabaseError
+from omp_yield.extract import (
+    extract_snapshot,
+    load_extraction_config,
+    verify_snapshot,
+    write_extraction_report,
+)
 from omp_yield.inventory import write_inventory_reports
 from omp_yield.sql import UnsafeQueryError
 
@@ -145,6 +151,96 @@ def db_query(
         _json_output(frame)
     else:
         _print_frame(frame)
+
+
+@app.command("extract")
+def extract(
+    config: Annotated[
+        Path,
+        typer.Option("--config", help="Extraction YAML configuration."),
+    ] = Path("config/extraction.yaml"),
+    snapshot_id: Annotated[
+        str | None,
+        typer.Option("--snapshot-id", help="Optional deterministic snapshot ID."),
+    ] = None,
+    force: Annotated[
+        bool,
+        typer.Option("--force", help="Replace an existing snapshot directory."),
+    ] = False,
+    report: Annotated[
+        Path,
+        typer.Option("--report", help="Markdown extraction report path."),
+    ] = Path("reports/02_extract_report.md"),
+) -> None:
+    """Extract configured tables into an immutable Parquet snapshot."""
+
+    try:
+        cfg = load_extraction_config(config)
+        result = extract_snapshot(
+            Database(Settings()),
+            cfg,
+            snapshot_id=snapshot_id,
+            force=force,
+        )
+        report_path = write_extraction_report(result, report)
+    except (
+        OmpDatabaseError,
+        UnsafeQueryError,
+        ValueError,
+        FileExistsError,
+        RuntimeError,
+    ) as exc:
+        _handle_error(exc)
+        return
+
+    table = Table(show_header=True, header_style="bold")
+    table.add_column("artifact")
+    table.add_column("value")
+    table.add_row("snapshot_id", result.snapshot_id)
+    table.add_row("snapshot_dir", str(result.snapshot_dir))
+    table.add_row("tables", str(result.manifest["summary"]["table_count"]))
+    table.add_row("rows", f"{result.manifest['summary']['row_count']:,}")
+    table.add_row("manifest_sha256", result.manifest_sha256)
+    table.add_row("report", str(report_path))
+    console.print(table)
+
+
+@app.command("verify-snapshot")
+def verify_snapshot_command(
+    snapshot_dir: Annotated[
+        Path,
+        typer.Argument(help="Snapshot directory containing manifest.json."),
+    ],
+) -> None:
+    """Re-verify a raw snapshot's manifest and Parquet files."""
+
+    try:
+        result = verify_snapshot(snapshot_dir)
+    except (FileNotFoundError, ValueError) as exc:
+        _handle_error(exc)
+        return
+
+    table = Table(show_header=True, header_style="bold")
+    table.add_column("table")
+    table.add_column("rows")
+    table.add_column("sha256")
+    table.add_column("columns")
+    table.add_column("ok")
+    for row in result["tables"]:
+        table.add_row(
+            row["table"],
+            str(row["row_count"]),
+            "ok" if row["sha256_ok"] else "FAIL",
+            "ok" if row["columns_ok"] else "FAIL",
+            "ok" if row["ok"] else "FAIL",
+        )
+    console.print(table)
+    console.print(
+        f"Manifest: {'ok' if result['manifest_ok'] else 'FAIL'}; "
+        f"overall: {'ok' if result['all_ok'] else 'FAIL'}"
+    )
+    if not result["all_ok"]:
+        raise typer.Exit(code=1)
 
 
 @app.command("inventory")

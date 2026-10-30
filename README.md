@@ -3,8 +3,9 @@
 Data cleaning, feature engineering, model training, forecasting, and ONNX export
 for OMP oil palm yield prediction.
 
-**Current phase:** Phase 1 complete — database inventory and data dictionary
-generated. Next: Phase 2 — raw extraction and immutable snapshots.
+**Current phase:** Phase 2 complete — raw extraction snapshot and manifest
+verified. Next: Phase 3 — cleaning, profiling, leakage audit, and feature
+decisions.
 
 Documentation index: `docs/README.md`.
 
@@ -15,7 +16,8 @@ Documentation index: `docs/README.md`.
 | Phase -1 — agent/CLI/MCP harness | Complete |
 | Phase 0 — read-only database access | Complete |
 | Phase 1 — database inventory and data dictionary | Complete |
-| Phase 2 — raw extraction and immutable snapshots | Next |
+| Phase 2 — raw extraction and immutable snapshots | Complete |
+| Phase 3 — cleaning, profiling, and leakage audit | Next |
 
 ## Quickstart
 
@@ -27,6 +29,8 @@ uv run omp-yield db tables
 uv run omp-yield db schema --table OILPALM
 uv run omp-yield db query "SELECT TOP 5 NAME, UNIT, BLOCK, YEAR, Y_TOTAL_ton FROM OILPALM"
 uv run omp-yield inventory
+uv run omp-yield extract --snapshot-id 20261030T000000Z --force
+uv run omp-yield verify-snapshot data/raw/20261030T000000Z
 ```
 
 Generate the interactive inventory notebook:
@@ -97,12 +101,14 @@ src/omp_yield/
   sql.py         # read-only SQL guard
   cli.py         # omp-yield CLI
   inventory.py   # Phase 1 inventory and dictionary generator
+  extract.py     # Phase 2 immutable snapshot extractor
   mcp_server.py  # local MCP wrapper
 tests/
   test_sql.py
   test_config.py
   test_cli.py
   test_inventory_helpers.py
+  test_extract.py
   test_mcp_contract.py
   test_db_integration.py
 notebooks/
@@ -128,9 +134,14 @@ docs/
       date_ranges.csv
       join_coverage.csv
       oilpalm_dictionary.csv
+  phase-2-extraction/
+    README.md
 reports/
   00_access.md
   01_db_inventory.html
+  02_extract_report.md
+config/
+  extraction.yaml
 .opencode/
   agents/
   skills/
@@ -177,11 +188,26 @@ See `docs/phase-1-inventory/README.md`,
 `docs/phase-1-inventory/db_inventory.md`, and
 `docs/phase-1-inventory/data_dictionary.md` / `docs/phase-1-inventory/erd.md`.
 
+## Phase 2 acceptance
+
+- 28 tables extracted to `data/raw/20261030T000000Z/`.
+- 140,004 rows and 4,591,906 Parquet bytes.
+- Every table was read with an explicit column list; no `SELECT *`.
+- All table row counts matched `COUNT_BIG(*)`.
+- Every Parquet file has a SHA256 checksum in `manifest.json`.
+- `manifest.sha256` matches the manifest contents.
+- Re-extraction with the same snapshot ID produced identical Parquet hashes.
+- `uv run omp-yield verify-snapshot data/raw/20261030T000000Z` reports
+  `overall: ok`.
+
+See `reports/02_extract_report.md` and
+`docs/phase-2-extraction/README.md`.
+
 ## Next phase
 
-Phase 2 — raw extraction and immutable snapshots:
+Phase 3 — cleaning, profiling, leakage audit, and feature decisions:
 
-1. Extract each candidate table with explicit columns.
-2. Write Parquet snapshots under `data/raw/<snapshot_id>/`.
-3. Record query hashes, row counts, schemas, and SHA256 checksums in a manifest.
-4. Verify row counts and idempotent re-extraction.
+1. Profile the raw snapshot for duplicates, missingness, and outliers.
+2. Audit target leakage and feature availability at both cutoffs.
+3. Produce the feature-decision report and `config/features.yaml`.
+4. Obtain approval before feature engineering.
