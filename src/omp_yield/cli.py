@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 import json
-from typing import Any
+from pathlib import Path
+from typing import Annotated, Any
 
 import polars as pl
 import typer
@@ -13,6 +14,7 @@ from rich.table import Table
 from omp_yield import __version__
 from omp_yield.config import Settings
 from omp_yield.db import Database, OmpDatabaseError
+from omp_yield.inventory import write_inventory_reports
 from omp_yield.sql import UnsafeQueryError
 
 console = Console()
@@ -143,6 +145,33 @@ def db_query(
         _json_output(frame)
     else:
         _print_frame(frame)
+
+
+@app.command("inventory")
+def inventory(
+    docs_dir: Annotated[
+        Path,
+        typer.Option("--docs-dir", help="Root directory for generated documentation."),
+    ] = Path("docs"),
+    reports_dir: Annotated[
+        Path,
+        typer.Option("--reports-dir", help="Directory for generated report artifacts."),
+    ] = Path("reports"),
+) -> None:
+    """Generate the Phase 1 database inventory and data dictionary."""
+
+    try:
+        artifacts = write_inventory_reports(Database(Settings()), docs_dir, reports_dir)
+    except (OmpDatabaseError, UnsafeQueryError, ValueError) as exc:
+        _handle_error(exc)
+        return
+
+    table = Table(show_header=True, header_style="bold")
+    table.add_column("artifact")
+    table.add_column("path")
+    for name, path in artifacts.items():
+        table.add_row(name, str(path))
+    console.print(table)
 
 
 @app.command("info")

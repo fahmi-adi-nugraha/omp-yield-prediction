@@ -112,13 +112,13 @@ $ opencode mcp list
 
 ## Next
 
-Phase 0 is complete. The read-only account and verification are documented in
-`reports/00_access.md`; the bootstrap script is
-`docs/create_readonly_user.sql`.
+Phase 0 and Phase 1 are complete. See `../../reports/00_access.md`,
+`../phase-1-inventory/README.md`, and
+`../phase-1-inventory/db_inventory.md`.
 
-Phase 1:
+Phase 2:
 
-1. Inventory all tables, columns, row counts, keys, and date ranges.
-2. Map join keys and measure match rates against `OILPALM`.
-3. Capture growth-period definitions and the estate/division hierarchy.
-4. Build the data dictionary and ERD.
+1. Extract each candidate table with explicit columns.
+2. Write Parquet snapshots under `data/raw/<snapshot_id>/`.
+3. Record query hashes, row counts, schemas, and SHA256 checksums in a manifest.
+4. Verify row counts and idempotent re-extraction.

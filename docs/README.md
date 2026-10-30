@@ -1,17 +1,48 @@
 # Documentation Index
 
-Phase documentation and reproducible setup notes for the OMP yield pipeline.
+Phase documentation, generated inventories, and reproducible setup notes for the
+OMP yield pipeline.
 
-| Document | Purpose |
+## Phase directories
+
+| Directory | Contents |
 |---|---|
-| `phase_minus_1.md` | Agent/CLI/MCP harness, verification, and known limitations |
-| `create_readonly_user.sql` | Idempotent bootstrap for `omp_ds_readonly` |
+| `phase-minus-1-harness/` | Agent/CLI/MCP harness, verification, and known limitations |
+| `phase-0-access/` | Read-only account summary and bootstrap SQL |
+| `phase-1-inventory/` | Database inventory, data dictionary, ERD, and CSV artifacts |
+
+## Phase -1
+
+- `phase-minus-1-harness/README.md` — harness report and limitations
+
+## Phase 0
+
+- `phase-0-access/README.md` — access summary
+- `phase-0-access/create_readonly_user.sql` — idempotent bootstrap
+- `../reports/00_access.md` — full access report
+
+## Phase 1
+
+- `phase-1-inventory/README.md` — phase summary and key findings
+- `phase-1-inventory/db_inventory.md` — detailed table/join inventory
+- `phase-1-inventory/data_dictionary.md` — readable OILPALM dictionary
+- `phase-1-inventory/erd.md` — core ERD and join map
+- `phase-1-inventory/data/schema_tables.csv`
+- `phase-1-inventory/data/schema_columns.csv`
+- `phase-1-inventory/data/key_constraints.csv`
+- `phase-1-inventory/data/foreign_keys.csv`
+- `phase-1-inventory/data/key_uniqueness.csv`
+- `phase-1-inventory/data/date_ranges.csv`
+- `phase-1-inventory/data/join_coverage.csv`
+- `phase-1-inventory/data/oilpalm_dictionary.csv`
+- `../reports/01_db_inventory.html` — exported Marimo inventory notebook
 
 ## Current status
 
 - Phase -1 — complete
-- Phase 0 — complete; see `../reports/00_access.md`
-- Phase 1 — next: database inventory and data dictionary
+- Phase 0 — complete
+- Phase 1 — complete
+- Phase 2 — next: raw extraction and immutable snapshots
 
 ## Credential files
 

@@ -4,7 +4,7 @@
 --   read -r -s OMP_READONLY_PASSWORD
 --   sqlcmd -C -S localhost,1433 -U sa -P "$SA_PASSWORD" -d master \
 --     -v ReadOnlyPassword="$OMP_READONLY_PASSWORD" \
---     -b -i docs/create_readonly_user.sql
+--     -b -i docs/phase-0-access/create_readonly_user.sql
 --
 -- The account is a SQL login with:
 --   * db_datareader on omp_as_demo

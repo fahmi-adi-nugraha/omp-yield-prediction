@@ -17,8 +17,9 @@ Status: **complete**
 
 ## Account creation
 
-The repeatable bootstrap script is `docs/create_readonly_user.sql`. It is
-idempotent for the login, user, and role membership.
+The repeatable bootstrap script is
+`docs/phase-0-access/create_readonly_user.sql`. It is idempotent for the login,
+user, and role membership.
 
 Granted:
 

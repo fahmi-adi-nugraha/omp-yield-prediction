@@ -1,0 +1,25 @@
+table_name,row_count,distinct_keys,key_columns,grain_note,duplicate_rows,rows_per_key
+OILPALM,2909,2909,"NAME, UNIT, BLOCK, YEAR",block-year,0,1.0
+tbl_areasPalmsBIY_blk_mts,2909,2909,"suEstate, suDivision, suBlock, Yr",block-year,0,1.0
+tbl_BBC_bunchCounts,8316,8316,"Estate, Unit, Block, CntDate",block-month,0,1.0
+tbl_BBC_forecastABW,1653,1653,"suEstate, suDivision, suBlock, Yr",block-year,0,1.0
+tbl_CB_cropBudgetMt,2908,2908,"NAME, UNIT, BLOCK, YEAR",block-year,0,1.0
+tbl_CLA_auditResults,1762,1762,"NAME, UNIT, BLOCK, YEAR, AuditDate, Row_1, Row_2",block-audit-date-row-pair,0,1.0
+tbl_CW_weatherAndWater,29,29,"R_Name, R_UNIT, R_YEAR",station-year,0,1.0
+tbl_FN_fertActInorg_mts,10626,10626,"suEstate, suDivision, suBlock, Yr, fertName, fertAppMeth",block-year-product-method,0,1.0
+tbl_FN_fertActOrg_mts,253,253,"suEstate, suDivision, suBlock, Yr, fertName, fertAppMeth",block-year-product-method,0,1.0
+tbl_FN_fertRecInorg_mts,10951,10951,"suEstate, suDivision, suBlock, Yr, fertName, fertAppMeth",block-year-product-method,0,1.0
+tbl_FN_fertRecOrg_mts,147,147,"suEstate, suDivision, suBlock, Yr, fertName, fertAppMeth",block-year-product-method,0,1.0
+tbl_FN_nutActRec,2909,2909,"suEstate, suDivision, suBlock, Yr",block-year,0,1.0
+tbl_FN_soilAnalysis,671,671,"NAME, UNIT, BLOCK, SA_DATE, SA_TYPE",block-sample,0,1.0
+tbl_GIS_blocks,2870,2870,"Yr, suEstate, suDivision, suBlock, fragmentIdx",block-year-fragment,0,1.0
+tbl_HRR_harvests,74986,74986,"Estate, UNIT, BLOCK, ID_Card, D_Harvest",block-harvest-card-date,0,1.0
+tbl_PCD_pesticideAct_dt,2369,2369,"suEstate, suDivision, suBlock, pcdAppDt, pcdProdName, pestEventID",block-application-event,0,1.0
+tbl_PCD_pesticideRec_mts,2211,2211,"suEstate, suDivision, suBlock, Yr, pcdProdName",block-year-product,0,1.0
+tbl_PD_controlAct,812,812,"ESTATE, UNIT, BLOCK, ID_Rep, Dt_App, Control_Name",block-control-event,0,1.0
+tbl_PD_surveys,8132,8132,"ESTATE, UNIT, BLOCK, ID_Rep, D_Survey, PestName",block-survey-pest,0,1.0
+tbl_planting,557,557,"Estate, Unit, Block, plantingCycle",block-planting-cycle,0,1.0
+tbl_SC_areas,1130,1130,"suEstate, suDivision, suBlock, validFromYr, validFromMt",block-effective-date,0,1.0
+tbl_SC_palmCensus,2908,2908,"suEstate, suDivision, suBlock, validFromYr, validFromMt",block-year-month-snapshot,0,1.0
+tbl_suDivisions,9,9,"suEstate, suDivision",division,0,1.0
+tbl_suFields,68,68,"suEstate, suDivision, suField",field,0,1.0

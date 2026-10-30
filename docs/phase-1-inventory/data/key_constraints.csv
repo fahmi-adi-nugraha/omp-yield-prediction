@@ -1,0 +1,267 @@
+schema_name,table_name,key_name,key_type,key_columns
+dbo,__RefactorLog,PK____Refact__D3AEFFDB8D5D5BB3,PRIMARY_KEY_CONSTRAINT,OperationKey
+dbo,BU_tbl_SIS_harvCards_10_4,tbl_SIS_harvCards$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Estate, UNIT, BLOCK, ID_Card"
+dbo,BU_tbl_SIS_harvests_10_4,tbl_SIS_harvests$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Estate, UNIT, BLOCK, D_Harvest, ID_Card"
+dbo,BU_tbl_SIS_pickUpSched_10_4,tbl_SIS_pickUpSched$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Estate, UNIT, Block, PickUpDate"
+dbo,BU_tbl_SIS_PU_harvCardTypes_10_4,tbl_SIS_PU_harvCardTypes$PrimaryKey,PRIMARY_KEY_CONSTRAINT,C_Type
+dbo,OILPALM,OILPALM$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"NAME, YEAR, UNIT, BLOCK"
+dbo,tbl_API_bulkActions,tbl_API_bulkActions$PrimaryKey,PRIMARY_KEY_CONSTRAINT,id
+dbo,tbl_API_FN_fertAct_dt,PK_tbl_API_FN_fertAct_dt,PRIMARY_KEY_CONSTRAINT,"processDate, processOrder, processType, suDivision, suBlock, blockID, fertAppDt, fertName, appMeth"
+dbo,tbl_API_FN_millResAct_dt,PK_tbl_API_FN_millResAct_dt,PRIMARY_KEY_CONSTRAINT,"processDate, processOrder, processType, suDivision, suBlock, blockID, MRAppDt, MRName, appMeth"
+dbo,tbl_API_optionalColumns,tbl_API_optionalColumns$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"APITable, columnNameAPI"
+dbo,tbl_API_PCD_pesticideAct_dt,PK_tbl_API_PCD_pesticideAct_dt,PRIMARY_KEY_CONSTRAINT,"processDate, processOrder, processType, suDivision, suBlock, blockID, pcdAppDt, pcdProdName, appMeth, pestEventID"
+dbo,tbl_API_PH_prod_dt,PK_tbl_API_PH_prod_dt,PRIMARY_KEY_CONSTRAINT,"processDate, processOrder, processType, suDivision, suBlock, blockID, harvestDt, harvTeamID"
+dbo,tbl_API_processLog,tbl_API_processLog$PrimaryKey,PRIMARY_KEY_CONSTRAINT,id
+dbo,tbl_API_PU_FN_fertTypes,tbl_API_PU_FN_fertTypes$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"processDate, processOrder, processType, fertNameInorg"
+dbo,tbl_API_PU_FN_millResTypes,tbl_API_PU_FN_millResTypes$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"processDate, processOrder, processType, fertNameOrg"
+dbo,tbl_API_PU_PCD_products,tbl_API_PU_PCD_products$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"processDate, processOrder, processType, pcdProdName"
+dbo,tbl_areasPalmsBIY_blk_mts,tbl_areasPalmsBIY_blk_mts$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"suEstate, Yr, suDivision, suBlock"
+dbo,tbl_BBC_bunchCounts,tbl_BBC_bunchCounts$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Estate, Unit, Block, CntDate"
+dbo,tbl_BBC_bunchLossRates,tbl_BBC_bunchLossRates$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Yr, suEstate, suDivision"
+dbo,tbl_BBC_cropDistrib_rules,tbl_BBC_cropDistrib_rules$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Yr, cropDistribPrio, ruleRank"
+dbo,tbl_BBC_cropDistrib_rules_fldsReq,tbl_BBC_cropDistrib_rules_fldsReq$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Yr, cropDistribPrio, ruleRank, fldName"
+dbo,tbl_BBC_cropDistribution,tbl_BBC_cropDistribution$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Yr, cropDistribPrio"
+dbo,tbl_BBC_forecastABW,tbl_BBC_forecastABW$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"suEstate, Yr, suDivision, suBlock"
+dbo,tbl_BBC_manAdj_comments,tbl_BBC_manAdj_comments$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Estate, Month, Year"
+dbo,tbl_BBC_manAdj_division,tbl_BBC_manAdj_division$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"NAME, UNIT, YEAR, Mt_Adj"
+dbo,tbl_BBC_manAdj_field,tbl_BBC_manAdj_field$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"NAME, UNIT, UNIT_SUB, YEAR, Mt_Adj"
+dbo,tbl_BBC_surveyBlockAssignment,tbl_BBC_surveyBlockAssignment$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"EstName, UNIT, BLOCK, YEAR"
+dbo,tbl_BBC_surveyYears,tbl_BBC_surveyYears$PrimaryKey,PRIMARY_KEY_CONSTRAINT,Yr
+dbo,tbl_BBC_sys_DBConfig,tbl_BBC_sys_DBConfig$PrimaryKey,PRIMARY_KEY_CONSTRAINT,sysPK
+dbo,tbl_CB_cropBudgetMt,tbl_CB_cropBudgetMt$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"NAME, UNIT, BLOCK, YEAR"
+dbo,tbl_CB_cropBudgetWk,tbl_CB_cropBudgetWk$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"ESTATE, UNIT, BLOCK, Yr, Wk, YearOfWeek"
+dbo,tbl_CB_sys_convCropResidue,tbl_CB_sys_convCropResidue$PrimaryKey,PRIMARY_KEY_CONSTRAINT,Year
+dbo,tbl_CB_sys_convLaborUse,tbl_CB_sys_convLaborUse$PrimaryKey,PRIMARY_KEY_CONSTRAINT,Year
+dbo,tbl_CB_sys_DBConfig,tbl_CB_sys_DBConfig$PrimaryKey,PRIMARY_KEY_CONSTRAINT,sysPK
+dbo,tbl_CB_sys_rounding,tbl_CB_sys_rounding$PrimaryKey,PRIMARY_KEY_CONSTRAINT,Yr
+dbo,tbl_CLA_auditResults,tbl_CLA_auditResults$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"NAME, UNIT, BLOCK, YEAR, AuditDate, Row_1, Row_2"
+dbo,tbl_CLA_sys_convCPOLoss,tbl_CLA_sys_convCPOLoss$PrimaryKey,PRIMARY_KEY_CONSTRAINT,Year
+dbo,tbl_CLA_sys_DBConfig,tbl_CLA_sys_DBConfig$PrimaryKey,PRIMARY_KEY_CONSTRAINT,sysPK
+dbo,tbl_CLA_sys_lossThresholds,tbl_CLA_sys_lossThresholds$PrimaryKey,PRIMARY_KEY_CONSTRAINT,Year
+dbo,tbl_CW_weatherAndWater,tbl_CW_weatherAndWater$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"R_Name, R_UNIT, R_YEAR"
+dbo,tbl_FN_fertAct_dt,tbl_FN_fertAct_dt$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"suEstate, suDivision, suBlock, fertAppDt, fertName, appMeth"
+dbo,tbl_FN_fertActInorg_mts,tbl_FN_fertActInorg_mts$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"suEstate, suDivision, suBlock, Yr, fertName, fertAppMeth"
+dbo,tbl_FN_fertActOrg_mts,tbl_FN_fertActOrg_mts$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"suEstate, suDivision, suBlock, Yr, fertName, fertAppMeth"
+dbo,tbl_FN_fertRecInorg_mts,tbl_FN_fertRecInorg_mts$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"suEstate, suDivision, suBlock, Yr, fertName, fertAppMeth"
+dbo,tbl_FN_fertRecOrg_mts,tbl_FN_fertRecOrg_mts$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"suEstate, suDivision, suBlock, Yr, fertName, fertAppMeth"
+dbo,tbl_FN_millResAct_dt,tbl_FN_millResAct_dt$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"suEstate, suDivision, suBlock, MRAppDt, MRName, appMeth"
+dbo,tbl_FN_nutActRec,tbl_FN_nutActRec$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"suEstate, Yr, suDivision, suBlock"
+dbo,tbl_FN_soilAnalysis,tbl_FN_soilAnalysis$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"NAME, UNIT, BLOCK, SA_DATE, SA_TYPE, SA_DEPT"
+dbo,tbl_FP_dataEdits,tbl_FP_dataEdits$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"scen_ID, data_edit"
+dbo,tbl_FP_doses,tbl_FP_doses$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"scen_ID, dose_ID"
+dbo,tbl_FP_doses_rules,tbl_FP_doses_rules$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"scen_ID, dose_ID, ruleRank"
+dbo,tbl_FP_doseTemplates,tbl_FP_doseTemplates$PrimaryKey,PRIMARY_KEY_CONSTRAINT,dose_templateID
+dbo,tbl_FP_doseTemplates_rules,tbl_FP_doseTemplates_rules$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"dose_templateID, ruleRank"
+dbo,tbl_FP_exportDef,tbl_FP_exportDef$PrimaryKey,PRIMARY_KEY_CONSTRAINT,fieldName
+dbo,tbl_FP_flagSettings,tbl_FP_flagSettings$PrimaryKey,PRIMARY_KEY_CONSTRAINT,flagID
+dbo,tbl_FP_immatProgs,tbl_FP_immatProgs$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"scen_ID, immatProgram_ID"
+dbo,tbl_FP_immatProgs_fertRec,tbl_FP_immatProgs_fertRec$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"scen_ID, immatProgram_ID, fert_name"
+dbo,tbl_FP_immatProgs_rules,tbl_FP_immatProgs_rules$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"scen_ID, immatProgram_ID, ruleRank"
+dbo,tbl_FP_immatProgTemplates,tbl_FP_immatProgTemplates$PrimaryKey,PRIMARY_KEY_CONSTRAINT,templateID
+dbo,tbl_FP_immatProgTemplates_fertRec,tbl_FP_immatProgTemplates_fertRec$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"templateID, fert_name"
+dbo,tbl_FP_immatProgTemplates_rules,tbl_FP_immatProgTemplates_rules$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"templateID, ruleRank"
+dbo,tbl_FP_inorgFertPrices,tbl_FP_inorgFertPrices$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"scen_ID, fert_name"
+dbo,tbl_FP_inorgFertRecManEdits,tbl_FP_inorgFertRecManEdits$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"scen_ID, suEstate, suDivision, suBlock, fertName"
+dbo,tbl_FP_inorgFertSpreads,tbl_FP_inorgFertSpreads$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"scen_ID, spread_ID"
+dbo,tbl_FP_inorgFertSpreads_details,tbl_FP_inorgFertSpreads_details$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"scen_ID, fert_name, spread_ID"
+dbo,tbl_FP_inorgFertSpreads_rules,tbl_FP_inorgFertSpreads_rules$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"scen_ID, spread_ID, ruleRank"
+dbo,tbl_FP_optimSettings_fert,tbl_FP_optimSettings_fert$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"scen_ID, fert_name"
+dbo,tbl_FP_optimSettings_nut,tbl_FP_optimSettings_nut$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"scen_ID, nutrient"
+dbo,tbl_FP_orgFertPrices,tbl_FP_orgFertPrices$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"scen_ID, fert_name"
+dbo,tbl_FP_orgFertRecMature,tbl_FP_orgFertRecMature$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"scen_ID, Estate, Unit, Block, fert_name"
+dbo,tbl_FP_overrides,tbl_FP_overrides$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"scen_ID, override_ID"
+dbo,tbl_FP_overrides_rules,tbl_FP_overrides_rules$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"scen_ID, override_ID, ruleRank"
+dbo,tbl_FP_overrideTemplates,tbl_FP_overrideTemplates$PrimaryKey,PRIMARY_KEY_CONSTRAINT,override_templateID
+dbo,tbl_FP_overrideTemplates_rules,tbl_FP_overrideTemplates_rules$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"override_templateID, ruleRank"
+dbo,tbl_FP_replantProgs,tbl_FP_replantProgs$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"scen_ID, replantProgram_ID"
+dbo,tbl_FP_replantProgs_details,tbl_FP_replantProgs_details$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"scen_ID, replantProgram_ID, fert_name"
+dbo,tbl_FP_replantProgs_rules,tbl_FP_replantProgs_rules$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"scen_ID, replantProgram_ID, ruleRank"
+dbo,tbl_FP_replantProgTemplates,tbl_FP_replantProgTemplates$PrimaryKey,PRIMARY_KEY_CONSTRAINT,templateID
+dbo,tbl_FP_replantProgTemplates_details,tbl_FP_replantProgTemplates_details$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"templateID, fert_name"
+dbo,tbl_FP_replantProgTemplates_rules,tbl_FP_replantProgTemplates_rules$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"templateID, ruleRank"
+dbo,tbl_FP_rulesetTemplates,tbl_FP_rulesetTemplates$PrimaryKey,PRIMARY_KEY_CONSTRAINT,ruleset_templateID
+dbo,tbl_FP_rulesetTemplates_doses,tbl_FP_rulesetTemplates_doses$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"ruleset_templateID, dose_ID"
+dbo,tbl_FP_rulesetTemplates_doses_rules,tbl_FP_rulesetTemplates_doses_rules$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"ruleset_templateID, dose_ID, ruleRank"
+dbo,tbl_FP_rulesetTemplates_nutSettings,tbl_FP_rulesetTemplates_nutSettings$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"ruleset_templateID, nutrient"
+dbo,tbl_FP_rulesetTemplates_overrides,tbl_FP_rulesetTemplates_overrides$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"ruleset_templateID, override_ID"
+dbo,tbl_FP_rulesetTemplates_overrides_rules,tbl_FP_rulesetTemplates_overrides_rules$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"ruleset_templateID, override_ID, ruleRank"
+dbo,tbl_FP_ruleTemplates,tbl_FP_ruleTemplates$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"rule_templateID, isOverrideRule"
+dbo,tbl_FP_scenarios,tbl_FP_scenarios$PrimaryKey,PRIMARY_KEY_CONSTRAINT,scen_ID
+dbo,tbl_FP_sys_DBConfig,tbl_FP_sys_DBConfig$PrimaryKey,PRIMARY_KEY_CONSTRAINT,sysPK
+dbo,tbl_FS_encodingScanner,tbl_FS_encodingScanner$PrimaryKey,PRIMARY_KEY_CONSTRAINT,encodID
+dbo,tbl_FS_expressions,tbl_FS_expressions$PrimaryKey,PRIMARY_KEY_CONSTRAINT,exprID
+dbo,tbl_FS_expressions_GISRanges,tbl_FS_expressions_GISRanges$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"exprID, lowerBound, upperBound"
+dbo,tbl_FS_expressions_questions,tbl_FS_expressions_questions$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"exprID, questionID"
+dbo,tbl_FS_PU_questionCat,tbl_FS_PU_questionCat$PrimaryKey,PRIMARY_KEY_CONSTRAINT,questionCat
+dbo,tbl_FS_PU_surveyorGroups,tbl_FS_PU_surveyorGroups$PrimaryKey,PRIMARY_KEY_CONSTRAINT,surveyorGroup
+dbo,tbl_FS_questions,tbl_FS_questions$PrimaryKey,PRIMARY_KEY_CONSTRAINT,questionID
+dbo,tbl_FS_questions_GISRanges,tbl_FS_questions_GISRanges$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"questionID, lowerBound, upperBound"
+dbo,tbl_FS_questions_valueLists,tbl_FS_questions_valueLists$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"questionID, puValue"
+dbo,tbl_FS_recipientsResults,tbl_FS_recipientsResults$PrimaryKey,PRIMARY_KEY_CONSTRAINT,recipientEmail
+dbo,tbl_FS_resultsFldNote,tbl_FS_resultsFldNote$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"surveyDt, estate, unit, block, surveyorID, pointType, pointID"
+dbo,tbl_FS_resultsFldNote_questions,tbl_FS_resultsFldNote_questions$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"surveyDt, estate, unit, block, surveyorID, pointType, pointID, questionID"
+dbo,tbl_FS_resultsSurvey,tbl_FS_resultsSurvey$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"surveyTypeID, surveyDt, estate, unit, block, surveyorID, pointType, pointID"
+dbo,tbl_FS_resultsSurvey_blk,tbl_FS_resultsSurvey_blk$prmKey,PRIMARY_KEY_CONSTRAINT,"surveyTypeID, surveyID, effDt, suEstate, suDivision, suBlock, isExpression, fldFS"
+dbo,tbl_FS_resultsSurvey_questions,tbl_FS_resultsSurvey_questions$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"surveyTypeID, surveyDt, estate, unit, block, surveyorID, pointType, pointID, questionID"
+dbo,tbl_FS_resultsSurvey_sched_div,tbl_FS_resultsSurvey_sched_div$prmKey,PRIMARY_KEY_CONSTRAINT,"surveyTypeID, surveyID, suEstate, suDivision, isExpression, fldFS"
+dbo,tbl_FS_resultsSurvey_sched_est,tbl_FS_resultsSurvey_sched_est$prmKey,PRIMARY_KEY_CONSTRAINT,"surveyTypeID, surveyID, suEstate, isExpression, fldFS"
+dbo,tbl_FS_resultsSurvey_sched_fld,tbl_FS_resultsSurvey_sched_fld$prmKey,PRIMARY_KEY_CONSTRAINT,"surveyTypeID, surveyID, suEstate, suDivision, suField, isExpression, fldFS"
+dbo,tbl_FS_su_fruitColPoints,tbl_FS_su_fruitColPoints$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"suEstate, suDivision, suBlock, pointID"
+dbo,tbl_FS_su_harvPaths,tbl_FS_su_harvPaths$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"suEstate, suDivision, suBlock, harvPath"
+dbo,tbl_FS_su_palmPoints,tbl_FS_su_palmPoints$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"suEstate, suDivision, suBlock, pointID"
+dbo,tbl_FS_su_surveyPoints,tbl_FS_su_surveyPoints$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"suEstate, suDivision, suBlock, pointID"
+dbo,tbl_FS_surveyors,tbl_FS_surveyors$PrimaryKey,PRIMARY_KEY_CONSTRAINT,surveyorID
+dbo,tbl_FS_surveyors_surveyorGroups,tbl_FS_surveyors_surveyorGroups$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"surveyorID, surveyorGroup"
+dbo,tbl_FS_surveys,tbl_FS_surveys$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"surveyTypeID, surveyID"
+dbo,tbl_FS_surveys_fldSync,tbl_FS_surveys_fldSync$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"surveyTypeID, surveyID, fldFS, isExpr"
+dbo,tbl_FS_surveyTypes,tbl_FS_surveyTypes$PrimaryKey,PRIMARY_KEY_CONSTRAINT,surveyTypeID
+dbo,tbl_FS_surveyTypes_expressions,tbl_FS_surveyTypes_expressions$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"surveyTypeID, exprID"
+dbo,tbl_FS_surveyTypes_questions,tbl_FS_surveyTypes_questions$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"surveyTypeID, questionID"
+dbo,tbl_FS_surveyTypes_surveyorGroups,tbl_FS_surveyTypes_surveyorGroups$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"surveyTypeID, surveyorGroup"
+dbo,tbl_FS_sys_DBConfig,tbl_FS_sys_DBConfig$PrimaryKey,PRIMARY_KEY_CONSTRAINT,sysPK
+dbo,tbl_FS_sys_ImportRules_questions,tbl_FS_sys_ImportRules_questions$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"questionID, checkOrder, procMode"
+dbo,tbl_FS_sys_pointCat,tbl_FS_sys_pointCat$PrimaryKey,PRIMARY_KEY_CONSTRAINT,catID
+dbo,tbl_FS_sys_WDT_dataChangeLog,tbl_FS_sys_WDT_dataChangeLog$PrimaryKey,PRIMARY_KEY_CONSTRAINT,appORMClass
+dbo,tbl_FS_sys_WDT_dataDeletionLog,tbl_FS_sys_WDT_dataDeletionLog$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"appORMClass, suDivision"
+dbo,tbl_FW_act,tbl_FW_act$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"jobCode, Dt, suEstate, suDivision, suBlock, workTeamID"
+dbo,tbl_FW_jobDefs,tbl_FW_jobDefs$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Yr, jobCode"
+dbo,tbl_FW_roundDefs,tbl_FW_roundDefs$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"suEstate, Yr, FWUnit, jobCode, timeStart"
+dbo,tbl_FW_sched,tbl_FW_sched$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Yr, jobCode, suEstate, suDivision, suBlock"
+dbo,tbl_FW_thinning,tbl_FW_thinning$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"suEstate, suDivision, suBlock, thinningDt"
+dbo,tbl_GIS_blocks,tbl_GIS_blocks$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Yr, suEstate, suDivision, suBlock, fragmentIdx"
+dbo,tbl_GIS_userLayers,tbl_GIS_userLayers$PrimaryKey,PRIMARY_KEY_CONSTRAINT,layerName
+dbo,tbl_HRR_harvests,tbl_HRR_harvests$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Estate, UNIT, BLOCK, D_Harvest, ID_Card"
+dbo,tbl_HRR_sys_DBConfig,tbl_HRR_sys_DBConfig$PrimaryKey,PRIMARY_KEY_CONSTRAINT,sysPK
+dbo,tbl_HRR_sys_roundLengthGroups,tbl_HRR_sys_roundLengthGroups$PrimaryKey,PRIMARY_KEY_CONSTRAINT,HarvGroup
+dbo,tbl_linkedDocs,tbl_linkedDocs$PrimaryKey,PRIMARY_KEY_CONSTRAINT,File_Name
+dbo,tbl_linkedDocs_blocks,tbl_linkedDocs_blocks$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"EstNAME, UNIT, BLOCK, YEAR, File_Name"
+dbo,tbl_PCD_pesticideAct_dt,tbl_PCD_pesticideAct_dt$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"suEstate, suDivision, suBlock, pcdAppDt, pcdProdName, appMeth"
+dbo,tbl_PCD_pesticideAct_mts,tbl_PCD_pesticideAct_mts$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"suEstate, suDivision, suBlock, Yr, pcdProdName, pcdAppMeth, pestEventID"
+dbo,tbl_PCD_pesticideRec_mts,tbl_PCD_pesticideRec_mts$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"suEstate, suDivision, suBlock, Yr, pcdProdName, pcdAppMeth"
+dbo,tbl_PD_controlAct,tbl_PD_controlAct$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"ESTATE, UNIT, BLOCK, Control_Name, App_Method, Dt_App"
+dbo,tbl_PD_controlRec,tbl_PD_controlRec$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"ESTATE, UNIT, BLOCK, Control_Name, App_Method, Dt_Bud"
+dbo,tbl_PD_events,tbl_PD_events$PrimaryKey,PRIMARY_KEY_CONSTRAINT,ID_Rep
+dbo,tbl_PD_events_blocks,tbl_PD_events_blocks$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"ESTATE, UNIT, BLOCK, ID_Rep"
+dbo,tbl_PD_surveys,tbl_PD_surveys$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"ESTATE, UNIT, BLOCK, D_Survey, PestName"
+dbo,tbl_PH_cropDelivered_dt,tbl_PH_cropDelivered_dt$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Dt, dtHarvest, suEstate, suDivision, suBlock, harvestTeamID, millName"
+dbo,tbl_PH_harvests_dt,tbl_PH_harvests_dt$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Dt, suEstate, suDivision, suBlock, harvestTeamID"
+dbo,tbl_PH_harvRounds_mt,tbl_PH_harvRounds_mt$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"yrFis, mtFis, suEstate, suDivision, suBlock"
+dbo,tbl_planting,tbl_planting$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Estate, Unit, Block, Dt_Planted"
+dbo,tbl_PM_PU_appMeths,tbl_PM_PU_appMeths$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"P_Group, P_Method"
+dbo,tbl_PM_PU_pesticideTypes,tbl_PM_PU_pesticideTypes$PrimaryKey,PRIMARY_KEY_CONSTRAINT,P_Type
+dbo,tbl_PU_blockCharsNum,tbl_PU_blockCharsNum$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"puFld, puValue"
+dbo,tbl_PU_blockCharsTxt,tbl_PU_blockCharsTxt$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"puFld, puValue"
+dbo,tbl_PU_CW_weatherStations,tbl_PU_CW_weatherStations$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"puFld, wsID"
+dbo,tbl_PU_FN,tbl_PU_FN$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"puFld, puValue"
+dbo,tbl_PU_FN_labAnalysis,tbl_PU_FN_labAnalysis$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"puFld, puValue"
+dbo,tbl_PU_FN_nutStatus,tbl_PU_FN_nutStatus$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"puFld, puValue"
+dbo,tbl_PU_FN_nutStatus_sharedScores,tbl_PU_FN_nutStatus_sharedScores$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"puFld, puScore"
+dbo,tbl_PU_FN_soilSampling,tbl_PU_FN_soilSampling$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"puFld, puValue"
+dbo,tbl_PU_FN_typesInorg,tbl_PU_FN_typesInorg$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"puFld, Fert_name"
+dbo,tbl_PU_FN_typesOrg,tbl_PU_FN_typesOrg$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"puFld, Fert_name"
+dbo,tbl_PU_FW_jobSubCats,tbl_PU_FW_jobSubCats$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"puFld, jobCat, jobSubCat"
+dbo,tbl_PU_FW_upkeep,tbl_PU_FW_upkeep$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"puFld, puValue"
+dbo,tbl_PU_FW_workTeams,tbl_PU_FW_workTeams$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"puFld, workTeamID"
+dbo,tbl_PU_landClass,tbl_PU_landClass$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"puFld, landClass"
+dbo,tbl_PU_mills,tbl_PU_mills$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"puFld, millName"
+dbo,tbl_PU_PCD,tbl_PU_PCD$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"puFld, puValue"
+dbo,tbl_PU_PCD_actIngs,tbl_PU_PCD_actIngs$PrimaryKey,PRIMARY_KEY_CONSTRAINT,CommonName
+dbo,tbl_PU_PCD_products,tbl_PU_PCD_products$PrimaryKey,PRIMARY_KEY_CONSTRAINT,Prod_Name
+dbo,tbl_PU_PCD_products_actIngs,tbl_PU_PCD_products_actIngs$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Prod_Name, Prod_ActiveIngredient"
+dbo,tbl_PU_PD_controlAppMeth,tbl_PU_PD_controlAppMeth$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"puFld, Control_Type, App_Method"
+dbo,tbl_PU_PD_controls,tbl_PU_PD_controls$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"puFld, Control_Name"
+dbo,tbl_PU_PD_pests,tbl_PU_PD_pests$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"puFld, Pest_Name"
+dbo,tbl_PU_PD_severities,tbl_PU_PD_severities$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"puFld, pestName, puValue"
+dbo,tbl_PU_PH,tbl_PU_PH$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"puFld, puValue"
+dbo,tbl_PU_RU_resourceTypes,tbl_PU_RU_resourceTypes$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"puFld, puValue"
+dbo,tbl_PU_vegGrowth,tbl_PU_vegGrowth$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"puFld, puValue"
+dbo,tbl_RU_act,tbl_RU_act$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Dt, useName, jobCat, jobSubCat, jobCode, suEstate, suDivision, suField, suBlock, workTeamID"
+dbo,tbl_RU_bud,tbl_RU_bud$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Yr, useName, jobCode, suEstate, suDivision, suBlock"
+dbo,tbl_RU_jobDefs_use,tbl_RU_jobDefs_use$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Yr, jobCode, useName"
+dbo,tbl_RU_jobDefs_use_fldsReq,tbl_RU_jobDefs_use_fldsReq$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Yr, jobCode, useName, fldName"
+dbo,tbl_SC_areas,tbl_SC_areas$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"suEstate, suDivision, suBlock, validFromYr, validFromMt"
+dbo,tbl_SC_palmCensus,tbl_SC_palmCensus$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"suEstate, suDivision, suBlock, validFromYr, validFromMt"
+dbo,tbl_SIS_blockAttributes,tbl_SIS_blockAttributes$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Estate, UNIT, BLOCK"
+dbo,tbl_SIS_blockComments,tbl_SIS_blockComments$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Estate, UNIT, BLOCK"
+dbo,tbl_SIS_demographics,tbl_SIS_demographics$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Estate, UNIT, BLOCK, D_Survey"
+dbo,tbl_SIS_farmerGroups,tbl_SIS_farmerGroups$PrimaryKey,PRIMARY_KEY_CONSTRAINT,G_Code
+dbo,tbl_SIS_farmerGroups_farmers,tbl_SIS_farmerGroups_farmers$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"G_Code, ID_Farmers"
+dbo,tbl_SIS_farmers,tbl_SIS_farmers$PrimaryKey,PRIMARY_KEY_CONSTRAINT,ID_Farmers
+dbo,tbl_SIS_landTitles,tbl_SIS_landTitles$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Estate, UNIT, BLOCK, BLOCK_SUB"
+dbo,tbl_SIS_loans,tbl_SIS_loans$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Estate, UNIT, BLOCK, D_LoanIssued"
+dbo,tbl_SIS_plots,tbl_SIS_plots$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"ESTATE, UNIT, BLOCK, BLOCK_SUB"
+dbo,tbl_SIS_PU_farmerContracts,tbl_SIS_PU_farmerContracts$PrimaryKey,PRIMARY_KEY_CONSTRAINT,ContracType
+dbo,tbl_SIS_PU_groupHeadPositions,tbl_SIS_PU_groupHeadPositions$PrimaryKey,PRIMARY_KEY_CONSTRAINT,Position
+dbo,tbl_SIS_PU_householdTypes,tbl_SIS_PU_householdTypes$PrimaryKey,PRIMARY_KEY_CONSTRAINT,HH_Type
+dbo,tbl_SIS_PU_landTitles,tbl_SIS_PU_landTitles$PrimaryKey,PRIMARY_KEY_CONSTRAINT,Type_LT
+dbo,tbl_SIS_PU_landUses,tbl_SIS_PU_landUses$PrimaryKey,PRIMARY_KEY_CONSTRAINT,LandUse
+dbo,tbl_SIS_PU_loanUses,tbl_SIS_PU_loanUses$PrimaryKey,PRIMARY_KEY_CONSTRAINT,UseForLoan
+dbo,tbl_SIS_PU_locCountries,tbl_SIS_PU_locCountries$PrimaryKey,PRIMARY_KEY_CONSTRAINT,Country
+dbo,tbl_SIS_PU_locDistricts,tbl_SIS_PU_locDistricts$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Country, Province, District"
+dbo,tbl_SIS_PU_locProvinces,tbl_SIS_PU_locProvinces$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Country, Province"
+dbo,tbl_SIS_PU_locSubDistricts,tbl_SIS_PU_locSubDistricts$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Country, Province, District, SubDistrict"
+dbo,tbl_SIS_PU_questionCats,tbl_SIS_PU_questionCats$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"CodePrinciple, Marker"
+dbo,tbl_SIS_PU_RSPOParams,tbl_SIS_PU_RSPOParams$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"SubGroup, Factor"
+dbo,tbl_SIS_PU_tools,tbl_SIS_PU_tools$PrimaryKey,PRIMARY_KEY_CONSTRAINT,Tool
+dbo,tbl_SIS_RSPOParamDates,tbl_SIS_RSPOParamDates$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Estate, UNIT, BLOCK, D_Survey, Marker"
+dbo,tbl_SIS_RSPOParams,tbl_SIS_RSPOParams$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Estate, UNIT, BLOCK, D_Survey, Marker, Factor"
+dbo,tbl_SIS_surveyResults,tbl_SIS_surveyResults$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Estate, UNIT, BLOCK, Marker, ID_Farmers, DateInterview"
+dbo,tbl_SIS_sys_DBConfig,tbl_SIS_sys_DBConfig$PrimaryKey,PRIMARY_KEY_CONSTRAINT,sysPK
+dbo,tbl_SIS_sys_exclPickUpDates,tbl_SIS_sys_exclPickUpDates$PrimaryKey,PRIMARY_KEY_CONSTRAINT,Dates
+dbo,tbl_SIS_sys_questions,tbl_SIS_sys_questions$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Code, Marker"
+dbo,tbl_SIS_sys_questionScores,tbl_SIS_sys_questionScores$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Scores, Marker"
+dbo,tbl_SIS_tools,tbl_SIS_tools$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"Estate, UNIT, BLOCK, Tool, T_date"
+dbo,tbl_SIS_trainingRecord,tbl_SIS_trainingRecord$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"ID_Farmers, Dt, Topic"
+dbo,tbl_su_blocks,PK_tbl_su_blocks,PRIMARY_KEY_CONSTRAINT,"suEstate, suDivision, suBlock, blockID"
+dbo,tbl_su_blocks,UQ_tbl_su_blocks_blockID,UNIQUE_CONSTRAINT,blockID
+dbo,tbl_su_plantationAssignment,tbl_su_plantationAssignment$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"suDivision, yrMin"
+dbo,tbl_suDivisions,tbl_suDivisions$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"suEstate, suDivision"
+dbo,tbl_suFields,tbl_suFields$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"suEstate, suDivision, suField"
+dbo,tbl_sys_clientSessions,tbl_sys_clientSessions$primaryKey,PRIMARY_KEY_CONSTRAINT,sessionID
+dbo,tbl_sys_clientSessions,tbl_sys_clientSessions$uniqueness,UNIQUE_CONSTRAINT,"clientAppID, clientComp, clientPath"
+dbo,tbl_sys_CW,tbl_sys_CW$PrimaryKey,PRIMARY_KEY_CONSTRAINT,sysPK
+dbo,tbl_sys_dataLocks,tbl_sys_dataLocks$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"sessionID, lockType, lockSourceProcess, lockRestrType, lockRestrVal"
+dbo,tbl_sys_DBConfig,tbl_sys_DBConfig$PrimaryKey,PRIMARY_KEY_CONSTRAINT,sysPK
+dbo,tbl_sys_DBInfo,tbl_sys_DBInfo$PrimaryKey,PRIMARY_KEY_CONSTRAINT,sysPK
+dbo,tbl_sys_DBVars,tbl_sys_DBVars$PrimaryKey,PRIMARY_KEY_CONSTRAINT,sysPK
+dbo,tbl_SYS_fldDefs,tbl_SYS_fldDefs$PrimaryKey,PRIMARY_KEY_CONSTRAINT,fldID
+dbo,tbl_sys_FN,tbl_sys_FN$PrimaryKey,PRIMARY_KEY_CONSTRAINT,sysPK
+dbo,tbl_sys_FN_palmNutCritVals,tbl_sys_FN_palmNutCritVals$PrimaryKey,PRIMARY_KEY_CONSTRAINT,AgeStart
+dbo,tbl_sys_FN_soilCritVals,tbl_sys_FN_soilCritVals$PrimaryKey,PRIMARY_KEY_CONSTRAINT,sysPK
+dbo,tbl_sys_FW,tbl_sys_FW$PrimaryKey,PRIMARY_KEY_CONSTRAINT,sysPK
+dbo,tbl_sys_FW_jobCats,tbl_sys_FW_jobCats$PrimaryKey,PRIMARY_KEY_CONSTRAINT,jobCat
+dbo,tbl_sys_GIS_Ranges,tbl_sys_GIS_Ranges$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"mapCategory, mapType, legendID, lowerBound, upperBound"
+dbo,tbl_sys_growthPeriods,tbl_sys_growthPeriods$PrimaryKey,PRIMARY_KEY_CONSTRAINT,Growth_Period
+dbo,tbl_sys_GT_dataConfig,tbl_sys_GT_dataConfig$PrimaryKey,PRIMARY_KEY_CONSTRAINT,limitDataByYear
+dbo,tbl_sys_GT_linkedDbs,tbl_sys_GT_linkedDbs$PrimaryKey,PRIMARY_KEY_CONSTRAINT,dbName
+dbo,tbl_sys_importDef,tbl_sys_importDef$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"appAbbrev, importMode, fldID"
+dbo,tbl_sys_lockDefs,tbl_sys_lockDefs$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"lockType, tableName, tablePart"
+dbo,tbl_sys_lockTypes,tbl_sys_lockTypes$PrimaryKey,PRIMARY_KEY_CONSTRAINT,lockType
+dbo,tbl_sys_maturityAges,tbl_sys_maturityAges$PrimaryKey,PRIMARY_KEY_CONSTRAINT,maturityAgePrio
+dbo,tbl_sys_maturityAges_rules,tbl_sys_maturityAges_rules$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"maturityAgePrio, ruleRank"
+dbo,tbl_sys_maturityAges_rules_fldsReq,tbl_sys_maturityAges_rules_fldsReq$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"maturityAgePrio, ruleRank, fldName"
+dbo,tbl_sys_maxSharedScores,tbl_sys_maxSharedScores$PrimaryKey,PRIMARY_KEY_CONSTRAINT,sysPK
+dbo,tbl_sys_Mts,tbl_sys_Mts$PK,PRIMARY_KEY_CONSTRAINT,Mt
+dbo,tbl_sys_nutrients,tbl_FP_sys_nutrients$PrimaryKey,PRIMARY_KEY_CONSTRAINT,nutrient
+dbo,tbl_sys_PCD,tbl_sys_PCD$PrimaryKey,PRIMARY_KEY_CONSTRAINT,sysPK
+dbo,tbl_sys_PD_controlTypes,tbl_sys_PD_controlTypes$PrimaryKey,PRIMARY_KEY_CONSTRAINT,Control_Type
+dbo,tbl_sys_PH,tbl_sys_PH$PrimaryKey,PRIMARY_KEY_CONSTRAINT,sysPK
+dbo,tbl_sys_PH_roundLengthGroups,tbl_sys_PH_roundLengthGroups$PrimaryKey,PRIMARY_KEY_CONSTRAINT,HarvGroup
+dbo,tbl_sys_RU_useCats,tbl_sys_RU_useCats$PrimaryKey,PRIMARY_KEY_CONSTRAINT,useCat
+dbo,tbl_sys_UAC,tbl_sys_UAC$PrimaryKey,PRIMARY_KEY_CONSTRAINT,sysPK
+dbo,tbl_sys_UAC_modes,tbl_sys_UAC_modes$PrimaryKey,PRIMARY_KEY_CONSTRAINT,UACModeID
+dbo,tbl_sys_UAC_userGroups,tbl_sys_UAC_userGroups$PrimaryKey,PRIMARY_KEY_CONSTRAINT,GroupName
+dbo,tbl_sys_UAC_userGroups_modes,tbl_sys_UAC_userGroups_modes$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"groupName, UACModeID"
+dbo,tbl_sys_UAC_userGroups_users,tbl_sys_UAC_userGroups_users$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"OPGroup, User_ID"
+dbo,tbl_sys_UAC_users,tbl_sys_UAC_users$PrimaryKey,PRIMARY_KEY_CONSTRAINT,User_ID
+dbo,tbl_sys_UDE_baseFields,tbl_sys_UDE_baseFields$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"fldNameExpr, tblNameBase, fldNameBase"
+dbo,tbl_sys_UDE_evalStatus,tbl_sys_UDE_evalStatus$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"suEstate, Yr, suDivision, suBlock"
+dbo,tbl_sys_UDE_fields,tbl_sys_UDE_fields$PrimaryKey,PRIMARY_KEY_CONSTRAINT,fldName
+dbo,tbl_sys_units,tbl_sys_units$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"unitAbbrev, isSystem"
+dbo,tbl_sys_VG,tbl_sys_VG$PrimaryKey,PRIMARY_KEY_CONSTRAINT,sysPK
+dbo,tbl_sys_Wks,tbl_sys_Wks$PK,PRIMARY_KEY_CONSTRAINT,Wk
+dbo,tmp_FS_resultsSurvey,tmp_FS_resultsSurvey$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"surveyTypeID, surveyDt, estate, unit, block, surveyorID, pointType, pointID, isDeletedTmp"
+dbo,tmp_FS_resultsSurvey_inner,tmp_FS_resultsSurvey_inner$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"surveyTypeID, surveyDt, estate, unit, block, surveyorID, pointType, pointID, isDeletedTmp"
+dbo,tmp_FS_resultsSurvey_questions,tmp_FS_resultsSurvey_questions$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"surveyTypeID, surveyDt, estate, unit, block, surveyorID, pointType, pointID, questionID, isDeletedTmp"
+dbo,tmp_FS_resultsSurvey_questions_inner,tmp_FS_resultsSurvey_questions_inner$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"surveyTypeID, surveyDt, estate, unit, block, surveyorID, pointType, pointID, questionID, isDeletedTmp"
+dbo,tmp_FS_resultsSurvey_questions_inner_bulkDel,tmp_FS_resultsSurvey_questions_inner_bulkDel$PrimaryKey,PRIMARY_KEY_CONSTRAINT,"surveyTypeID, surveyDt, estate, unit, block, surveyorID, pointType, pointID, questionID"

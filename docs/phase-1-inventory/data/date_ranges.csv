@@ -1,0 +1,178 @@
+schema_name,table_name,column_name,non_null_count,min_value,max_value
+dbo,BU_tbl_HRR_harvests_10_4,D_Harvest,1422,2018-02-02 00:00:00,2022-03-31 00:00:00
+dbo,BU_tbl_HRR_harvests_10_4,D_StartOfRound,1422,2018-02-02 00:00:00,2022-03-31 00:00:00
+dbo,BU_tbl_SIS_harvCards_10_4,D_Expired,3126,2026-07-23 00:00:00,2028-09-22 00:00:00
+dbo,BU_tbl_SIS_harvCards_10_4,D_issued,3126,2021-07-23 00:00:00,2023-10-04 00:00:00
+dbo,BU_tbl_SIS_harvests_10_4,D_Harvest,86070,2017-01-05 00:00:00,2023-12-30 00:00:00
+dbo,BU_tbl_SIS_harvests_10_4,D_PickUp,85904,2017-01-06 00:00:00,2023-12-31 00:00:00
+dbo,BU_tbl_SIS_harvests_10_4,EntryDate,8,2017-10-12 14:30:52,2017-11-26 16:41:25
+dbo,BU_tbl_SIS_harvests_10_4,LastUpload,216,2017-07-27 16:04:56,2017-08-23 15:34:59
+dbo,BU_tbl_SIS_harvests_10_4,PickUpSchedule,85892,2017-01-01 00:00:00,2023-12-28 00:00:00
+dbo,BU_tbl_SIS_pickUpSched_10_4,PickUpDate,0,,
+dbo,OILPALM,AblEnd,287,2014-02-09 00:00:00,2017-03-02 00:00:00
+dbo,OILPALM,AblStart,287,2014-02-06 00:00:00,2017-02-27 00:00:00
+dbo,OILPALM,D_FHARVEST,2437,2009-07-01 00:00:00,2025-12-19 00:00:00
+dbo,OILPALM,D_PLANTED,2909,2007-01-01 00:00:00,2024-12-01 00:00:00
+dbo,OILPALM,LA_DATE,1937,2020-10-10 00:00:00,2025-04-22 00:00:00
+dbo,tbl_API_FN_fertAct_dt,fertAppDt,0,,
+dbo,tbl_API_FN_fertAct_dt,fertAppDtOld,0,,
+dbo,tbl_API_FN_fertAct_dt,processDate,0,,
+dbo,tbl_API_FN_millResAct_dt,MRAppDt,0,,
+dbo,tbl_API_FN_millResAct_dt,MRAppDtOld,0,,
+dbo,tbl_API_FN_millResAct_dt,processDate,0,,
+dbo,tbl_API_PCD_pesticideAct_dt,pcdAppDt,0,,
+dbo,tbl_API_PCD_pesticideAct_dt,pcdAppDtOld,0,,
+dbo,tbl_API_PCD_pesticideAct_dt,processDate,0,,
+dbo,tbl_API_PH_prod_dt,harvestDt,0,,
+dbo,tbl_API_PH_prod_dt,harvestDtOld,0,,
+dbo,tbl_API_PH_prod_dt,processDate,0,,
+dbo,tbl_API_PU_FN_fertTypes,processDate,0,,
+dbo,tbl_API_PU_FN_millResTypes,processDate,0,,
+dbo,tbl_API_PU_PCD_products,processDate,0,,
+dbo,tbl_API_bulkActions,dtEnd,0,,
+dbo,tbl_API_bulkActions,dtStart,0,,
+dbo,tbl_API_processLog,processTime,0,,
+dbo,tbl_BBC_bunchCounts,CntDate,8316,2023-01-31 00:00:00,2025-12-31 00:00:00
+dbo,tbl_CB_cropBudgetMt,EntryDate,2908,2025-10-24 09:02:11,2025-10-24 09:02:11
+dbo,tbl_CB_cropBudgetWk,EndDate,58518,2024-01-07 00:00:00,2026-01-04 00:00:00
+dbo,tbl_CB_cropBudgetWk,StartDate,58518,2024-01-01 00:00:00,2025-12-29 00:00:00
+dbo,tbl_CLA_auditResults,AuditDate,1762,2025-01-03 00:00:00,2025-06-26 00:00:00
+dbo,tbl_CLA_auditResults,EntryDate,1762,2020-08-18 00:00:00,2020-08-18 00:00:00
+dbo,tbl_CLA_sys_convCPOLoss,Lastupdate,0,,
+dbo,tbl_CLA_sys_lossThresholds,LastUpadate,0,,
+dbo,tbl_CW_weatherAndWater,EntryDate,1,2026-10-21 11:04:48,2026-10-21 11:04:48
+dbo,tbl_FN_fertAct_dt,fertAppDt,7049,2025-01-02 00:00:00,2025-12-29 00:00:00
+dbo,tbl_FN_millResAct_dt,MRAppDt,200,2025-02-01 00:00:00,2025-11-28 00:00:00
+dbo,tbl_FN_soilAnalysis,EntryDate,671,2022-08-18 00:00:00,2022-08-18 00:00:00
+dbo,tbl_FN_soilAnalysis,SA_DATE,671,2021-07-17 00:00:00,2025-04-12 00:00:00
+dbo,tbl_FP_dataEdits,lastEdit,24,2025-01-01 00:00:00,2025-01-01 00:00:00
+dbo,tbl_FP_scenarios,lastRecalc,2,2019-01-01 20:37:10,2019-01-01 20:40:30
+dbo,tbl_FS_resultsFldNote,dtEndApp,319,2019-12-20 08:01:11,2021-12-20 08:14:08
+dbo,tbl_FS_resultsFldNote,dtStartApp,319,2019-12-20 07:46:49,2021-12-20 08:23:17
+dbo,tbl_FS_resultsFldNote,surveyDt,319,2023-12-20 00:00:00,2025-12-20 00:00:00
+dbo,tbl_FS_resultsFldNote_questions,surveyDt,3682,2023-12-20 00:00:00,2025-12-20 00:00:00
+dbo,tbl_FS_resultsSurvey,dtEndApp,26648,2021-12-23 07:28:22,2024-10-31 00:00:00
+dbo,tbl_FS_resultsSurvey,dtStartApp,26648,2021-12-23 07:13:24,2024-10-31 00:00:00
+dbo,tbl_FS_resultsSurvey,surveyDt,26648,2022-12-19 00:00:00,2025-10-31 00:00:00
+dbo,tbl_FS_resultsSurvey_blk,effDt,42457,2022-12-20 00:00:00,2025-10-31 00:00:00
+dbo,tbl_FS_resultsSurvey_blk,firstDt,42457,2022-12-19 00:00:00,2025-10-31 00:00:00
+dbo,tbl_FS_resultsSurvey_questions,roundStartDt,26423,2022-12-19 00:00:00,2025-01-14 00:00:00
+dbo,tbl_FS_resultsSurvey_questions,surveyDt,214522,2022-12-19 00:00:00,2025-10-31 00:00:00
+dbo,tbl_FS_resultsSurvey_sched_div,effDt,1148,2023-06-27 00:00:00,2025-10-31 00:00:00
+dbo,tbl_FS_resultsSurvey_sched_div,firstDt,1148,2023-04-12 00:00:00,2025-10-19 00:00:00
+dbo,tbl_FS_resultsSurvey_sched_est,effDt,339,2023-06-30 00:00:00,2025-10-31 00:00:00
+dbo,tbl_FS_resultsSurvey_sched_est,firstDt,339,2023-04-12 00:00:00,2025-10-03 00:00:00
+dbo,tbl_FS_resultsSurvey_sched_fld,effDt,6188,2023-04-17 00:00:00,2025-10-31 00:00:00
+dbo,tbl_FS_resultsSurvey_sched_fld,firstDt,6188,2023-04-12 00:00:00,2025-10-22 00:00:00
+dbo,tbl_FS_su_fruitColPoints,lastEditedUTC,1876,2026-02-02 02:03:00,2026-02-02 02:03:00
+dbo,tbl_FS_su_harvPaths,lastEditedUTC,4,2026-02-02 02:03:00,2026-02-02 02:03:00
+dbo,tbl_FS_su_palmPoints,lastEditedUTC,604,2026-02-02 02:03:00,2026-02-02 02:03:00
+dbo,tbl_FS_su_surveyPoints,lastEditedUTC,4,2026-02-02 02:03:00,2026-02-02 02:03:00
+dbo,tbl_FS_surveyors,tokenExpiry,0,,
+dbo,tbl_FS_surveys,dtEndSched,38,2021-12-31 00:00:00,2029-11-30 00:00:00
+dbo,tbl_FS_surveys,dtStartSched,39,2021-07-01 00:00:00,2029-08-01 00:00:00
+dbo,tbl_FS_sys_WDT_dataChangeLog,lastDataChangeUTC,19,2026-02-02 02:03:00,2026-10-21 04:19:33
+dbo,tbl_FS_sys_WDT_dataDeletionLog,lastDeletionUTC,14,2025-10-16 07:09:24,2025-10-16 07:09:24
+dbo,tbl_FS_sys_WDT_resultsToProcess,dtEndApp,44,2026-08-31 10:17:18.0000000,2026-08-31 10:23:49.0000000
+dbo,tbl_FS_sys_WDT_resultsToProcess,dtStartApp,44,2026-08-31 10:13:11.0000000,2026-08-31 10:22:43.0000000
+dbo,tbl_FS_sys_WDT_resultsToProcess,surveyDt,44,2026-08-31 00:00:00.0000000,2026-08-31 00:00:00.0000000
+dbo,tbl_FW_act,Dt,46258,2025-01-02 00:00:00,2025-12-29 00:00:00
+dbo,tbl_FW_thinning,thinningDt,1,2019-02-10 00:00:00,2019-02-10 00:00:00
+dbo,tbl_GIS_mapImportSummary,dtUploaded,7,2024-12-22,2024-12-22
+dbo,tbl_HRR_harvests,D_Harvest,74986,2019-01-10 00:00:00,2025-12-30 00:00:00
+dbo,tbl_HRR_harvests,D_StartOfRound,74986,2019-01-10 00:00:00,2025-12-30 00:00:00
+dbo,tbl_PCD_pesticideAct_dt,pcdAppDt,2369,2025-01-02 00:00:00,2025-12-29 00:00:00
+dbo,tbl_PD_controlAct,Dt_App,812,2022-02-05 00:00:00,2025-09-15 00:00:00
+dbo,tbl_PD_controlAct,EntryDate,812,2020-08-19 13:54:58,2020-08-19 13:56:12
+dbo,tbl_PD_controlRec,Dt_Bud,951,2022-02-05 00:00:00,2025-09-15 00:00:00
+dbo,tbl_PD_controlRec,EntryDate,951,2020-08-19 13:54:58,2020-08-19 13:56:12
+dbo,tbl_PD_events,D_Closed,29,2019-12-31 00:00:00,2025-12-31 00:00:00
+dbo,tbl_PD_events,D_Start,29,2019-01-01 00:00:00,2025-07-09 00:00:00
+dbo,tbl_PD_events,EntryDate,30,2016-04-07 23:35:42,2026-08-19 13:53:41
+dbo,tbl_PD_events_blocks,D_Closed,3748,2019-12-31 00:00:00,2025-12-31 00:00:00
+dbo,tbl_PD_events_blocks,D_Start,3748,2019-01-01 00:00:00,2025-07-11 00:00:00
+dbo,tbl_PD_events_blocks,EntryDate,3748,2022-08-18 00:00:00,2026-08-19 13:56:15
+dbo,tbl_PD_surveys,D_Survey,8132,2019-01-05 00:00:00,2025-08-15 00:00:00
+dbo,tbl_PD_surveys,EntryDate,8132,2014-08-18 00:00:00,2018-08-19 13:56:15
+dbo,tbl_PH_cropDelivered_dt,Dt,0,,
+dbo,tbl_PH_harvests_dt,Dt,0,,
+dbo,tbl_PH_harvests_dt,dtStartOfRound,0,,
+dbo,tbl_PU_PCD_products,Prod_MSDS_date,4,1994-07-28 00:00:00,2007-04-01 00:00:00
+dbo,tbl_RU_act,Dt,308524,2025-01-02 00:00:00,2025-12-30 00:00:00
+dbo,tbl_SC_palmCensus,censusDt,2908,2019-01-05 00:00:00,2025-01-29 00:00:00
+dbo,tbl_SIS_PU_RSPOParams,EntryDate,0,,
+dbo,tbl_SIS_RSPOParamDates,D_Survey,2113,2023-08-01 00:00:00,2025-11-24 00:00:00
+dbo,tbl_SIS_RSPOParamDates,EntryDate,2113,2025-09-21 00:00:00,2025-11-23 00:00:00
+dbo,tbl_SIS_RSPOParams,D_Survey,3902,2023-08-01 00:00:00,2025-11-24 00:00:00
+dbo,tbl_SIS_RSPOParams,EntryDate,3852,2025-09-21 00:00:00,2025-11-23 00:00:00
+dbo,tbl_SIS_blockAttributes,EntryDate,77,2025-05-06 11:05:28,2025-08-12 11:24:08
+dbo,tbl_SIS_demographics,D_Survey,962,2017-06-16 00:00:00,2018-10-15 00:00:00
+dbo,tbl_SIS_demographics,EntryDate,82,2018-05-06 15:20:00,2018-08-30 13:59:42
+dbo,tbl_SIS_farmerGroups,G_DateFormed,7,2045-07-13 00:00:00,2045-08-13 00:00:00
+dbo,tbl_SIS_farmerGroups_farmers,EntryDate,38,2040-01-15 00:00:00,2040-01-15 00:00:00
+dbo,tbl_SIS_farmers,F_ContractDate,0,,
+dbo,tbl_SIS_farmers,F_DOB,0,,
+dbo,tbl_SIS_farmers,F_LastUpdate,2,2012-03-30 00:00:00,2012-03-30 00:00:00
+dbo,tbl_SIS_landTitles,EntryDate,1561,2025-09-02 09:37:50,2025-10-22 12:08:48
+dbo,tbl_SIS_landTitles,LT_D_Expired,0,,
+dbo,tbl_SIS_landTitles,LT_D_Issued,0,,
+dbo,tbl_SIS_loans,D_LoanIssued,1028,2005-05-04 00:00:00,2031-10-23 00:00:00
+dbo,tbl_SIS_loans,DateRepaid,1027,2005-07-04 00:00:00,2031-11-22 00:00:00
+dbo,tbl_SIS_loans,EntryDate,1028,2025-05-06 11:01:05,2025-10-15 10:40:12
+dbo,tbl_SIS_plots,D_Planted,1561,2001-01-02 00:00:00,2019-12-01 00:00:00
+dbo,tbl_SIS_plots,D_Poisoned,0,,
+dbo,tbl_SIS_plots,D_Replanted,1561,2026-01-02 00:00:00,2044-12-01 00:00:00
+dbo,tbl_SIS_plots,D_Survey,1561,2025-05-07 00:00:00,2025-08-07 00:00:00
+dbo,tbl_SIS_plots,D_ValidUntil,0,,
+dbo,tbl_SIS_plots,TC_DATE,1561,2025-05-07 00:00:00,2025-10-22 00:00:00
+dbo,tbl_SIS_plots,last_update,1561,2025-10-15 09:52:14,2025-10-15 09:52:14
+dbo,tbl_SIS_surveyResults,DateInterview,282,2021-01-01 00:00:00,2023-12-26 00:00:00
+dbo,tbl_SIS_sys_exclPickUpDates,Dates,272,2015-09-13 00:00:00,2023-12-25 00:00:00
+dbo,tbl_SIS_tools,EntryDate,1104,2025-05-20 16:09:35,2025-10-22 11:24:50
+dbo,tbl_SIS_tools,T_date,1104,2014-05-02 00:00:00,2025-05-13 00:00:00
+dbo,tbl_SIS_trainingRecord,Dt,0,,
+dbo,tbl_areasPalmsBIY_blk_mts,dtAreaValidFrom,2909,2009-01-01 00:00:00,2026-01-01 00:00:00
+dbo,tbl_areasPalmsBIY_blk_mts,dtPalmCensusValidFrom,2909,2019-01-01 00:00:00,2025-01-01 00:00:00
+dbo,tbl_linkedDocs,Doc_Date,2,2021-05-11 00:00:00,2021-07-09 00:00:00
+dbo,tbl_linkedDocs,Doc_Date_published,2,2022-10-22 00:00:00,2022-10-22 00:00:00
+dbo,tbl_linkedDocs,Doc_Date_until,0,,
+dbo,tbl_planting,Dt_FHarvest,554,2009-07-01 00:00:00,2025-12-19 00:00:00
+dbo,tbl_planting,Dt_Planted,557,2007-01-01 00:00:00,2024-12-01 00:00:00
+dbo,tbl_planting,Dt_ReplStart,0,,
+dbo,tbl_planting,EntryDate,0,,
+dbo,tbl_planting,replantDtEnd,0,,
+dbo,tbl_sys_DBVars,FPFlaggingLastEdit,1,2020-01-26 16:28:05,2020-01-26 16:28:05
+dbo,tbl_sys_GT_dataConfig,dataLastUpdate,0,,
+dbo,tbl_sys_PD_controlTypes,EntryDate,4,2021-07-10 00:00:00,2022-05-19 11:34:32
+dbo,tbl_sys_UAC_userGroups_users,EntryDate,1,2008-07-03 00:00:00,2008-07-03 00:00:00
+dbo,tbl_sys_UAC_users,EntryDate,1,2016-07-01 00:00:00,2016-07-01 00:00:00
+dbo,tbl_sys_UAC_users,ExpiredDate,0,,
+dbo,tbl_sys_UDE_evalStatus,lastDataEdit_BBC_cropDistrib,2909,2023-02-08 08:59:23,2026-10-21 11:04:48
+dbo,tbl_sys_UDE_evalStatus,lastDataEdit_maturityAges,2909,2021-10-26 19:19:14,2026-10-21 11:04:48
+dbo,tbl_sys_UDE_evalStatus,lastDataEdit_resourceUseRates,1,2026-10-21 11:04:48,2026-10-21 11:04:48
+dbo,tbl_sys_UDE_evalStatus,lastEval_BBC_cropDistrib,2908,2023-02-09 08:59:23,2025-10-24 10:19:44
+dbo,tbl_sys_UDE_evalStatus,lastEval_maturityAges,2909,2026-10-21 11:04:58,2026-10-21 11:04:58
+dbo,tbl_sys_UDE_evalStatus,lastEval_resourceUseRates,2908,2025-10-31 08:54:52,2025-10-31 08:54:52
+dbo,tbl_sys_clientSessions,sessionStartTime,0,,
+dbo,tbl_sys_dataLocks,lockTime,0,,
+dbo,tmp_BBC_bunchCounts,CntDate,1,2021-04-17 00:00:00.0000000,2021-04-17 00:00:00.0000000
+dbo,tmp_BBC_bunchCounts,CntDate_old,1,2022-04-17 00:00:00.0000000,2022-04-17 00:00:00.0000000
+dbo,tmp_FS_recalc_expressionEval,effDt,0,,
+dbo,tmp_FS_recalc_expressionEval,firstDt,0,,
+dbo,tmp_FS_resultsSurvey,dtEndApp,53,2021-05-01 00:00:00,2021-05-01 00:00:00
+dbo,tmp_FS_resultsSurvey,dtStartApp,53,2021-05-01 00:00:00,2021-05-01 00:00:00
+dbo,tmp_FS_resultsSurvey,surveyDt,53,2022-05-01 00:00:00,2022-05-01 00:00:00
+dbo,tmp_FS_resultsSurvey,surveyDt_old,53,2022-05-01 00:00:00,2022-05-01 00:00:00
+dbo,tmp_FS_resultsSurvey_inner,dtEndApp,0,,
+dbo,tmp_FS_resultsSurvey_inner,dtStartApp,0,,
+dbo,tmp_FS_resultsSurvey_inner,surveyDt,53,2022-05-01 00:00:00,2022-05-01 00:00:00
+dbo,tmp_FS_resultsSurvey_inner,surveyDt_old,0,,
+dbo,tmp_FS_resultsSurvey_questions,roundStartDt,0,,
+dbo,tmp_FS_resultsSurvey_questions,surveyDt,212,2022-05-01 00:00:00,2022-05-01 00:00:00
+dbo,tmp_FS_resultsSurvey_questions,surveyDt_old,212,2022-05-01 00:00:00,2022-05-01 00:00:00
+dbo,tmp_FS_resultsSurvey_questions_inner,roundStartDt,0,,
+dbo,tmp_FS_resultsSurvey_questions_inner,surveyDt,0,,
+dbo,tmp_FS_resultsSurvey_questions_inner,surveyDt_old,0,,
+dbo,tmp_FS_resultsSurvey_questions_inner_bulkDel,dtEndApp,0,,
+dbo,tmp_FS_resultsSurvey_questions_inner_bulkDel,dtStartApp,0,,
+dbo,tmp_FS_resultsSurvey_questions_inner_bulkDel,surveyDt,0,,

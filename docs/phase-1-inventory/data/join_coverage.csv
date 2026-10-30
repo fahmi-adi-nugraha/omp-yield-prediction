@@ -1,0 +1,23 @@
+join_type,source_table,source_grain,source_keys,matched_source_keys,matched_oil_rows,oil_rows,matched_source_pct,matched_oil_pct
+block-year,tbl_areasPalmsBIY_blk_mts,one row per block-year,2909,2909,2909,2909,100.0,100.0
+block-year,tbl_BBC_bunchCounts,monthly counts per block-year,693,693,693,2909,100.0,23.8
+block-year,tbl_BBC_forecastABW,one row per block-year,1653,1653,1653,2909,100.0,56.8
+block-year,tbl_CB_cropBudgetMt,one row per block-year,2908,2908,2908,2909,100.0,100.0
+block-year,tbl_CLA_auditResults,audit events per block-year,61,60,60,2909,98.4,2.1
+weather-station-year,tbl_CW_weatherAndWater,one row per station-year,29,27,27,27,93.1,100.0
+block-year,tbl_FN_fertActInorg_mts,many fertilizer products per block-year,2170,2170,2170,2909,100.0,74.6
+block-year,tbl_FN_fertActOrg_mts,many organic products per block-year,251,251,251,2909,100.0,8.6
+block-year,tbl_FN_fertRecInorg_mts,many fertilizer recommendations per block-year,2112,2112,2112,2909,100.0,72.6
+block-year,tbl_FN_fertRecOrg_mts,many organic recommendations per block-year,147,147,147,2909,100.0,5.1
+block-year,tbl_FN_nutActRec,one row per block-year,2909,2909,2909,2909,100.0,100.0
+block-year,tbl_FN_soilAnalysis,sample events per block-year,338,338,338,2909,100.0,11.6
+block-only,tbl_GIS_blocks,GIS fragments per block-year,546,546,546,557,100.0,98.0
+block-year,tbl_HRR_harvests,many harvest events per block-year,2436,2436,2436,2909,100.0,83.7
+block-year,tbl_PCD_pesticideAct_dt,pesticide application events per block-year,547,547,547,2909,100.0,18.8
+block-year,tbl_PCD_pesticideRec_mts,one recommendation row per block-year/product,1089,1089,1089,2909,100.0,37.4
+block-year,tbl_PD_controlAct,many control events per block-year,611,611,611,2909,100.0,21.0
+block-year,tbl_PD_surveys,many pest surveys per block-year,2609,2609,2609,2909,100.0,89.7
+block-only,tbl_planting,one or more planting cycles per block,557,557,557,557,100.0,100.0
+block-only,tbl_SC_areas,effective-dated area records per block,557,557,557,557,100.0,100.0
+block-year,tbl_SC_palmCensus,census snapshot per block-year,2908,2908,2908,2909,100.0,100.0
+division,tbl_suDivisions,one row per division,9,9,9,9,100.0,100.0

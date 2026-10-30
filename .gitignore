@@ -20,6 +20,7 @@ models/*
 !models/.gitkeep
 mlruns/
 reports/*.html
+!reports/01_db_inventory.html
 reports/*.parquet
 
 # Large vendor/database artifacts
@@ -36,3 +37,6 @@ htmlcov/
 .DS_Store
 .idea/
 .vscode/
+
+# Marimo session cache
+notebooks/__marimo__/

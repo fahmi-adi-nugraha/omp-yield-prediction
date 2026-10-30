@@ -3,8 +3,10 @@
 Data cleaning, feature engineering, model training, forecasting, and ONNX export
 for OMP oil palm yield prediction.
 
-**Current phase:** Phase 0 complete — read-only database access verified.
-Next: Phase 1 — database inventory and data dictionary.
+**Current phase:** Phase 1 complete — database inventory and data dictionary
+generated. Next: Phase 2 — raw extraction and immutable snapshots.
+
+Documentation index: `docs/README.md`.
 
 ## Phase status
 
@@ -12,7 +14,8 @@ Next: Phase 1 — database inventory and data dictionary.
 |---|---|
 | Phase -1 — agent/CLI/MCP harness | Complete |
 | Phase 0 — read-only database access | Complete |
-| Phase 1 — database inventory and data dictionary | Next |
+| Phase 1 — database inventory and data dictionary | Complete |
+| Phase 2 — raw extraction and immutable snapshots | Next |
 
 ## Quickstart
 
@@ -23,6 +26,13 @@ uv run omp-yield db ping
 uv run omp-yield db tables
 uv run omp-yield db schema --table OILPALM
 uv run omp-yield db query "SELECT TOP 5 NAME, UNIT, BLOCK, YEAR, Y_TOTAL_ton FROM OILPALM"
+uv run omp-yield inventory
+```
+
+Generate the interactive inventory notebook:
+
+```bash
+uv run --with marimo marimo export html notebooks/01_db_inventory.py -o reports/01_db_inventory.html
 ```
 
 Credential resolution order:
@@ -86,18 +96,41 @@ src/omp_yield/
   db.py          # read-only ConnectorX/Polars client
   sql.py         # read-only SQL guard
   cli.py         # omp-yield CLI
+  inventory.py   # Phase 1 inventory and dictionary generator
   mcp_server.py  # local MCP wrapper
 tests/
   test_sql.py
   test_config.py
   test_cli.py
+  test_inventory_helpers.py
   test_mcp_contract.py
   test_db_integration.py
+notebooks/
+  01_db_inventory.py
 docs/
-  phase_minus_1.md
-  create_readonly_user.sql
+  README.md
+  phase-minus-1-harness/
+    README.md
+  phase-0-access/
+    README.md
+    create_readonly_user.sql
+  phase-1-inventory/
+    README.md
+    db_inventory.md
+    data_dictionary.md
+    erd.md
+    data/
+      schema_tables.csv
+      schema_columns.csv
+      key_constraints.csv
+      foreign_keys.csv
+      key_uniqueness.csv
+      date_ranges.csv
+      join_coverage.csv
+      oilpalm_dictionary.csv
 reports/
   00_access.md
+  01_db_inventory.html
 .opencode/
   agents/
   skills/
@@ -112,8 +145,8 @@ reports/
 - The MCP server starts and exposes the same read-only tools.
 - Tests pass.
 
-See `docs/phase_minus_1.md` for the completed harness, verification output, and
-known limitations.
+See `docs/phase-minus-1-harness/README.md` for the completed harness,
+verification output, and known limitations.
 
 ## Phase 0 acceptance
 
@@ -126,13 +159,29 @@ known limitations.
   project tree.
 
 See `reports/00_access.md` for the access report and
-`docs/create_readonly_user.sql` for the idempotent bootstrap script.
+`docs/phase-0-access/create_readonly_user.sql` for the idempotent bootstrap script.
+
+## Phase 1 acceptance
+
+- 274 tables, 4,458 visible columns, 266 key constraints, and 137 foreign keys
+  inventoried.
+- 177 date-like columns have min/max coverage recorded.
+- Candidate business keys checked for duplicates.
+- Join coverage measured against `OILPALM`.
+- Growth-period definitions and the estate/division hierarchy captured.
+- OILPALM data dictionary generated with descriptions, null counts, and
+  preliminary leakage/timing notes.
+- Interactive Marimo inventory exported to `reports/01_db_inventory.html`.
+
+See `docs/phase-1-inventory/README.md`,
+`docs/phase-1-inventory/db_inventory.md`, and
+`docs/phase-1-inventory/data_dictionary.md` / `docs/phase-1-inventory/erd.md`.
 
 ## Next phase
 
-Phase 1 — database inventory and data dictionary:
+Phase 2 — raw extraction and immutable snapshots:
 
-1. Inventory all tables, columns, row counts, keys, and date ranges.
-2. Map join keys and measure match rates against `OILPALM`.
-3. Capture growth-period definitions and the estate/division hierarchy.
-4. Build the data dictionary and ERD.
+1. Extract each candidate table with explicit columns.
+2. Write Parquet snapshots under `data/raw/<snapshot_id>/`.
+3. Record query hashes, row counts, schemas, and SHA256 checksums in a manifest.
+4. Verify row counts and idempotent re-extraction.
