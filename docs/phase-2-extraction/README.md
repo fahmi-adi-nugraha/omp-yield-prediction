@@ -37,9 +37,7 @@ The selected and excluded columns are recorded per table in `manifest.json`.
 
 ## Verification
 
-- The current snapshot records `Git dirty: True` because Phase 2 code was not
-  yet committed. Re-run the extraction after committing Phase 2 if a clean
-  commit is required for provenance.
+- The current snapshot records commit `ba043d0` with `Git dirty: False`.
 - All 28 table row counts matched `COUNT_BIG(*)`.
 - Every Parquet file has a SHA256 checksum in `manifest.json`.
 - `manifest.sha256` matches the manifest contents.
