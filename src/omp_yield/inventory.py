@@ -12,7 +12,7 @@ from omp_yield.db import Database
 
 OILPALM = "OILPALM"
 INVENTORY_PHASE_DIR = "phase-1-inventory"
-INVENTORY_DATA_DIR = "data"
+INVENTORY_ARTIFACT_DIR = "phase-1-inventory"
 
 
 @dataclass(frozen=True)
@@ -801,13 +801,18 @@ def markdown_table(
     return "\n".join(lines)
 
 
-def write_inventory_reports(db: Database, docs_dir: Path, reports_dir: Path) -> dict[str, Path]:
+def write_inventory_reports(
+    db: Database,
+    docs_dir: Path,
+    data_dir: Path,
+    reports_dir: Path,
+) -> dict[str, Path]:
     """Generate Phase 1 CSVs, Markdown reports, and the data dictionary."""
 
     phase_dir = docs_dir / INVENTORY_PHASE_DIR
-    data_dir = phase_dir / INVENTORY_DATA_DIR
+    artifact_dir = data_dir / INVENTORY_ARTIFACT_DIR
     phase_dir.mkdir(parents=True, exist_ok=True)
-    data_dir.mkdir(parents=True, exist_ok=True)
+    artifact_dir.mkdir(parents=True, exist_ok=True)
     reports_dir.mkdir(parents=True, exist_ok=True)
 
     tables = table_inventory(db)
@@ -824,7 +829,7 @@ def write_inventory_reports(db: Database, docs_dir: Path, reports_dir: Path) -> 
     artifacts: dict[str, Path] = {}
 
     def write_csv(name: str, frame: pl.DataFrame) -> None:
-        path = data_dir / name
+        path = artifact_dir / name
         frame.write_csv(path)
         artifacts[name] = path
 
@@ -876,7 +881,7 @@ matching source record.
 
 {markdown_table(top_tables, ["schema_name", "table_name", "row_count", "column_count"])}
 
-Full table inventory: `data/schema_tables.csv`.
+Full table inventory: `../../data/phase-1-inventory/schema_tables.csv`.
 
 ## Growth periods
 
@@ -892,13 +897,13 @@ Mature model filter: `Growth_Period IN ('SAYP', 'PYP', 'DYP')`.
 
 {markdown_table(keys.head(40), max_text=180)}
 
-Full key inventory: `data/key_constraints.csv`.
+Full key inventory: `../../data/phase-1-inventory/key_constraints.csv`.
 
 ## Foreign keys
 
 {markdown_table(fks.head(40), max_text=180)}
 
-Full foreign-key inventory: `data/foreign_keys.csv`.
+Full foreign-key inventory: `../../data/phase-1-inventory/foreign_keys.csv`.
 
 ## Date ranges
 
@@ -906,20 +911,20 @@ Core date coverage:
 
 {markdown_table(dates.filter(pl.col("table_name").is_in(["OILPALM", "tbl_HRR_harvests", "tbl_PD_surveys", "tbl_CW_weatherAndWater", "tbl_FN_soilAnalysis", "tbl_BBC_bunchCounts", "tbl_CLA_auditResults"])).sort("table_name", "column_name"))}
 
-Full date-range inventory: `data/date_ranges.csv`.
+Full date-range inventory: `../../data/phase-1-inventory/date_ranges.csv`.
 
 ## Artifacts
 
 | File | Contents |
 |---|---|
-| `data/schema_tables.csv` | All tables, row counts, column counts |
-| `data/schema_columns.csv` | All columns and data types |
-| `data/key_constraints.csv` | Primary/unique keys |
-| `data/foreign_keys.csv` | Foreign keys |
-| `data/key_uniqueness.csv` | Candidate business-key duplicate checks |
-| `data/date_ranges.csv` | Min/max date per date-like column |
-| `data/join_coverage.csv` | Candidate join coverage |
-| `data/oilpalm_dictionary.csv` | OILPALM data dictionary |
+| `../../data/phase-1-inventory/schema_tables.csv` | All tables, row counts, column counts |
+| `../../data/phase-1-inventory/schema_columns.csv` | All columns and data types |
+| `../../data/phase-1-inventory/key_constraints.csv` | Primary/unique keys |
+| `../../data/phase-1-inventory/foreign_keys.csv` | Foreign keys |
+| `../../data/phase-1-inventory/key_uniqueness.csv` | Candidate business-key duplicate checks |
+| `../../data/phase-1-inventory/date_ranges.csv` | Min/max date per date-like column |
+| `../../data/phase-1-inventory/join_coverage.csv` | Candidate join coverage |
+| `../../data/phase-1-inventory/oilpalm_dictionary.csv` | OILPALM data dictionary |
 | `data_dictionary.md` | Readable OILPALM dictionary |
 | `erd.md` | Core ERD and join map |
 """
@@ -950,7 +955,7 @@ starting point for Phase 3 feature decisions; it is not the final feature list.
 
 {markdown_table(dictionary, ["ordinal", "column_name", "data_type", "is_nullable", "null_count", "null_pct", "distinct_count", "category", "unit", "description", "preliminary_role", "available_at", "notes"], max_text=180)}
 
-Full CSV: `data/oilpalm_dictionary.csv`.
+Full CSV: `../../data/phase-1-inventory/oilpalm_dictionary.csv`.
 """
     dictionary_path = phase_dir / "data_dictionary.md"
     dictionary_path.write_text(dictionary_md)

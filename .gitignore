@@ -15,7 +15,7 @@ build/
 data/raw/
 data/interim/
 data/processed/
-data/*.json
+data/db-json-exports/*.json
 models/*
 !models/.gitkeep
 mlruns/

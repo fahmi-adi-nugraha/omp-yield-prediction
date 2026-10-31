@@ -229,4 +229,4 @@ starting point for Phase 3 feature decisions; it is not the final feature list.
 | 206 | seedlingAgeAtPlanting | int | YES | 2909 | 100.0 | 0 | Planting | mt | Seedling age in months at planting | context | pre_season |  |
 | 207 | maturityAge_mt | int | YES | 0 | 0.0 | 1 |  |  |  | empty_or_constant | pre_season |  |
 
-Full CSV: `data/oilpalm_dictionary.csv`.
+Full CSV: `../../data/phase-1-inventory/oilpalm_dictionary.csv`.

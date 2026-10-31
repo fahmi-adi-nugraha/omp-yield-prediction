@@ -88,7 +88,7 @@ matching source record.
 | dbo | OILPALM | 2909 | 207 |
 | dbo | tbl_areasPalmsBIY_blk_mts | 2909 | 220 |
 
-Full table inventory: `data/schema_tables.csv`.
+Full table inventory: `../../data/phase-1-inventory/schema_tables.csv`.
 
 ## Growth periods
 
@@ -161,7 +161,7 @@ Mature model filter: `Growth_Period IN ('SAYP', 'PYP', 'DYP')`.
 | dbo | tbl_CLA_sys_lossThresholds | tbl_CLA_sys_lossThresholds$PrimaryKey | PRIMARY_KEY_CONSTRAINT | Year |
 | dbo | tbl_CW_weatherAndWater | tbl_CW_weatherAndWater$PrimaryKey | PRIMARY_KEY_CONSTRAINT | R_Name, R_UNIT, R_YEAR |
 
-Full key inventory: `data/key_constraints.csv`.
+Full key inventory: `../../data/phase-1-inventory/key_constraints.csv`.
 
 ## Foreign keys
 
@@ -208,7 +208,7 @@ Full key inventory: `data/key_constraints.csv`.
 | tbl_FP_inorgFertPrices$tbl_scenariostbl_fertPrices | dbo | tbl_FP_inorgFertPrices | dbo | tbl_FP_scenarios | scen_ID | scen_ID |
 | tbl_FP_inorgFertRecManEdits$tbl_fertPricestbl_FP_inorgFertRecManEdits | dbo | tbl_FP_inorgFertRecManEdits | dbo | tbl_FP_inorgFertPrices | scen_ID, fertName | scen_ID, fert_name |
 
-Full foreign-key inventory: `data/foreign_keys.csv`.
+Full foreign-key inventory: `../../data/phase-1-inventory/foreign_keys.csv`.
 
 ## Date ranges
 
@@ -232,19 +232,19 @@ Core date coverage:
 | dbo | tbl_PD_surveys | D_Survey | 8132 | 2019-01-05 00:00:00 | 2025-08-15 00:00:00 |
 | dbo | tbl_PD_surveys | EntryDate | 8132 | 2014-08-18 00:00:00 | 2018-08-19 13:56:15 |
 
-Full date-range inventory: `data/date_ranges.csv`.
+Full date-range inventory: `../../data/phase-1-inventory/date_ranges.csv`.
 
 ## Artifacts
 
 | File | Contents |
 |---|---|
-| `data/schema_tables.csv` | All tables, row counts, column counts |
-| `data/schema_columns.csv` | All columns and data types |
-| `data/key_constraints.csv` | Primary/unique keys |
-| `data/foreign_keys.csv` | Foreign keys |
-| `data/key_uniqueness.csv` | Candidate business-key duplicate checks |
-| `data/date_ranges.csv` | Min/max date per date-like column |
-| `data/join_coverage.csv` | Candidate join coverage |
-| `data/oilpalm_dictionary.csv` | OILPALM data dictionary |
+| `../../data/phase-1-inventory/schema_tables.csv` | All tables, row counts, column counts |
+| `../../data/phase-1-inventory/schema_columns.csv` | All columns and data types |
+| `../../data/phase-1-inventory/key_constraints.csv` | Primary/unique keys |
+| `../../data/phase-1-inventory/foreign_keys.csv` | Foreign keys |
+| `../../data/phase-1-inventory/key_uniqueness.csv` | Candidate business-key duplicate checks |
+| `../../data/phase-1-inventory/date_ranges.csv` | Min/max date per date-like column |
+| `../../data/phase-1-inventory/join_coverage.csv` | Candidate join coverage |
+| `../../data/phase-1-inventory/oilpalm_dictionary.csv` | OILPALM data dictionary |
 | `data_dictionary.md` | Readable OILPALM dictionary |
 | `erd.md` | Core ERD and join map |

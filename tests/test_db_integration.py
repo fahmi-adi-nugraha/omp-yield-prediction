@@ -21,6 +21,7 @@ from omp_yield.inventory import (
     key_uniqueness,
     oilpalm_dictionary,
     table_inventory,
+    write_inventory_reports,
 )
 
 pytestmark = pytest.mark.skipif(
@@ -67,6 +68,21 @@ def test_inventory_keys_and_coverage() -> None:
     nutrition = coverage.filter(coverage["source_table"] == "tbl_FN_nutActRec").row(0, named=True)
     assert nutrition["matched_source_pct"] == 100.0
     assert nutrition["matched_oil_rows"] == 2909
+
+
+def test_inventory_writes_csvs_to_data_directory() -> None:
+    with TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        artifacts = write_inventory_reports(
+            Database(),
+            root / "docs",
+            root / "data",
+            root / "reports",
+        )
+        assert (root / "data" / "phase-1-inventory" / "schema_tables.csv").is_file()
+        assert (root / "data" / "phase-1-inventory" / "oilpalm_dictionary.csv").is_file()
+        assert (root / "docs" / "phase-1-inventory" / "db_inventory.md").is_file()
+        assert artifacts["schema_tables.csv"].parent == root / "data" / "phase-1-inventory"
 
 
 def test_oilpalm_dictionary_has_target_and_leakage_notes() -> None:

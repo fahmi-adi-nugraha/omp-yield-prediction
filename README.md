@@ -1,52 +1,203 @@
 # OMP Yield Prediction
 
-Data cleaning, feature engineering, model training, forecasting, and ONNX export
-for OMP oil palm yield prediction.
+A repeatable data science pipeline for OMP oil palm yield prediction and
+multi-year yield forecasting. The project covers database access, immutable raw
+extraction, data cleaning, feature engineering, model training and validation,
+what-if analysis, and ONNX export.
 
-**Current phase:** Phase 2 complete — raw extraction snapshot and manifest
-verified. Next: Phase 3 — cleaning, profiling, leakage audit, and feature
-decisions.
+The Python pipeline produces the model artifacts. A separate Go REST API loads
+the exported ONNX models for inference.
 
-Documentation index: `docs/README.md`.
+## What this project builds
 
-## Phase status
+The project develops two machine learning models:
 
-| Phase | Status |
+1. **Crop yield prediction model**
+   - Predicts block-year fresh fruit bunch yield, `Y_TOTAL_ton`, in metric tons.
+   - Trained on mature blocks: `Growth_Period IN ('SAYP', 'PYP', 'DYP')`.
+   - Supports two information cutoffs:
+     - `pre_season` — prior-year data only
+     - `mid_season` — current-year data only up to a configurable cutoff
+   - Supports what-if analysis over **management levers only**, such as nutrient
+     application rates, pruning, harvester access, harvest interval, and
+     pest/disease control. Weather, soil, age, stand, leaf analysis, pest
+     pressure, and prior yield are read-only context features.
+
+2. **Crop yield forecasting model**
+   - Produces estate-level multi-year forecasts, with division/block detail.
+   - Default horizon: 3 years. A 5-year horizon is an experimental extension.
+   - Uses a hierarchical approach: train on the mature block panel, aggregate
+     through `UNIT` to `NAME`, and report estate totals.
+   - Supports scenario-based forecasts driven by management levers and weather
+     assumptions, plus an unconditional baseline.
+   - Reports prediction intervals and widening uncertainty at longer horizons.
+
+## Training data
+
+The source is the company demo SQL Server database `omp_as_demo` in the
+`omp-as-demo-db` container. The pipeline connects through the least-privilege
+account `omp_ds_readonly`.
+
+The main table is `OILPALM`, a block-year panel containing:
+
+- Estate, division, block, and year keys
+- Static site and planting attributes
+- Palm stand and growth-period context
+- Leaf and soil analysis
+- Annual yield and harvest-derived columns
+- Weather-station linkage
+
+Supporting tables provide nutrient applications and recommendations, harvest
+events, pest and disease surveys, weather and water balance, palm census and
+stand projections, soil analysis, bunch counts, crop budgets, and planting
+records.
+
+Current data scope:
+
+| Item | Value |
 |---|---|
-| Phase -1 — agent/CLI/MCP harness | Complete |
-| Phase 0 — read-only database access | Complete |
-| Phase 1 — database inventory and data dictionary | Complete |
-| Phase 2 — raw extraction and immutable snapshots | Complete |
-| Phase 3 — cleaning, profiling, and leakage audit | Next |
+| Usable years | 2019–2025 |
+| 2026 rows | 1 placeholder row, excluded from modeling |
+| Blocks | 553 unique block codes |
+| Divisions | 9 |
+| Estates | 1 in the demo |
+| Raw snapshot | `data/raw/20261030T000000Z` |
+| Snapshot contents | 28 tables, 140,004 rows |
+| Snapshot provenance | Manifest, per-table SHA256, and `manifest.sha256` |
 
-## Quickstart
+`data/raw/` is gitignored. Phase 2 snapshots are immutable local inputs with
+row-count and checksum verification. See
+`docs/phase-2-extraction/README.md` and `reports/02_extract_report.md`.
+
+Data directory layout:
+
+```text
+data/
+  db-json-exports/     # legacy JSON exports; gitignored
+  phase-1-inventory/   # generated inventory CSVs
+  raw/                 # immutable extraction snapshots; gitignored
+  interim/             # cleaned/intermediate data; gitignored
+  processed/           # modeling tables; gitignored
+```
+
+## Data cleaning and feature preparation
+
+The planned and partially implemented pipeline uses:
+
+### Cleaning
+
+- Key, type, date, category, and blank-value normalization
+- Exact and business-key duplicate checks
+- Missingness analysis by year and division
+- Constant/near-constant column removal
+- Outlier detection with domain bounds, not automatic deletion
+- Consistency checks across monthly/annual yield, area, stand, tree age, and
+  harvest tables
+- Mature-block filtering and exclusion of the 2026 placeholder
+- Explicit flagging of known anomalies such as `204D` 2025 and `124H`
+
+### Leakage control
+
+All current-year target-derived `Y_*` columns are excluded from features,
+including `Y_TH`, `Y_KGB`, monthly yield totals, `Y_TH_GAP`,
+`Y_GAP_PERCENT`, and `Y_per_manday`. Ambiguous fields such as `Y_TH_POT` and
+`MarkerYield` require explicit approval.
+
+Every feature carries an `available_at` value (`pre_season`, `mid_season`, or
+`post_season`) and is validated against the selected cutoff.
+
+### Feature selection
+
+- Remove identifiers, constants, and target leakage
+- Univariate association, mutual information, VIF, permutation importance, and
+  group ablation
+- Preserve management levers even when their marginal predictive importance is
+  low, because they are the what-if controls
+
+### Feature engineering
+
+Planned transformations include:
+
+- Lagged and rolling yield, harvest, weather, nutrient, and pest features
+- Weather anomalies, dry-month counts, water deficit, and seasonal rainfall
+- Nutrient application rates, balances, and recommendation gaps
+- Stand, mature fraction, tree age, and growth-period features
+- Leaf and soil nutrient ratios
+- Harvest interval, rounds, losses, and bunch-weight history
+- Estate/division aggregates built only from prior or cutoff-safe data
+
+Phase 1 inventory and Phase 2 extraction are complete. Phase 3 cleaning and
+feature decisions are next; Phase 4 builds the final modeling table and
+transforms.
+
+## Proposed models and training
+
+### Yield prediction
+
+- Primary candidate: `HistGradientBoostingRegressor`
+- Baselines: Ridge/ElasticNet
+- Benchmark: Random Forest / ExtraTrees
+- Optional challenger: LightGBM if cross-validated gain justifies the dependency
+- Separate models for `pre_season` and `mid_season`
+- Time-aware validation, grouped by block, with a chronological holdout
+- Random search over learning rate, tree complexity, leaf size, regularization,
+  and iteration count
+- Metrics: RMSE, MAE, MAPE/sMAPE, R², bias, and error by year/division/age band
+
+### Forecasting
+
+- Hierarchical block-panel model aggregated to estate level
+- Direct multi-horizon models rather than recursive one-step forecasting
+- Scenario-conditional and unconditional variants
+- Rolling-origin backtests and estate-level error reporting
+- Metrics: RMSE, MAE, MAPE, MASE, bias, and prediction-interval coverage
+- Baselines: last-year yield, 3-year average, linear trend, and company budget
+
+Training runs log parameters, metrics, artifacts, and errors per iteration.
+MLflow is optional and local only; runs fall back to local JSONL/Parquet files.
+The test set is reserved for final evaluation, not iteration.
+
+## Deployment
+
+The Python pipeline exports:
+
+- `model.onnx`
+- `feature_schema.json`
+- `target_schema.json` / `scenario_schema.json`
+- `metrics.json`
+- `model_card.md`
+- ONNX-vs-scikit-learn parity results
+
+The ONNX models are loaded by a separate **Go REST API** inference endpoint.
+For now the endpoint runs locally. The deployment path is:
+
+```text
+Python training pipeline
+        -> ONNX artifact
+        -> Go REST API
+        -> local inference
+        -> future Docker image / cloud deployment
+```
+
+This repository owns the Python pipeline and ONNX artifacts, not the Go serving
+layer.
+
+## Setup
+
+Requirements:
+
+- Python 3.12
+- `uv`
+- Access to the `omp-as-demo-db` container and `omp_as_demo`
+- The read-only credentials in `~/.config/omp-yield/env`
+
+Install dependencies:
 
 ```bash
 uv sync
-uv run omp-yield --version
-uv run omp-yield db ping
-uv run omp-yield db tables
-uv run omp-yield db schema --table OILPALM
-uv run omp-yield db query "SELECT TOP 5 NAME, UNIT, BLOCK, YEAR, Y_TOTAL_ton FROM OILPALM"
-uv run omp-yield inventory
-uv run omp-yield extract --snapshot-id 20261030T000000Z --force
-uv run omp-yield verify-snapshot data/raw/20261030T000000Z
 ```
 
-Generate the interactive inventory notebook:
-
-```bash
-uv run --with marimo marimo export html notebooks/01_db_inventory.py -o reports/01_db_inventory.html
-```
-
-Credential resolution order:
-
-1. `OMP_ENV_FILE`
-2. project `.env`
-3. `~/.config/omp-yield/env`
-4. `docker-build/.env` (local demo fallback only)
-
-Recommended local setup:
+Recommended credential location:
 
 ```bash
 mkdir -p ~/.config/omp-yield
@@ -55,159 +206,91 @@ chmod 600 ~/.config/omp-yield/env
 # edit ~/.config/omp-yield/env with the omp_ds_readonly credentials
 ```
 
-Keep the password file outside the Syncthing-synced project tree where possible.
+The CLI resolves credentials in this order:
 
-## Agent setup
+1. `OMP_ENV_FILE`
+2. project `.env`
+3. `~/.config/omp-yield/env`
+4. `docker-build/.env` (local demo fallback only)
 
-- `.opencode/agents/data-science.md` — primary data-science build agent.
-- `.opencode/agents/ds-reviewer.md` — read-only review subagent.
-- `.opencode/skills/omp-db-access/SKILL.md` — schema map, joins, safety.
-- `.opencode/skills/omp-data-profiling/SKILL.md` — cleaning/leakage/lever audit.
-- `opencode.jsonc` — default agent and the `omp-yield` MCP server.
+Verify access:
 
-The DS agent is primary because this project involves long, iterative sessions
-with approval gates. The reviewer subagent is used for independent leakage,
-validation, metric, and ONNX audits.
-
-## Database access
-
-Phase 0 created the least-privilege account `omp_ds_readonly` on
-`omp_as_demo`:
-
-- `db_datareader`
-- `VIEW DEFINITION`
-- no `sysadmin`, `db_owner`, `db_datawriter`, DDL, or `EXECUTE`
-
-The pipeline does not use `sa`. `sa` is only for local DB bootstrap.
-
-## MCP tools
-
-The local server exposes:
-
-- `db_ping` — connectivity and `OILPALM` row count.
-- `db_tables` — user tables.
-- `db_schema` — column metadata, optionally by table.
-- `db_query` — one read-only `SELECT`/`WITH` query with a row limit.
-
-Tools are thin wrappers around `src/omp_yield/db.py`; the CLI is the source of
-truth.
-
-## Project structure
-
-```text
-src/omp_yield/
-  config.py      # env settings and connection URL
-  db.py          # read-only ConnectorX/Polars client
-  sql.py         # read-only SQL guard
-  cli.py         # omp-yield CLI
-  inventory.py   # Phase 1 inventory and dictionary generator
-  extract.py     # Phase 2 immutable snapshot extractor
-  mcp_server.py  # local MCP wrapper
-tests/
-  test_sql.py
-  test_config.py
-  test_cli.py
-  test_inventory_helpers.py
-  test_extract.py
-  test_mcp_contract.py
-  test_db_integration.py
-notebooks/
-  01_db_inventory.py
-docs/
-  README.md
-  phase-minus-1-harness/
-    README.md
-  phase-0-access/
-    README.md
-    create_readonly_user.sql
-  phase-1-inventory/
-    README.md
-    db_inventory.md
-    data_dictionary.md
-    erd.md
-    data/
-      schema_tables.csv
-      schema_columns.csv
-      key_constraints.csv
-      foreign_keys.csv
-      key_uniqueness.csv
-      date_ranges.csv
-      join_coverage.csv
-      oilpalm_dictionary.csv
-  phase-2-extraction/
-    README.md
-reports/
-  00_access.md
-  01_db_inventory.html
-  02_extract_report.md
-config/
-  extraction.yaml
-.opencode/
-  agents/
-  skills/
+```bash
+uv run omp-yield db ping
 ```
 
-## Phase -1 acceptance
+## Running the Marimo notebooks
 
-- `uv run omp-yield db ping` returns the database identity and `OILPALM`
-  row count.
-- `uv run omp-yield db schema --table OILPALM` returns column metadata.
-- `uv run omp-yield db query ...` enforces read-only SQL and row limits.
-- The MCP server starts and exposes the same read-only tools.
-- Tests pass.
+Interactive notebook:
 
-See `docs/phase-minus-1-harness/README.md` for the completed harness,
-verification output, and known limitations.
+```bash
+uv run --with marimo marimo edit notebooks/01_db_inventory.py
+```
 
-## Phase 0 acceptance
+Export the inventory notebook to HTML:
 
-- `omp_ds_readonly` created with `db_datareader` and `VIEW DEFINITION`.
-- `db ping` reports login `omp_ds_readonly` and 2,909 `OILPALM` rows.
-- 274 tables and 207 `OILPALM` columns are visible.
-- Write attempts are rejected.
-- Integration tests pass against the read-only account.
-- Credentials live in `~/.config/omp-yield/env` (mode `600`), outside the
-  project tree.
+```bash
+uv run --with marimo marimo export html \
+  notebooks/01_db_inventory.py \
+  -o reports/01_db_inventory.html
+```
 
-See `reports/00_access.md` for the access report and
-`docs/phase-0-access/create_readonly_user.sql` for the idempotent bootstrap script.
+For later modeling notebooks, install the optional data-science extras:
 
-## Phase 1 acceptance
+```bash
+uv sync --extra ds
+```
 
-- 274 tables, 4,458 visible columns, 266 key constraints, and 137 foreign keys
-  inventoried.
-- 177 date-like columns have min/max coverage recorded.
-- Candidate business keys checked for duplicates.
-- Join coverage measured against `OILPALM`.
-- Growth-period definitions and the estate/division hierarchy captured.
-- OILPALM data dictionary generated with descriptions, null counts, and
-  preliminary leakage/timing notes.
-- Interactive Marimo inventory exported to `reports/01_db_inventory.html`.
+## CLI
 
-See `docs/phase-1-inventory/README.md`,
-`docs/phase-1-inventory/db_inventory.md`, and
-`docs/phase-1-inventory/data_dictionary.md` / `docs/phase-1-inventory/erd.md`.
+Common user-facing commands:
 
-## Phase 2 acceptance
+```bash
+# Database checks
+uv run omp-yield db ping
+uv run omp-yield db tables
+uv run omp-yield db schema --table OILPALM
+uv run omp-yield db query "SELECT TOP 5 NAME, UNIT, BLOCK, YEAR, Y_TOTAL_ton FROM OILPALM"
 
-- 28 tables extracted to `data/raw/20261030T000000Z/`.
-- 140,004 rows and 4,591,906 Parquet bytes.
-- Every table was read with an explicit column list; no `SELECT *`.
-- All table row counts matched `COUNT_BIG(*)`.
-- Every Parquet file has a SHA256 checksum in `manifest.json`.
-- `manifest.sha256` matches the manifest contents.
-- Re-extraction with the same snapshot ID produced identical Parquet hashes.
-- `uv run omp-yield verify-snapshot data/raw/20261030T000000Z` reports
-  `overall: ok`.
+# Generate the database inventory and data dictionary
+uv run omp-yield inventory
 
-See `reports/02_extract_report.md` and
-`docs/phase-2-extraction/README.md`.
+# Extract an immutable raw snapshot
+uv run omp-yield extract \
+  --snapshot-id 20261030T000000Z \
+  --force \
+  --report reports/02_extract_report.md
 
-## Next phase
+# Re-verify a snapshot's manifest, checksums, row counts, and columns
+uv run omp-yield verify-snapshot data/raw/20261030T000000Z
 
-Phase 3 — cleaning, profiling, leakage audit, and feature decisions:
+# Show non-secret configuration
+uv run omp-yield info
+```
 
-1. Profile the raw snapshot for duplicates, missingness, and outliers.
-2. Audit target leakage and feature availability at both cutoffs.
-3. Produce the feature-decision report and `config/features.yaml`.
-4. Obtain approval before feature engineering.
+The extraction table list is in `config/extraction.yaml`. Snapshots are written
+under `data/raw/<snapshot_id>/` and are intentionally gitignored.
+
+## Documentation
+
+Start here:
+
+- `docs/README.md` — phase-based documentation index
+- `docs/phase-minus-1-harness/README.md` — agent/CLI/MCP harness
+- `docs/phase-0-access/README.md` — read-only database access
+- `docs/phase-1-inventory/README.md` — database inventory summary
+- `docs/phase-1-inventory/db_inventory.md` — table, join, and hierarchy report
+- `docs/phase-1-inventory/data_dictionary.md` — OILPALM data dictionary
+- `docs/phase-1-inventory/erd.md` — core ERD and join map
+- `docs/phase-2-extraction/README.md` — raw snapshot summary
+- `reports/00_access.md` — Phase 0 access report
+- `reports/01_db_inventory.html` — interactive inventory notebook
+- `reports/02_extract_report.md` — Phase 2 extraction and verification report
+
+## Current status
+
+- Phase -1 — agent/CLI/MCP harness: complete
+- Phase 0 — read-only database access: complete
+- Phase 1 — database inventory and data dictionary: complete
+- Phase 2 — raw extraction and immutable snapshots: complete
+- Phase 3 — cleaning, profiling, leakage audit, and feature decisions: next

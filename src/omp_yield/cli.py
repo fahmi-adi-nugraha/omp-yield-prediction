@@ -249,6 +249,10 @@ def inventory(
         Path,
         typer.Option("--docs-dir", help="Root directory for generated documentation."),
     ] = Path("docs"),
+    data_dir: Annotated[
+        Path,
+        typer.Option("--data-dir", help="Root directory for generated data artifacts."),
+    ] = Path("data"),
     reports_dir: Annotated[
         Path,
         typer.Option("--reports-dir", help="Directory for generated report artifacts."),
@@ -257,7 +261,12 @@ def inventory(
     """Generate the Phase 1 database inventory and data dictionary."""
 
     try:
-        artifacts = write_inventory_reports(Database(Settings()), docs_dir, reports_dir)
+        artifacts = write_inventory_reports(
+            Database(Settings()),
+            docs_dir,
+            data_dir,
+            reports_dir,
+        )
     except (OmpDatabaseError, UnsafeQueryError, ValueError) as exc:
         _handle_error(exc)
         return

@@ -189,14 +189,14 @@ def _(mo):
         - `docs/phase-1-inventory/db_inventory.md` — inventory report
         - `docs/phase-1-inventory/data_dictionary.md` — readable OILPALM dictionary
         - `docs/phase-1-inventory/erd.md` — core ERD and join map
-        - `docs/phase-1-inventory/data/schema_tables.csv` — all tables
-        - `docs/phase-1-inventory/data/schema_columns.csv` — all columns
-        - `docs/phase-1-inventory/data/key_constraints.csv` — primary/unique keys
-        - `docs/phase-1-inventory/data/foreign_keys.csv` — foreign keys
-        - `docs/phase-1-inventory/data/key_uniqueness.csv` — candidate-key duplicate checks
-        - `docs/phase-1-inventory/data/date_ranges.csv` — date coverage
-        - `docs/phase-1-inventory/data/join_coverage.csv` — join coverage
-        - `docs/phase-1-inventory/data/oilpalm_dictionary.csv` — dictionary CSV
+        - `data/phase-1-inventory/schema_tables.csv` — all tables
+        - `data/phase-1-inventory/schema_columns.csv` — all columns
+        - `data/phase-1-inventory/key_constraints.csv` — primary/unique keys
+        - `data/phase-1-inventory/foreign_keys.csv` — foreign keys
+        - `data/phase-1-inventory/key_uniqueness.csv` — candidate-key duplicate checks
+        - `data/phase-1-inventory/date_ranges.csv` — date coverage
+        - `data/phase-1-inventory/join_coverage.csv` — join coverage
+        - `data/phase-1-inventory/oilpalm_dictionary.csv` — dictionary CSV
         """
     )
     return

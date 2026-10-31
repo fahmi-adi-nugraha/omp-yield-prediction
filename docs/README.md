@@ -24,18 +24,20 @@ OMP yield pipeline.
 
 ## Phase 1
 
+Phase 1 CSV artifacts live under `data/phase-1-inventory/`.
+
 - `phase-1-inventory/README.md` — phase summary and key findings
 - `phase-1-inventory/db_inventory.md` — detailed table/join inventory
 - `phase-1-inventory/data_dictionary.md` — readable OILPALM dictionary
 - `phase-1-inventory/erd.md` — core ERD and join map
-- `phase-1-inventory/data/schema_tables.csv`
-- `phase-1-inventory/data/schema_columns.csv`
-- `phase-1-inventory/data/key_constraints.csv`
-- `phase-1-inventory/data/foreign_keys.csv`
-- `phase-1-inventory/data/key_uniqueness.csv`
-- `phase-1-inventory/data/date_ranges.csv`
-- `phase-1-inventory/data/join_coverage.csv`
-- `phase-1-inventory/data/oilpalm_dictionary.csv`
+- `../data/phase-1-inventory/schema_tables.csv`
+- `../data/phase-1-inventory/schema_columns.csv`
+- `../data/phase-1-inventory/key_constraints.csv`
+- `../data/phase-1-inventory/foreign_keys.csv`
+- `../data/phase-1-inventory/key_uniqueness.csv`
+- `../data/phase-1-inventory/date_ranges.csv`
+- `../data/phase-1-inventory/join_coverage.csv`
+- `../data/phase-1-inventory/oilpalm_dictionary.csv`
 - `../reports/01_db_inventory.html` — exported Marimo inventory notebook
 
 ## Phase 2

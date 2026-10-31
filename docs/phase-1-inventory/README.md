@@ -4,19 +4,22 @@ Status: **complete**
 
 ## Generated artifacts
 
+Phase 1 data artifacts live under `data/phase-1-inventory/`; this directory
+contains only the documentation.
+
 | Artifact | Purpose |
 |---|---|
 | `db_inventory.md` | Main inventory report |
 | `data_dictionary.md` | Readable OILPALM data dictionary |
 | `erd.md` | Core ERD and join map |
-| `data/schema_tables.csv` | All tables, row counts, column counts |
-| `data/schema_columns.csv` | All visible columns and types |
-| `data/key_constraints.csv` | Primary and unique keys |
-| `data/foreign_keys.csv` | Foreign keys |
-| `data/key_uniqueness.csv` | Candidate business-key duplicate checks |
-| `data/date_ranges.csv` | Min/max coverage per date-like column |
-| `data/join_coverage.csv` | Candidate table coverage against OILPALM |
-| `data/oilpalm_dictionary.csv` | OILPALM dictionary as CSV |
+| `../../data/phase-1-inventory/schema_tables.csv` | All tables, row counts, column counts |
+| `../../data/phase-1-inventory/schema_columns.csv` | All visible columns and types |
+| `../../data/phase-1-inventory/key_constraints.csv` | Primary and unique keys |
+| `../../data/phase-1-inventory/foreign_keys.csv` | Foreign keys |
+| `../../data/phase-1-inventory/key_uniqueness.csv` | Candidate business-key duplicate checks |
+| `../../data/phase-1-inventory/date_ranges.csv` | Min/max coverage per date-like column |
+| `../../data/phase-1-inventory/join_coverage.csv` | Candidate table coverage against OILPALM |
+| `../../data/phase-1-inventory/oilpalm_dictionary.csv` | OILPALM dictionary as CSV |
 | `../../reports/01_db_inventory.html` | Exported Marimo inventory notebook |
 
 ## Key findings
