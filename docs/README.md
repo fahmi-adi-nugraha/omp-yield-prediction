@@ -3,6 +3,8 @@
 Phase documentation, generated inventories, and reproducible setup notes for the
 OMP yield pipeline.
 
+Implementation roadmap: `../plan/README.md`.
+
 ## Phase directories
 
 | Directory | Contents |
@@ -11,6 +13,7 @@ OMP yield pipeline.
 | `phase-0-access/` | Read-only account summary and bootstrap SQL |
 | `phase-1-inventory/` | Database inventory, data dictionary, ERD, and CSV artifacts |
 | `phase-2-extraction/` | Raw extraction snapshot summary and reproducibility notes |
+| `phase-3-cleaning/` | Cleaning, leakage, feature decisions, and interim data summary |
 
 ## Phase -1
 
@@ -46,13 +49,25 @@ Phase 1 CSV artifacts live under `data/phase-1-inventory/`.
 - `../reports/02_extract_report.md` — full extraction report
 - `config/extraction.yaml` — extraction table configuration
 
+## Phase 3
+
+Phase 3 data artifacts live under `data/phase-3-cleaning/`; interim Parquet
+files live under `data/interim/phase-3/`.
+
+- `phase-3-cleaning/README.md` — cleaning summary and approval checklist
+- `phase-3-cleaning/cleaning_report.md` — detailed cleaning/leakage report
+- `../config/features.yaml` — approved feature decisions
+- `../config/management_levers.yaml` — approved management levers
+- `../reports/03_cleaning_report.html` — interactive Marimo cleaning notebook
+
 ## Current status
 
 - Phase -1 — complete
 - Phase 0 — complete
 - Phase 1 — complete
 - Phase 2 — complete
-- Phase 3 — next: cleaning, profiling, leakage audit, and feature decisions
+- Phase 3 — approved
+- Phase 4 — next
 
 ## Credential files
 

@@ -1,0 +1,5 @@
+feature_a,feature_b,pearson_r
+LA_N,LA_PCRIT,0.9999999999999997
+LA_leaf_ProdRate,LA_Leaf_Prod,0.999999999999999
+area_ha,LA_LSU,0.9989542485483466
+palmStand_p_ha,TC_DENS,0.9631609175477517

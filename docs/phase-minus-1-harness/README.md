@@ -112,13 +112,14 @@ $ opencode mcp list
 
 ## Next
 
-Phase 0, Phase 1, and Phase 2 are complete. See `../../reports/00_access.md`,
-`../phase-1-inventory/README.md`, `../phase-2-extraction/README.md`, and
-`../../reports/02_extract_report.md`.
+Phase 0, Phase 1, Phase 2, and Phase 3 are complete. See
+`../../reports/00_access.md`, `../phase-1-inventory/README.md`,
+`../phase-2-extraction/README.md`, `../phase-3-cleaning/README.md`, and
+`../../reports/03_cleaning_report.html`.
 
-Phase 3:
+Phase 4:
 
-1. Profile the raw snapshot for duplicates, missingness, and outliers.
-2. Audit target leakage and candidate feature availability.
-3. Produce the feature-decision report and `config/features.yaml`.
-4. Obtain approval before feature engineering.
+1. Use the approved `config/features.yaml` and `config/management_levers.yaml`.
+2. Build cutoff-safe derived features and the final modeling table.
+3. Run feature regression tests and leakage checks.
+4. Proceed to time-aware model training and validation.

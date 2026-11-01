@@ -12,6 +12,7 @@ from rich.console import Console
 from rich.table import Table
 
 from omp_yield import __version__
+from omp_yield.cleaning import latest_snapshot, write_cleaning_reports
 from omp_yield.config import Settings
 from omp_yield.db import Database, OmpDatabaseError
 from omp_yield.extract import (
@@ -241,6 +242,60 @@ def verify_snapshot_command(
     )
     if not result["all_ok"]:
         raise typer.Exit(code=1)
+
+
+@app.command("clean")
+def clean(
+    snapshot: Annotated[
+        Path | None,
+        typer.Option("--snapshot", help="Phase 2 snapshot directory. Defaults to latest."),
+    ] = None,
+    docs_dir: Annotated[
+        Path,
+        typer.Option("--docs-dir", help="Root directory for generated documentation."),
+    ] = Path("docs"),
+    data_dir: Annotated[
+        Path,
+        typer.Option("--data-dir", help="Root directory for generated data artifacts."),
+    ] = Path("data"),
+    config_dir: Annotated[
+        Path,
+        typer.Option("--config-dir", help="Directory for draft feature/lever configs."),
+    ] = Path("config"),
+    reports_dir: Annotated[
+        Path,
+        typer.Option("--reports-dir", help="Directory for generated report artifacts."),
+    ] = Path("reports"),
+    overwrite_config: Annotated[
+        bool,
+        typer.Option(
+            "--overwrite-config",
+            help="Replace existing edited feature/lever configs instead of writing *.generated.yaml.",
+        ),
+    ] = False,
+) -> None:
+    """Run Phase 3 cleaning, leakage audit, and feature decisions."""
+
+    try:
+        snapshot_dir = snapshot or latest_snapshot(Path("data/raw"))
+        artifacts = write_cleaning_reports(
+            snapshot_dir,
+            docs_dir=docs_dir,
+            data_dir=data_dir,
+            config_dir=config_dir,
+            reports_dir=reports_dir,
+            overwrite_config=overwrite_config,
+        )
+    except (FileNotFoundError, RuntimeError, ValueError) as exc:
+        _handle_error(exc)
+        return
+
+    table = Table(show_header=True, header_style="bold")
+    table.add_column("artifact")
+    table.add_column("path")
+    for name, path in artifacts.items():
+        table.add_row(name, str(path))
+    console.print(table)
 
 
 @app.command("inventory")

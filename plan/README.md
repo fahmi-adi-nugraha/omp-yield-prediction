@@ -28,8 +28,8 @@ As of 2026-11-01:
 | Phase 0 — Read-only database access | Complete | `phase-00-access.md` |
 | Phase 1 — Database inventory and data dictionary | Complete | `phase-01-inventory.md` |
 | Phase 2 — Raw extraction and immutable snapshots | Complete | `phase-02-extraction.md` |
-| Phase 3 — Cleaning, leakage audit, feature decisions | Draft — awaiting approval | `phase-03-cleaning.md` |
-| Phase 4 — Feature engineering and modeling table | Next after Phase 3 approval | `phase-04-feature-engineering.md` |
+| Phase 3 — Cleaning, leakage audit, feature decisions | Approved | `phase-03-cleaning.md` |
+| Phase 4 — Feature engineering and modeling table | Next | `phase-04-feature-engineering.md` |
 | Phase 5 — Splits, contracts, evaluation protocol | Planned | `phase-05-splits-contracts.md` |
 | Phase 6 — Model selection | Planned | `phase-06-model-selection.md` |
 | Phase 7 — Hyperparameter search | Planned | `phase-07-hyperparameter-search.md` |
@@ -39,9 +39,9 @@ As of 2026-11-01:
 | Phase 11 — Packaging, reproducibility, operations | Planned | `phase-11-packaging.md` |
 | Phase 12 — Freeze, release, handover | Planned | `phase-12-freeze.md` |
 
-**Current gate:** Phase 3 has generated draft `config/features.yaml` and
-`config/management_levers.yaml`. They are not approved. Phase 4 must not start
-until the `review` decisions and levers are resolved.
+**Current gate:** Phase 3 is approved. `config/features.yaml` and
+`config/management_levers.yaml` are the approved source of truth; Phase 4 may
+start. Do not change approved features or levers without a new review.
 
 ## Project goals
 
@@ -107,7 +107,7 @@ document. The table below is the quick roadmap.
 | 0 | Minimum-privilege DB access | `omp_ds_readonly`, access report, bootstrap SQL | Complete |
 | 1 | Understand the database | inventory CSVs, data dictionary, ERD, Marimo report | Complete |
 | 2 | Immutable raw snapshot | Parquet snapshot, manifest, checksums, extraction report | Complete |
-| 3 | Cleaning and feature decisions | cleaning report, draft features/levers, interim Parquet | Draft |
+| 3 | Cleaning and feature decisions | cleaning report, approved features/levers, interim Parquet | Approved |
 | 4 | Feature engineering | transforms, derived features, modeling table | Planned |
 | 5 | Validation protocol | splits, data contracts, metrics, baselines | Planned |
 | 6 | Model selection | model comparison report and recommendation | Planned |
@@ -121,7 +121,7 @@ document. The table below is the quick roadmap.
 ## Approval gates
 
 - **Gate 1:** Phase 3 feature list (`config/features.yaml`) and management levers
-  (`config/management_levers.yaml`). All `review` decisions must be resolved.
+  (`config/management_levers.yaml`) — **passed**. No review decisions remain.
 - **Gate 2:** Phase 6 model family, target definition, and validation protocol.
 - **Gate 3:** Phase 8 final metrics and model card.
 - **Gate 4:** Phase 12 frozen release and reproducibility report.

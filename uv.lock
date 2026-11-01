@@ -1564,6 +1564,7 @@ source = { editable = "." }
 dependencies = [
     { name = "connectorx" },
     { name = "mcp" },
+    { name = "numpy" },
     { name = "polars" },
     { name = "pyarrow" },
     { name = "pydantic" },
@@ -1614,6 +1615,7 @@ requires-dist = [
     { name = "matplotlib", marker = "extra == 'ds'", specifier = ">=3.9.0" },
     { name = "mcp", specifier = ">=2.0.0,<3" },
     { name = "mlflow", marker = "extra == 'mlflow'", specifier = ">=2.19.0" },
+    { name = "numpy", specifier = ">=1.26.0" },
     { name = "numpy", marker = "extra == 'ds'", specifier = ">=1.26.0" },
     { name = "onnx", marker = "extra == 'ds'", specifier = ">=1.17.0" },
     { name = "onnxmltools", marker = "extra == 'lightgbm'", specifier = ">=1.12.0" },

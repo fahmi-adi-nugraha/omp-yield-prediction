@@ -1,12 +1,13 @@
 # Phase 3 — Cleaning, Leakage Audit, and Feature Decisions
 
-Status: **draft — awaiting approval**
+Status: **approved**
 
 ## Overview
 
 Profile the mature 2019–2025 block-year population, audit target leakage,
 identify data-quality anomalies, assess feature signal/redundancy, and produce
-draft feature and management-lever decisions for user approval.
+feature and management-lever decisions for approval. The decisions are now
+approved and frozen for Phase 4.
 
 ## Goals and deliverables
 
@@ -20,8 +21,8 @@ draft feature and management-lever decisions for user approval.
   signal, VIF, redundancy, feature decisions.
 - `data/interim/phase-3/*.parquet` — mature, mature-positive, and anomaly
   datasets (gitignored).
-- `config/features.yaml` — draft feature decisions.
-- `config/management_levers.yaml` — draft levers.
+- `config/features.yaml` — approved feature decisions.
+- `config/management_levers.yaml` — approved levers.
 
 ## Technical details
 
@@ -41,25 +42,32 @@ Leakage checks verify target-derived identities such as:
 - `Y_TH_GAP`, `Y_GAP_Percent`, `Y_per_manday`, `Y_BNTREE`
 
 All identities pass, so current-year `Y_*` fields are dropped from candidate
-features. `Y_TH_POT` and `MarkerYield` are `review` because formula checks alone
-cannot establish their timing/source.
+features. `Y_TH_POT` and `MarkerYield` were reviewed and are approved as `drop`.
 
 Feature decisions use missingness, distinct counts, leakage rules, univariate
 Pearson signal, approximate VIF, and correlation pairs. Management levers are
 kept even if marginal predictive importance is low.
 
+Derived/renamed provenance: several external feature names are not exact raw
+columns. `soil_ph`, `soil_cec`, and `soil_som` rename
+`SA_PH_H2O`, `SA_CEC`, and `SA_SOM` from `tbl_FN_soilAnalysis`.
+`black_bunch_per_palm` is `BlackBunch / NoOfPalm` from
+`tbl_BBC_bunchCounts`. `yield_lag1`, `bunch_weight_lag1`, and
+`harvest_interval_lag1` are lagged `OILPALM` fields. Weather, pest, budget, and
+ABW aliases are also derived/renamed. See `phase-04-feature-engineering.md`.
+
 Known anomalies:
 
 - `204D` 2025 target `0` vs HRR harvest FFB about `759 t` — source
-  inconsistency; decide whether to exclude.
+  inconsistency; exclude from training unless the source is corrected.
 - `124H` 2024/2025 `areaIY_ha=0` with positive yield.
 - 178 `IGP` rows have positive yield despite immature status.
 - 9 mature rows have mature stand > total stand.
 - 228 rows have a one-year tree-age/planting-year discrepancy.
 
-Current decision counts: 49 keep, 147 drop, 33 review, 1 target. The 33 review
-items include `Y_TH_POT`, `MarkerYield`, derived leaf/LA features, `TC_*`, and
-sparse soil/bunch features.
+Approved decision counts: 61 keep, 168 drop, 0 review, 1 target. User-edited
+roles include `no_correlation`, `sparse_no_info`, `minimal_info`,
+`missing_values`, and `no_info` for the rejected features.
 
 ## Locations
 
@@ -85,12 +93,9 @@ uv run mypy src tests
 
 ## Approval gate
 
-Do not proceed to Phase 4 until:
-
-- Every `review` feature in `config/features.yaml` is resolved.
-- `config/management_levers.yaml` is approved or edited.
-- The `204D` 2025 decision is documented.
-- The mature filter and target definition are confirmed.
+**Passed.** The feature list and management levers are approved. The `204D` 2025
+anomaly is documented and must be handled in Phase 4/5; it must not be used for
+training without an explicit exclusion decision.
 
 ## Next
 

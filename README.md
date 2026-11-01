@@ -8,6 +8,22 @@ what-if analysis, and ONNX export.
 The Python pipeline produces the model artifacts. A separate Go REST API loads
 the exported ONNX models for inference.
 
+## Start here — LLMs and new contributors
+
+This project is documented as a phase-based plan in `plan/`. If you have blank
+context, read `plan/README.md` end-to-end before changing code. Then read the
+document for the current phase and the next phase, inspect the referenced code,
+configs, tests, and reports, and respect every approval gate. The plan is the
+source of truth for phase status, scope, deliverables, technical decisions, and
+artifact locations.
+
+Current phase document: `plan/phase-03-cleaning.md`
+
+Next phase document: `plan/phase-04-feature-engineering.md`
+
+**Current phase:** Phase 3 approved — feature and management-lever decisions
+approved. Next: Phase 4 — feature engineering and the final modeling table.
+
 ## What this project builds
 
 The project develops two machine learning models:
@@ -75,6 +91,7 @@ Data directory layout:
 data/
   db-json-exports/     # legacy JSON exports; gitignored
   phase-1-inventory/   # generated inventory CSVs
+  phase-3-cleaning/    # cleaning, leakage, and feature-decision tables
   raw/                 # immutable extraction snapshots; gitignored
   interim/             # cleaned/intermediate data; gitignored
   processed/           # modeling tables; gitignored
@@ -126,9 +143,8 @@ Planned transformations include:
 - Harvest interval, rounds, losses, and bunch-weight history
 - Estate/division aggregates built only from prior or cutoff-safe data
 
-Phase 1 inventory and Phase 2 extraction are complete. Phase 3 cleaning and
-feature decisions are next; Phase 4 builds the final modeling table and
-transforms.
+Phase 3 is approved. The feature and management-lever configs are frozen for
+Phase 4, which builds the final modeling table and transforms.
 
 ## Proposed models and training
 
@@ -235,6 +251,14 @@ uv run --with marimo marimo export html \
   -o reports/01_db_inventory.html
 ```
 
+Export the cleaning notebook:
+
+```bash
+uv run --with marimo marimo export html \
+  notebooks/02_cleaning_report.py \
+  -o reports/03_cleaning_report.html
+```
+
 For later modeling notebooks, install the optional data-science extras:
 
 ```bash
@@ -264,6 +288,9 @@ uv run omp-yield extract \
 # Re-verify a snapshot's manifest, checksums, row counts, and columns
 uv run omp-yield verify-snapshot data/raw/20261030T000000Z
 
+# Refresh Phase 3 cleaning artifacts; existing approved configs are preserved
+uv run omp-yield clean
+
 # Show non-secret configuration
 uv run omp-yield info
 ```
@@ -283,9 +310,14 @@ Start here:
 - `docs/phase-1-inventory/data_dictionary.md` — OILPALM data dictionary
 - `docs/phase-1-inventory/erd.md` — core ERD and join map
 - `docs/phase-2-extraction/README.md` — raw snapshot summary
+- `docs/phase-3-cleaning/README.md` — cleaning and feature-decision summary
+- `docs/phase-3-cleaning/cleaning_report.md` — detailed cleaning report
+- `config/features.yaml` — approved feature decisions
+- `config/management_levers.yaml` — approved management levers
 - `reports/00_access.md` — Phase 0 access report
 - `reports/01_db_inventory.html` — interactive inventory notebook
 - `reports/02_extract_report.md` — Phase 2 extraction and verification report
+- `reports/03_cleaning_report.html` — interactive cleaning notebook
 
 ## Current status
 
@@ -293,4 +325,5 @@ Start here:
 - Phase 0 — read-only database access: complete
 - Phase 1 — database inventory and data dictionary: complete
 - Phase 2 — raw extraction and immutable snapshots: complete
-- Phase 3 — cleaning, profiling, leakage audit, and feature decisions: next
+- Phase 3 — cleaning, profiling, leakage audit, and feature decisions: approved
+- Phase 4 — feature engineering and modeling table: next

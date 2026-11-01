@@ -1,0 +1,10 @@
+check,max_abs_diff,tolerance,status
+Y_TH = Y_TOTAL_ton / area_ha,2.1316282072803006e-14,1e-6,pass
+Y_KGB = 1000 * Y_TOTAL_ton / Y_TOTAL_bunches,0.0,1e-6,pass
+Y_TH_GAP = Y_TH - Y_TH_POT,0.0,1e-6,pass
+Y_GAP_Percent = 100 * (Y_TH - Y_TH_POT) / Y_TH_POT,1.4210854715202004e-14,1e-6,pass
+Y_TOTAL_ton = sum monthly ton,4.547473508864641e-13,1e-6,pass
+Y_TOTAL_bunches = sum monthly bunches,0.0,1e-6,pass
+Y_TOTAL_mandays = sum monthly mandays,9.094947017729282e-13,1e-6,pass
+Y_per_manday = Y_TOTAL_ton / Y_TOTAL_mandays,0.0,1e-6,pass
+Y_BNTREE ~= Y_TOTAL_bunches / palmStandMature_p,0.21046416121004263,0.5,pass

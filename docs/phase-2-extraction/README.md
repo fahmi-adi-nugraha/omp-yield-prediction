@@ -67,4 +67,5 @@ uv run omp-yield verify-snapshot data/raw/20261030T000000Z
 
 ## Next
 
-Phase 3 — cleaning, profiling, leakage audit, and feature-decision report.
+Phase 3 is approved; see `../phase-3-cleaning/README.md` and
+`../../reports/03_cleaning_report.html`. Phase 4 is next.

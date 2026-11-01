@@ -1,0 +1,231 @@
+source,name,dtype,decision,role,available_at,adjustable,missing_pct,distinct_count,pearson_r,vif,derived,derived_from,derivation,reason
+OILPALM,NAME,String,drop,id,pre_season,false,0.0,1,,,false,"","","Identifier, key, or timing label; not a model feature."
+OILPALM,suPlantation,String,drop,id,pre_season,false,0.0,3,,,false,"","","Identifier, key, or timing label; not a model feature."
+OILPALM,UNIT,String,drop,id,pre_season,false,0.0,9,,,false,"","","Identifier, key, or timing label; not a model feature."
+OILPALM,UNIT_SUB,String,drop,id,pre_season,false,3.1,51,,,false,"","","Identifier, key, or timing label; not a model feature."
+OILPALM,BLOCK,String,drop,id,pre_season,false,0.0,502,,,false,"","","Identifier, key, or timing label; not a model feature."
+OILPALM,YEAR,Int64,drop,id,pre_season,false,0.0,7,,,false,"","","Identifier, key, or timing label; not a model feature."
+OILPALM,area_ha,Float64,keep,context,pre_season,false,0.0,459,0.8907141858870967,1526.198251324302,false,"","",Contextual feature; validate cutoff availability in Phase 4.
+OILPALM,areaIY_ha,Float64,drop,redundant,pre_season,false,0.0,473,,,false,"","","Redundant, target-timing, or structurally invalid feature."
+OILPALM,areaHCV_ha,Float64,drop,sparse_no_info,pre_season,false,0.0,50,0.0894703591187545,1.0255771115977106,false,"","","Sparse, derived, or timing-ambiguous; requires approval."
+OILPALM,D_PLANTED,"Datetime(time_unit='us', time_zone=None)",keep,context,pre_season,false,0.0,48,,,false,"","",Contextual feature; validate cutoff availability in Phase 4.
+OILPALM,D_FHARVEST,"Datetime(time_unit='us', time_zone=None)",drop,redundant,post_season_or_review,false,0.0,136,,,false,"","","Redundant, target-timing, or structurally invalid feature."
+OILPALM,D_TREEAGE,Float64,keep,context,pre_season,false,0.0,17,0.747542562254183,15.323904546244705,false,"","",Contextual feature; validate cutoff availability in Phase 4.
+OILPALM,Growth_Period,String,keep,context,pre_season,false,0.0,3,,,false,"","",Contextual feature; validate cutoff availability in Phase 4.
+OILPALM,palmStand_p_ha,Float64,keep,context,pre_season,false,0.0,2115,-0.7077616339351872,78.13816090039397,false,"","",Contextual feature; validate cutoff availability in Phase 4.
+OILPALM,palmStand_p,Int64,drop,redundant,pre_season,false,0.0,1756,,,false,"","","Redundant, target-timing, or structurally invalid feature."
+OILPALM,palmStandIY_p,Int64,drop,redundant,pre_season,false,0.0,1755,,,false,"","","Redundant, target-timing, or structurally invalid feature."
+OILPALM,palmStandMature_p,Int64,keep,context,pre_season,false,0.0,1728,0.9056806765798319,10.857973480489624,false,"","",Contextual feature; validate cutoff availability in Phase 4.
+OILPALM,LandClass,String,keep,context,pre_season,false,0.0,12,,,false,"","",Contextual feature; validate cutoff availability in Phase 4.
+OILPALM,SOILTYPE,String,keep,context,pre_season,false,0.0,3,,,false,"","",Contextual feature; validate cutoff availability in Phase 4.
+OILPALM,ALTITUDE,Float64,keep,context,pre_season,false,0.0,34,0.20217849621341435,1.0856199393974961,false,"","",Contextual feature; validate cutoff availability in Phase 4.
+OILPALM,TOPOGRAPHY,String,keep,context,pre_season,false,0.0,4,,,false,"","",Contextual feature; validate cutoff availability in Phase 4.
+OILPALM,SA_TextClass,String,drop,empty_or_constant,pre_season,false,99.4,4,,,false,"","",Empty or constant column.
+OILPALM,PREV_CROP,String,keep,context,pre_season,false,0.0,5,,,false,"","",Contextual feature; validate cutoff availability in Phase 4.
+OILPALM,ID_WeatherStation,String,drop,id,pre_season,false,0.0,4,,,false,"","","Identifier, key, or timing label; not a model feature."
+OILPALM,ID_LSUgroup,String,drop,id,pre_season,false,0.1,63,,,false,"","","Identifier, key, or timing label; not a model feature."
+OILPALM,SH_GROUPmember,String,drop,id,pre_season,false,95.7,15,,,false,"","","Identifier, key, or timing label; not a model feature."
+OILPALM,trunkDiameter,Float64,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,soilDeficN,Int64,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,soilDeficP,Int64,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,soilDeficK,Int64,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,soilDeficMg,Int64,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,soilAcidity,String,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,depthRootRestrict,String,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,LANDCLEARING,String,keep,context,pre_season,false,0.0,3,,,false,"","",Contextual feature; validate cutoff availability in Phase 4.
+OILPALM,Erosion,String,keep,context,pre_season,false,0.2,5,,,false,"","",Contextual feature; validate cutoff availability in Phase 4.
+OILPALM,Soil_Consv,String,keep,context,pre_season,false,0.2,6,,,false,"","",Contextual feature; validate cutoff availability in Phase 4.
+OILPALM,soilConsStatus,String,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,GroundCover,String,keep,context,pre_season,false,0.2,6,,,false,"","",Contextual feature; validate cutoff availability in Phase 4.
+OILPALM,Drainage,String,keep,context,pre_season,false,0.6,5,,,false,"","",Contextual feature; validate cutoff availability in Phase 4.
+OILPALM,waterConsMeasures,String,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,waterTableDepth,String,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,Pruning,String,keep,management,pre_season,true,22.9,5,,,false,"","",Management lever for what-if analysis.
+OILPALM,HarvesterAccess,String,keep,management,pre_season,true,24.1,4,,,false,"","",Management lever for what-if analysis.
+OILPALM,Supervisor,String,drop,empty_or_constant,pre_season,false,99.9,1,,,false,"","",Empty or constant column.
+OILPALM,MillName,String,keep,context,pre_season,false,0.0,3,,,false,"","",Contextual feature; validate cutoff availability in Phase 4.
+OILPALM,MillDistance,Float64,drop,empty_or_constant,pre_season,false,0.0,1,,,false,"","",Empty or constant column.
+OILPALM,BlockComment,String,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,frondStacking,String,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,weedCircle,String,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,weedPath,String,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,harvRoad,String,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,BlockInYield,Int64,drop,redundant,pre_season,false,0.0,2,,,false,"","","Redundant, target-timing, or structurally invalid feature."
+OILPALM,cropRecovery,String,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,harvMeth,String,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,M_FHARVEST,Float64,drop,redundant,post_season_or_review,false,0.0,3,,,false,"","","Redundant, target-timing, or structurally invalid feature."
+OILPALM,Y_TH,Float64,drop,leakage,post_season,false,0.1,2256,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_TH_POT,Float64,drop,drop,pre_season,false,0.0,75,,,false,"","","Sparse, derived, or timing-ambiguous; requires approval."
+OILPALM,Y_TH_GAP,Float64,drop,leakage,post_season,false,0.1,2256,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_GAP_Percent,Float64,drop,leakage,post_season,false,0.1,2256,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_KGB,Float64,drop,leakage,post_season,false,0.0,2257,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_BNTREE,Float64,drop,leakage,post_season,false,0.1,2255,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_TOTAL_ton,Float64,target,target,post_season,false,0.0,2258,,,false,"","",Model target in metric tons.
+OILPALM,Y_TOTAL_bunches,Float64,drop,leakage,post_season,false,0.0,2211,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_TOTAL_mandays,Float64,drop,leakage,post_season,false,0.0,2124,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_TOTAL_rounds,Float64,drop,leakage,post_season,false,0.0,34,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_AVG_harvest_int,Float64,drop,leakage,post_season,false,6.0,97,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_per_manday,Float64,drop,leakage,post_season,false,0.0,2257,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_01_total_ton,Float64,drop,leakage,post_season,false,0.0,2183,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_02_total_ton,Float64,drop,leakage,post_season,false,0.0,2193,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_03_total_ton,Float64,drop,leakage,post_season,false,0.0,2154,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_04_total_ton,Float64,drop,leakage,post_season,false,0.0,2220,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_05_total_ton,Float64,drop,leakage,post_season,false,0.0,2226,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_06_total_ton,Float64,drop,leakage,post_season,false,0.0,2256,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_07_total_ton,Float64,drop,leakage,post_season,false,0.0,2258,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_08_total_ton,Float64,drop,leakage,post_season,false,0.0,2257,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_09_total_ton,Float64,drop,leakage,post_season,false,0.0,2257,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_10_total_ton,Float64,drop,leakage,post_season,false,0.0,2257,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_11_total_ton,Float64,drop,leakage,post_season,false,0.0,2256,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_12_total_ton,Float64,drop,leakage,post_season,false,0.0,2257,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_01_total_bunches,Float64,drop,leakage,post_season,false,0.0,1741,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_02_total_bunches,Float64,drop,leakage,post_season,false,0.0,1753,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_03_total_bunches,Float64,drop,leakage,post_season,false,0.0,1788,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_04_total_bunches,Float64,drop,leakage,post_season,false,0.0,1796,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_05_total_bunches,Float64,drop,leakage,post_season,false,0.0,1792,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_06_total_bunches,Float64,drop,leakage,post_season,false,0.0,1759,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_07_total_bunches,Float64,drop,leakage,post_season,false,0.0,1763,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_08_total_bunches,Float64,drop,leakage,post_season,false,0.0,1784,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_09_total_bunches,Float64,drop,leakage,post_season,false,0.0,1785,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_10_total_bunches,Float64,drop,leakage,post_season,false,0.0,1844,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_11_total_bunches,Float64,drop,leakage,post_season,false,0.0,1822,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_12_total_bunches,Float64,drop,leakage,post_season,false,0.0,1781,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_01_mandays,Float64,drop,leakage,post_season,false,0.0,1056,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_02_mandays,Float64,drop,leakage,post_season,false,0.0,1018,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_03_mandays,Float64,drop,leakage,post_season,false,0.0,1086,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_04_mandays,Float64,drop,leakage,post_season,false,0.0,1105,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_05_mandays,Float64,drop,leakage,post_season,false,0.0,1122,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_06_mandays,Float64,drop,leakage,post_season,false,0.0,1130,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_07_mandays,Float64,drop,leakage,post_season,false,0.0,1152,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_08_mandays,Float64,drop,leakage,post_season,false,0.0,1180,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_09_mandays,Float64,drop,leakage,post_season,false,0.0,1151,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_10_mandays,Float64,drop,leakage,post_season,false,0.0,1167,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_11_mandays,Float64,drop,leakage,post_season,false,0.0,1097,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_12_mandays,Float64,drop,leakage,post_season,false,0.0,1071,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_01_harvest_int,Float64,drop,leakage,post_season,false,5.8,12,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_02_harvest_int,Float64,drop,leakage,post_season,false,2.9,12,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_03_harvest_int,Float64,drop,leakage,post_season,false,2.3,13,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_04_harvest_int,Float64,drop,leakage,post_season,false,1.9,13,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_05_harvest_int,Float64,drop,leakage,post_season,false,1.4,12,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_06_harvest_int,Float64,drop,leakage,post_season,false,0.2,12,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_07_harvest_int,Float64,drop,leakage,post_season,false,0.0,13,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_08_harvest_int,Float64,drop,leakage,post_season,false,0.0,13,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_09_harvest_int,Float64,drop,leakage,post_season,false,0.0,13,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_10_harvest_int,Float64,drop,leakage,post_season,false,0.0,13,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_11_harvest_int,Float64,drop,leakage,post_season,false,0.0,13,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_12_harvest_int,Float64,drop,leakage,post_season,false,0.0,14,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_01_harvest_rnd,Float64,drop,leakage,post_season,false,0.0,5,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_02_harvest_rnd,Float64,drop,leakage,post_season,false,0.0,5,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_03_harvest_rnd,Float64,drop,leakage,post_season,false,0.0,5,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_04_harvest_rnd,Float64,drop,leakage,post_season,false,0.0,5,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_05_harvest_rnd,Float64,drop,leakage,post_season,false,0.0,5,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_06_harvest_rnd,Float64,drop,leakage,post_season,false,0.0,5,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_07_harvest_rnd,Float64,drop,leakage,post_season,false,0.0,5,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_08_harvest_rnd,Float64,drop,leakage,post_season,false,0.0,5,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_09_harvest_rnd,Float64,drop,leakage,post_season,false,0.0,5,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_10_harvest_rnd,Float64,drop,leakage,post_season,false,0.0,5,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_11_harvest_rnd,Float64,drop,leakage,post_season,false,0.0,5,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,Y_12_harvest_rnd,Float64,drop,leakage,post_season,false,0.0,5,,,false,"","",Current-year target-derived or assessment field; leakage risk.
+OILPALM,fertAppScoreInorg,String,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,fertAppScoreOrg,String,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,LA_DATE,"Datetime(time_unit='us', time_zone=None)",drop,id,mid_season,false,17.1,31,,,false,"","","Identifier, key, or timing label; not a model feature."
+OILPALM,LA_LABNO,String,drop,id,mid_season,false,17.1,1078,,,false,"","","Identifier, key, or timing label; not a model feature."
+OILPALM,LA_LABNAME,String,drop,id,mid_season,false,39.1,1,,,false,"","","Identifier, key, or timing label; not a model feature."
+OILPALM,LA_METHOD,String,drop,id,mid_season,false,63.2,1,,,false,"","","Identifier, key, or timing label; not a model feature."
+OILPALM,LA_FROND,Float64,drop,redundant,mid_season,false,11.4,3,,,false,"","","Redundant, target-timing, or structurally invalid feature."
+OILPALM,LA_LSU,Float64,drop,redundant,mid_season,false,0.0,69,0.8753292764162207,1462.5528031055453,false,"","","Sparse, derived, or timing-ambiguous; requires approval."
+OILPALM,LA_N,Float64,keep,leaf,mid_season,false,0.0,113,-0.18544243322771128,inf,false,"","",Leaf nutrient or vegetative context; use latest pre-cutoff sample.
+OILPALM,LA_P,Float64,keep,leaf,mid_season,false,0.0,83,-0.5646672018366536,2.2084074083726613,false,"","",Leaf nutrient or vegetative context; use latest pre-cutoff sample.
+OILPALM,LA_K,Float64,keep,leaf,mid_season,false,0.0,96,-0.3263096910786898,232.08984723393095,false,"","",Leaf nutrient or vegetative context; use latest pre-cutoff sample.
+OILPALM,LA_Ca,Float64,keep,leaf,mid_season,false,0.0,46,-0.000023377198458507616,,false,"","",Leaf nutrient or vegetative context; use latest pre-cutoff sample.
+OILPALM,LA_Mg,Float64,keep,leaf,mid_season,false,0.0,31,-0.17630324579989282,230.66144338625224,false,"","",Leaf nutrient or vegetative context; use latest pre-cutoff sample.
+OILPALM,LA_Cl,Float64,keep,leaf,mid_season,false,0.0,45,0.015805141352661076,1.009915866280852,false,"","",Leaf nutrient or vegetative context; use latest pre-cutoff sample.
+OILPALM,LA_S,Float64,keep,leaf,mid_season,false,0.0,24,-0.007985136679351783,,false,"","",Leaf nutrient or vegetative context; use latest pre-cutoff sample.
+OILPALM,LA_Si,Float64,drop,empty_or_constant,mid_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,LA_Mn,Float64,keep,leaf,mid_season,false,0.0,874,-0.02340536691723544,1.0132811869366383,false,"","",Leaf nutrient or vegetative context; use latest pre-cutoff sample.
+OILPALM,LA_B,Float64,keep,leaf,mid_season,false,0.0,1002,-0.013695789775640118,1.0091579824928028,false,"","",Leaf nutrient or vegetative context; use latest pre-cutoff sample.
+OILPALM,LA_Cu,Float64,keep,leaf,mid_season,false,0.0,766,-0.014793358784136125,1.0121641948966815,false,"","",Leaf nutrient or vegetative context; use latest pre-cutoff sample.
+OILPALM,LA_Zn,Float64,keep,leaf,mid_season,false,0.0,956,-0.367725464543115,1.2819010211405484,false,"","",Leaf nutrient or vegetative context; use latest pre-cutoff sample.
+OILPALM,LA_Fe,Float64,drop,empty_or_constant,mid_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,LA_TLB,Float64,keep,leaf,mid_season,false,0.0,2155,-0.2864053885466426,217.05299469531417,false,"","","Sparse, derived, or timing-ambiguous; requires approval."
+OILPALM,LA_PK,Float64,keep,leaf,mid_season,false,0.0,2151,-0.18560046831421712,139.83850725576775,false,"","","Sparse, derived, or timing-ambiguous; requires approval."
+OILPALM,LA_PMG,Float64,drop,minimal_info,mid_season,false,0.0,2154,-0.03257618826444091,139.30160173931273,false,"","","Sparse, derived, or timing-ambiguous; requires approval."
+OILPALM,LA_PCRIT,Float64,drop,redundant,mid_season,false,0.0,113,-0.18544243322771123,inf,false,"","","Sparse, derived, or timing-ambiguous; requires approval."
+OILPALM,LA_Rachis_N,Float64,keep,leaf,mid_season,false,0.0,39,-0.019755585879470506,1.012156550504283,false,"","",Leaf nutrient or vegetative context; use latest pre-cutoff sample.
+OILPALM,LA_Rachis_P,Float64,keep,leaf,mid_season,false,0.0,66,-0.016884882891480418,1.0082941308634237,false,"","",Leaf nutrient or vegetative context; use latest pre-cutoff sample.
+OILPALM,LA_Rachis_K,Float64,keep,leaf,mid_season,false,0.0,78,-0.010424253738300865,,false,"","",Leaf nutrient or vegetative context; use latest pre-cutoff sample.
+OILPALM,LA_Rachis_Mg,Float64,keep,leaf,mid_season,false,0.0,56,-0.002522425600010261,,false,"","",Leaf nutrient or vegetative context; use latest pre-cutoff sample.
+OILPALM,LA_VN,Int64,drop,redundant,mid_season,false,56.9,3,,,false,"","","Redundant, target-timing, or structurally invalid feature."
+OILPALM,LA_VK,Int64,drop,redundant,mid_season,false,46.8,4,,,false,"","","Redundant, target-timing, or structurally invalid feature."
+OILPALM,LA_VMG,Int64,drop,redundant,mid_season,false,49.0,4,,,false,"","","Redundant, target-timing, or structurally invalid feature."
+OILPALM,LA_VB,Int64,drop,redundant,mid_season,false,52.0,4,,,false,"","","Redundant, target-timing, or structurally invalid feature."
+OILPALM,LA_VP,Int64,drop,empty_or_constant,mid_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,LA_VCu,Int64,drop,empty_or_constant,mid_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,LA_VS,Int64,drop,empty_or_constant,mid_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,visDeficLCPP,Int64,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,visDeficLCPK,Int64,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,visDeficLCPMg,Int64,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,visDeficHardWeed,String,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,LA_cross_section,Float64,keep,leaf,mid_season,false,29.3,1244,0.6333013619028499,2.1039588905901567,false,"","","Sparse, derived, or timing-ambiguous; requires approval."
+OILPALM,LA_Rachis_length,Float64,drop,empty_or_constant,mid_season,false,0.0,1,,,false,"","",Empty or constant column.
+OILPALM,LA_tree_height,Float64,drop,missing_values,mid_season,false,47.5,531,0.7139178558745032,1.7634451653064143,false,"","","Sparse, derived, or timing-ambiguous; requires approval."
+OILPALM,LA_tree_heightIncrement,Float64,keep,leaf,mid_season,false,47.5,829,0.20146429091967694,1.2908026508348989,false,"","",Leaf nutrient or vegetative context; use latest pre-cutoff sample.
+OILPALM,LA_Remark,String,drop,leaf,mid_season,false,87.6,9,,,false,"","",Leaf measurement with limited coverage.
+OILPALM,LAI_LL_Nr,Float64,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,LAI_LL_length,Float64,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,LAI_LL_width,Float64,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,LA_leaf_ProdRate,Float64,keep,leaf,mid_season,false,85.0,105,-0.10124264880150559,inf,false,"","","Sparse, derived, or timing-ambiguous; requires approval."
+OILPALM,LAI_FrondArea,Float64,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,LA_Leaf_Prod,Float64,drop,drop,mid_season,false,85.0,105,-0.10124264880150553,inf,false,"","","Sparse, derived, or timing-ambiguous; requires approval."
+OILPALM,LAI,Float64,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,LA_GreenLeaves,Float64,drop,empty_or_constant,mid_season,false,0.0,1,,,false,"","",Empty or constant column.
+OILPALM,canopyDev,String,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,defoliation,String,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,TC_PMAT,String,keep,context,pre_season,false,0.0,4,,,false,"","","Sparse, derived, or timing-ambiguous; requires approval."
+OILPALM,TC_DENS,Float64,drop,redundant,pre_season,false,0.0,2,-0.639538958602172,44.02737730341308,false,"","","Sparse, derived, or timing-ambiguous; requires approval."
+OILPALM,TC_RPOISON,Int64,drop,no_correlation,pre_season,false,0.0,2,-0.0004263738048980516,,false,"","","Sparse, derived, or timing-ambiguous; requires approval."
+OILPALM,IsAbblation,Int64,drop,no_correlation,pre_season,false,0.0,2,0.45189000491174663,4.109551446415565,false,"","","Sparse, derived, or timing-ambiguous; requires approval."
+OILPALM,AblStart,"Datetime(time_unit='us', time_zone=None)",drop,no_info,pre_season,false,91.2,62,,,false,"","","Sparse, derived, or timing-ambiguous; requires approval."
+OILPALM,AblEnd,"Datetime(time_unit='us', time_zone=None)",drop,no_info,pre_season,false,91.2,62,,,false,"","","Sparse, derived, or timing-ambiguous; requires approval."
+OILPALM,AblReps,Float64,keep,context,pre_season,false,0.0,121,-0.33225260395013323,4.205408247324677,false,"","","Sparse, derived, or timing-ambiguous; requires approval."
+OILPALM,ALL_REMARK,String,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,marker1,String,drop,context,pre_season,false,91.9,4,,,false,"","",Categorical context with limited coverage.
+OILPALM,marker2,String,drop,empty_or_constant,pre_season,false,89.7,1,,,false,"","",Empty or constant column.
+OILPALM,marker3,String,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,marker4,String,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,marker5,String,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,marker6,String,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,markerFert,String,keep,context,pre_season,false,24.9,96,,,false,"","",Contextual feature; validate cutoff availability in Phase 4.
+OILPALM,MarkerYield,String,drop,drop,post_season_or_review,false,0.0,6,,,false,"","","Sparse, derived, or timing-ambiguous; requires approval."
+OILPALM,MarkerLeaf_N,String,drop,leaf,pre_season,false,0.0,5,,,false,"","","Sparse, derived, or timing-ambiguous; requires approval."
+OILPALM,MarkerLeaf_P,String,drop,leaf,pre_season,false,0.0,5,,,false,"","","Sparse, derived, or timing-ambiguous; requires approval."
+OILPALM,MarkerLeaf_K,String,drop,leaf,pre_season,false,0.0,5,,,false,"","","Sparse, derived, or timing-ambiguous; requires approval."
+OILPALM,MarkerLeaf_Mg,String,drop,leaf,pre_season,false,0.0,5,,,false,"","","Sparse, derived, or timing-ambiguous; requires approval."
+OILPALM,HarvestIndex,Int64,drop,redundant,pre_season,false,0.0,21,,,false,"","","Redundant, target-timing, or structurally invalid feature."
+OILPALM,Upkeep_Index,Int64,drop,redundant,pre_season,false,0.0,74,,,false,"","","Redundant, target-timing, or structurally invalid feature."
+OILPALM,FWUnit,String,drop,id,pre_season,false,0.0,2,,,false,"","","Identifier, key, or timing label; not a model feature."
+OILPALM,seedlingAgeAtPlanting,Int64,drop,empty_or_constant,pre_season,false,100.0,0,,,false,"","",Empty or constant column.
+OILPALM,maturityAge_mt,Int64,drop,empty_or_constant,pre_season,false,0.0,1,,,false,"","",Empty or constant column.
+tbl_FN_nutActRec,nutActInorgN_kg_p,,keep,management,pre_season,true,,,,,false,"","",Primary inorganic nitrogen management lever.
+tbl_FN_nutActRec,nutActInorgP2O5_kg_p,,keep,management,pre_season,true,,,,,false,"","",Primary phosphorus management lever.
+tbl_FN_nutActRec,nutActInorgK2O_kg_p,,keep,management,pre_season,true,,,,,false,"","",Primary potassium management lever.
+tbl_FN_nutActRec,nutActInorgMgO_kg_p,,keep,management,pre_season,true,,,,,false,"","",Magnesium management lever.
+tbl_FN_nutActRec,nutActInorgCaO_kg_p,,keep,management,pre_season,true,,,,,false,"","",Calcium management lever.
+tbl_FN_nutActRec,nutActInorgB_kg_p,,keep,management,pre_season,true,,,,,false,"","",Boron management lever.
+tbl_FN_nutActRec,nutRecInorgN_kg_p,,drop,management,pre_season,true,,,,,false,"","",Recommended N rate; confirm availability before the cutoff.
+tbl_FN_nutActRec,nutRecInorgK2O_kg_p,,drop,management,pre_season,true,,,,,false,"","",Recommended K rate; confirm availability before the cutoff.
+tbl_FN_nutActRec,nutActOrgN_kg_p,,keep,management,pre_season,true,,,,,false,"","",Organic N share; sparse but potentially actionable.
+tbl_CW_weatherAndWater,rain_annual_mm,,keep,weather,pre_season,false,,,,,true,tbl_CW_weatherAndWater.R_Total Rainfall,Renamed/standardized annual rainfall; equivalent to sum(R_rain_mm_1..12),Annual rainfall; lag and anomaly features planned.
+tbl_CW_weatherAndWater,dry_months,,keep,weather,pre_season,false,,,,,true,tbl_CW_weatherAndWater.R_NO_dry_month,Renamed raw dry-month count,Water-stress context.
+tbl_CW_weatherAndWater,water_deficit,,keep,weather,pre_season,false,,,,,true,tbl_CW_weatherAndWater.R_waterdeficit,Renamed raw water-deficit field,Water-balance context; 2022 drought signal.
+derived,yield_lag1,,keep,history,pre_season,false,,,,,true,OILPALM.Y_TOTAL_ton,Y_TOTAL_ton shifted 1 year within block; equivalent to prior-year HRR harvest FFB,"Derived, not a raw column: prior-year target. Current-year Y_TOTAL_ton is leakage; lagged values are safe."
+derived,bunch_weight_lag1,,keep,history,pre_season,false,,,,,true,OILPALM.Y_KGB,Y_KGB shifted 1 year within block; Y_KGB = 1000 * Y_TOTAL_ton / Y_TOTAL_bunches; alternative from tbl_HRR_harvests sum(Y_FFB)/sum(Y_BunchNo),"Derived, not a raw column: prior-year average bunch weight. Lagged target-derived values are safe."
+derived,harvest_interval_lag1,,keep,management,pre_season,true,,,,,true,OILPALM.Y_AVG_harvest_int,Y_AVG_harvest_int shifted 1 year within block; alternative from tbl_HRR_harvests mean(prevRoundLength_d) or gaps between distinct D_Harvest dates,"Derived, not a raw column: prior-year harvest interval. Review the exact interval definition before approval."
+tbl_PD_surveys,ganoderma_affected_area,,keep,pest,pre_season,false,,,,,true,tbl_PD_surveys.P_AffectedArea or AffectedArea filtered to PestName='Ganoderma',Aggregate affected area by block-year; confirm whether P_AffectedArea or AffectedArea is the intended unit,Chronic disease pressure context.
+tbl_PD_surveys,ganoderma_severity,,keep,pest,pre_season,false,,,,,true,tbl_PD_surveys.P_Severity filtered to PestName='Ganoderma',Aggregate severity by block-year (max or mean),Chronic disease pressure context.
+tbl_FN_soilAnalysis,soil_ph,,keep,soil,pre_season,false,,,,,true,tbl_FN_soilAnalysis.SA_PH_H2O,Renamed H2O pH; alternative SA_PH_KCl,Soil chemistry; only ~12% block-year coverage.
+tbl_FN_soilAnalysis,soil_cec,,keep,soil,pre_season,false,,,,,true,tbl_FN_soilAnalysis.SA_CEC,Renamed CEC; alternative ECEC (effective CEC),Soil chemistry; sparse coverage.
+tbl_FN_soilAnalysis,soil_som,,keep,soil,pre_season,false,,,,,true,tbl_FN_soilAnalysis.SA_SOM,Renamed soil organic matter,Soil organic matter; sparse coverage.
+tbl_BBC_bunchCounts,black_bunch_per_palm,,keep,leading_indicator,mid_season,false,,,,,true,tbl_BBC_bunchCounts.BlackBunch / NoOfPalm,Per-survey bunch count per palm; aggregate to block-year by mean or latest survey before the cutoff,Only available 2023-2025; useful as a mid-season signal.
+tbl_CB_cropBudgetMt,crop_budget_ton,,drop,benchmark,post_season_or_review,false,,,,,true,tbl_CB_cropBudgetMt.Y_total_ton_bud,Renamed budget total; benchmark only,"Company budget is backfilled; use as a benchmark, not a feature."
+tbl_BBC_forecastABW,abw_forecast,,drop,benchmark,post_season_or_review,false,,,,,true,tbl_BBC_forecastABW.ABWMt1_kg..ABWMt12_kg,Average or selected-month ABW forecast; benchmark/test only,OMP forecast-derived; test only after timing is confirmed.

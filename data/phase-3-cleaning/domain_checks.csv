@@ -1,0 +1,8 @@
+check,rows
+target zero,1
+target negative,0
+area_ha <= 0,0
+tree age < 3,0
+tree age > 30,0
+yield per ha > 40,0
+mature stand > total stand,9

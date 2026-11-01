@@ -21,6 +21,7 @@ models/*
 mlruns/
 reports/*.html
 !reports/01_db_inventory.html
+!reports/03_cleaning_report.html
 reports/*.parquet
 
 # Large vendor/database artifacts

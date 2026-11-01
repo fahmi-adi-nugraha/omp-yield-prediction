@@ -6,6 +6,7 @@ from tempfile import TemporaryDirectory
 
 import pytest
 
+from omp_yield.cleaning import write_cleaning_reports
 from omp_yield.db import Database
 from omp_yield.extract import (
     ExtractionConfig,
@@ -148,3 +149,29 @@ def test_extract_snapshot_force_is_reproducible() -> None:
             t["table"]: t["parquet_sha256"] for t in second.manifest["tables"]
         }
         assert first_hashes == second_hashes
+
+
+def test_write_cleaning_reports() -> None:
+    snapshot = Path("data/raw/20261030T000000Z")
+    if not snapshot.is_dir():
+        pytest.skip("Phase 2 snapshot is not present")
+    with TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        artifacts = write_cleaning_reports(
+            snapshot,
+            docs_dir=root / "docs",
+            data_dir=root / "data",
+            config_dir=root / "config",
+            reports_dir=root / "reports",
+        )
+        assert "features.yaml" in artifacts
+        assert "management_levers.yaml" in artifacts
+        assert (root / "config" / "features.yaml").is_file()
+        assert (root / "config" / "management_levers.yaml").is_file()
+        assert (
+            root / "data" / "phase-3-cleaning" / "feature_decisions.csv"
+        ).is_file()
+        assert (
+            root / "data" / "interim" / "phase-3" / "oilpalm_mature.parquet"
+        ).is_file()
+        assert (root / "docs" / "phase-3-cleaning" / "cleaning_report.md").is_file()

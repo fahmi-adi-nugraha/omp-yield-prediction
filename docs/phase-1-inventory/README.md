@@ -90,4 +90,5 @@ items:
 Phase 2 is complete; see `../phase-2-extraction/README.md` and
 `../../reports/02_extract_report.md`.
 
-Phase 3 — cleaning, profiling, leakage audit, and feature decisions.
+Phase 3 is approved; see `../phase-3-cleaning/README.md` and
+`../../reports/03_cleaning_report.html`. Phase 4 is next.
