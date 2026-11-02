@@ -1,0 +1,206 @@
+status: approved
+requires_approval: false
+levers:
+  nutActInorgN_kg_p:
+    label: N rate
+    source: tbl_FN_nutActRec
+    dtype: float
+    unit: kg/palm/year
+    available_at: pre_season
+    adjustable: true
+    observed_p05: 0.0
+    observed_p95: 1.6379
+    decision: keep
+    reason: Primary nutrient management lever.
+  nutActInorgP2O5_kg_p:
+    label: P2O5 rate
+    source: tbl_FN_nutActRec
+    dtype: float
+    unit: kg/palm/year
+    available_at: pre_season
+    adjustable: true
+    observed_p05: 0.0
+    observed_p95: 1.1767
+    decision: keep
+    reason: Primary nutrient management lever.
+  nutActInorgK2O_kg_p:
+    label: K2O rate
+    source: tbl_FN_nutActRec
+    dtype: float
+    unit: kg/palm/year
+    available_at: pre_season
+    adjustable: true
+    observed_p05: 0.0
+    observed_p95: 3.3092
+    decision: keep
+    reason: Primary nutrient management lever.
+  nutActInorgMgO_kg_p:
+    label: MgO rate
+    source: tbl_FN_nutActRec
+    dtype: float
+    unit: kg/palm/year
+    available_at: pre_season
+    adjustable: true
+    observed_p05: 0.0
+    observed_p95: 0.2777
+    decision: keep
+    reason: Primary nutrient management lever.
+  nutActInorgCaO_kg_p:
+    label: CaO rate
+    source: tbl_FN_nutActRec
+    dtype: float
+    unit: kg/palm/year
+    available_at: pre_season
+    adjustable: true
+    observed_p05: 0.0
+    observed_p95: 1.4134
+    decision: keep
+    reason: Primary nutrient management lever.
+  nutActInorgB_kg_p:
+    label: B rate
+    source: tbl_FN_nutActRec
+    dtype: float
+    unit: kg/palm/year
+    available_at: pre_season
+    adjustable: true
+    observed_p05: 0.0
+    observed_p95: 0.0285
+    decision: keep
+    reason: Primary nutrient management lever.
+  nutRecInorgN_kg_p:
+    label: Recommended N rate
+    source: tbl_FN_nutActRec
+    dtype: float
+    unit: kg/palm/year
+    available_at: pre_season
+    adjustable: true
+    observed_p05: 0.0
+    observed_p95: 1.84
+    decision: drop
+    reason: Confirm recommendation/organic input availability and operational meaning.
+  nutRecInorgP2O5_kg_p:
+    label: Recommended P2O5 rate
+    source: tbl_FN_nutActRec
+    dtype: float
+    unit: kg/palm/year
+    available_at: pre_season
+    adjustable: true
+    observed_p05: 0.0
+    observed_p95: 1.1868
+    decision: drop
+    reason: Confirm recommendation/organic input availability and operational meaning.
+  nutRecInorgK2O_kg_p:
+    label: Recommended K2O rate
+    source: tbl_FN_nutActRec
+    dtype: float
+    unit: kg/palm/year
+    available_at: pre_season
+    adjustable: true
+    observed_p05: 0.0
+    observed_p95: 2.4
+    decision: drop
+    reason: Confirm recommendation/organic input availability and operational meaning.
+  nutActOrgN_kg_p:
+    label: Organic N rate
+    source: tbl_FN_nutActRec
+    dtype: float
+    unit: kg/palm/year
+    available_at: pre_season
+    adjustable: true
+    observed_p05: 0.0
+    observed_p95: 0.3344
+    decision: keep
+    reason: Primary nutrient management lever.
+  nutActOrgP2O5_kg_p:
+    label: Organic P2O5 rate
+    source: tbl_FN_nutActRec
+    dtype: float
+    unit: kg/palm/year
+    available_at: pre_season
+    adjustable: true
+    observed_p05: 0.0
+    observed_p95: 0.0941
+    decision: keep
+    reason: Primary nutrient management lever.
+  nutActOrgK2O_kg_p:
+    label: Organic K2O rate
+    source: tbl_FN_nutActRec
+    dtype: float
+    unit: kg/palm/year
+    available_at: pre_season
+    adjustable: true
+    observed_p05: 0.0
+    observed_p95: 1.1086
+    decision: keep
+    reason: Primary nutrient management lever.
+  Pruning:
+    label: Pruning
+    source: OILPALM
+    dtype: categorical
+    options:
+    - Correct
+    - Neglected
+    - Over
+    - Under
+    available_at: pre_season
+    adjustable: true
+    decision: keep
+    reason: Operational management lever.
+  HarvesterAccess:
+    label: HarvesterAccess
+    source: OILPALM
+    dtype: categorical
+    options:
+    - Full
+    - Incomplete
+    - None
+    available_at: pre_season
+    adjustable: true
+    decision: keep
+    reason: Operational management lever.
+  harvest_interval_target_d:
+    label: Harvest interval target
+    source: OILPALM.Y_AVG_harvest_int
+    dtype: float
+    unit: days
+    available_at: pre_season
+    adjustable: true
+    basis: prior-year lag
+    observed_p05: 11.5833
+    observed_p95: 15.5833
+    decision: keep
+    reason: Target-derived in-year field; only a lagged operational lever is safe.
+  disease_control_felling:
+    label: Disease control / felling
+    source: tbl_PD_controlAct
+    dtype: integer
+    unit: events
+    available_at: pre_season
+    adjustable: true
+    coverage_block_years: 611
+    years:
+    - 2022
+    - 2023
+    - 2024
+    - 2025
+    decision: drop
+    reason: Only 2022-2025 coverage; confirm operational interpretation.
+  weed_control_intensity:
+    label: Weed control intensity
+    source: tbl_PCD_pesticideAct_dt
+    dtype: float
+    unit: kg applied
+    available_at: pre_season
+    adjustable: true
+    years:
+    - 2025
+    decision: drop
+    reason: 2025-only data; scenario-only lever until more history exists.
+  replanting_ablation:
+    label: Ablation / replanting intervention
+    source: OILPALM.IsAbblation
+    dtype: boolean
+    available_at: pre_season
+    adjustable: true
+    decision: drop
+    reason: Sparse intervention; test before exposing in what-if.

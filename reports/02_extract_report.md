@@ -7,16 +7,16 @@ Status: **complete**
 | Field | Value |
 |---|---|
 | Snapshot ID | `20261030T000000Z` |
-| Extracted at | `2026-10-30T14:35:24.388070+00:00` |
+| Extracted at | `2026-11-02T06:40:44.903692+00:00` |
 | Snapshot directory | `data/raw/20261030T000000Z` |
 | Source | `omp_ds_readonly@localhost:1433/omp_as_demo` |
 | Database | `omp_as_demo` |
 | Login | `omp_ds_readonly` |
-| Git commit | `ba043d06b4eabd3d38c72fc2b7df1de688c151d3` |
-| Git dirty | `False` |
+| Git commit | `5f2771a321a091961962aff1d2ade00fe52435db` |
+| Git dirty | `True` |
 | Config | `config/extraction.yaml` |
 | Config SHA256 | `973591e1b248a0514e17b2a451cdc92633fe83ac68d728053b4826916e734f5a` |
-| Manifest SHA256 | `496d3fffc87ac80a7113a62949612b1d70de29e875aba737f3e9826962178c69` |
+| Manifest SHA256 | `ac06f5f4c645c0da800f5340c8ed1e412dd21d9823d20219ad66e2f96e5e5568` |
 
 ## Summary
 
