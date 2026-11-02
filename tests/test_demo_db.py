@@ -359,6 +359,7 @@ class DockerFake:
             },
         }
         self.image_id: str | None = "sha256:image"
+        self.image_after_build: str | None = "sha256:image"
         self.container_id: str | None = "container-id"
         self.container_name = "omp-as-demo-db"
         self.container_state = "running"
@@ -367,6 +368,7 @@ class DockerFake:
         self.volume_mountpoint: str | None = "/var/lib/docker/volumes/example/_data"
         self.setup_done: bool | None = True
         self.logs_output = "line 1\nline 2\n"
+        self.fail_commands: set[str] = set()
 
     def __call__(
         self,
@@ -391,6 +393,30 @@ class DockerFake:
         if "compose" in argv:
             if self.compose_error is not None:
                 return _result(argv, returncode=1, stderr=self.compose_error)
+            subcommand = next(
+                (
+                    token
+                    for token in (
+                        "config",
+                        "ps",
+                        "logs",
+                        "build",
+                        "up",
+                        "stop",
+                        "start",
+                        "restart",
+                        "down",
+                    )
+                    if token in argv
+                ),
+                None,
+            )
+            if subcommand in self.fail_commands:
+                return _result(
+                    argv,
+                    returncode=1,
+                    stderr=f"{subcommand} failed",
+                )
             if "config" in argv:
                 return _result(argv, stdout=json.dumps(self.compose_model))
             if "ps" in argv:
@@ -398,6 +424,31 @@ class DockerFake:
                 return _result(argv, stdout=container)
             if "logs" in argv:
                 return _result(argv, stdout=self.logs_output)
+            if "build" in argv:
+                if self.image_after_build is not None:
+                    self.image_id = self.image_after_build
+                return _result(argv)
+            if "up" in argv:
+                return _result(argv)
+            if "stop" in argv:
+                self.container_state = "exited"
+                self.container_running = False
+                return _result(argv)
+            if "start" in argv:
+                self.container_state = "running"
+                self.container_running = True
+                return _result(argv)
+            if "restart" in argv:
+                self.container_state = "running"
+                self.container_running = True
+                return _result(argv)
+            if "down" in argv:
+                self.container_id = None
+                self.container_state = "exited"
+                self.container_running = False
+                if "-v" in argv:
+                    self.volume_mountpoint = None
+                return _result(argv)
 
         if argv[:3] == ("docker", "image", "inspect"):
             if self.image_id is None:
@@ -651,3 +702,278 @@ def test_logs_invalid_compose(tmp_path: Path) -> None:
     assert result["ok"] is False
     assert result["lines"] == []
     assert result["error"] == "invalid compose configuration"
+
+
+def test_build_skips_when_image_exists(tmp_path: Path) -> None:
+    fake = DockerFake()
+    manager = DemoDbManager(settings=_settings(tmp_path), runner=fake)
+
+    result = manager.build()
+
+    assert result["ok"] is True
+    assert result["action"] == "skipped"
+    assert result["image"]["present"] is True
+    assert not any("build" in call for call in fake.calls)
+
+
+def test_build_builds_missing_image(tmp_path: Path) -> None:
+    fake = DockerFake()
+    fake.image_id = None
+    fake.image_after_build = "sha256:built"
+    manager = DemoDbManager(settings=_settings(tmp_path), runner=fake)
+
+    result = manager.build()
+
+    assert result["ok"] is True
+    assert result["action"] == "built"
+    assert result["image"]["id"] == "sha256:built"
+    assert any("build" in call for call in fake.calls)
+
+
+def test_build_force_rebuilds_existing_image(tmp_path: Path) -> None:
+    fake = DockerFake()
+    manager = DemoDbManager(settings=_settings(tmp_path), runner=fake)
+
+    result = manager.build(force=True)
+
+    assert result["ok"] is True
+    assert result["action"] == "built"
+    assert any("build" in call for call in fake.calls)
+
+
+def test_build_failure_returns_error(tmp_path: Path) -> None:
+    fake = DockerFake()
+    fake.image_id = None
+    fake.fail_commands.add("build")
+    manager = DemoDbManager(settings=_settings(tmp_path), runner=fake)
+
+    result = manager.build()
+
+    assert result["ok"] is False
+    assert result["action"] == "build_failed"
+    assert "build failed" in str(result["error"])
+
+
+def test_up_builds_if_image_missing(tmp_path: Path) -> None:
+    fake = DockerFake()
+    fake.image_id = None
+    fake.image_after_build = "sha256:built"
+    manager = DemoDbManager(settings=_settings(tmp_path), runner=fake)
+
+    result = manager.up()
+
+    assert result["ok"] is True
+    assert result["action"] == "up"
+    assert any("build" in call for call in fake.calls)
+    assert any("up" in call for call in fake.calls)
+
+
+def test_up_skips_build_when_image_present(tmp_path: Path) -> None:
+    fake = DockerFake()
+    manager = DemoDbManager(settings=_settings(tmp_path), runner=fake)
+
+    result = manager.up()
+
+    assert result["ok"] is True
+    assert result["action"] == "up"
+    assert not any("build" in call for call in fake.calls)
+    up_call = next(call for call in fake.calls if "up" in call)
+    assert "--no-build" in up_call
+
+
+def test_up_recreate_includes_force_recreate(tmp_path: Path) -> None:
+    fake = DockerFake()
+    manager = DemoDbManager(settings=_settings(tmp_path), runner=fake)
+
+    result = manager.up(recreate=True)
+
+    assert result["ok"] is True
+    up_call = next(call for call in fake.calls if "up" in call)
+    assert "--force-recreate" in up_call
+
+
+def test_up_aborts_when_build_fails(tmp_path: Path) -> None:
+    fake = DockerFake()
+    fake.image_id = None
+    fake.fail_commands.add("build")
+    manager = DemoDbManager(settings=_settings(tmp_path), runner=fake)
+
+    result = manager.up()
+
+    assert result["ok"] is False
+    assert result["action"] == "up_failed"
+    assert result["error"] == "Image build failed."
+    assert result["build"]["ok"] is False
+    assert not any("up" in call for call in fake.calls)
+
+
+def test_up_does_not_wait_for_setup(tmp_path: Path) -> None:
+    fake = DockerFake()
+    manager = DemoDbManager(settings=_settings(tmp_path), runner=fake)
+
+    result = manager.up()
+
+    assert result["ok"] is True
+    assert "setup_done" not in result
+    assert not any(call[:2] == ("docker", "exec") for call in fake.calls)
+
+
+def test_stop_running_container(tmp_path: Path) -> None:
+    fake = DockerFake()
+    manager = DemoDbManager(settings=_settings(tmp_path), runner=fake)
+
+    result = manager.stop()
+
+    assert result["ok"] is True
+    assert result["action"] == "stopped"
+    assert any("stop" in call for call in fake.calls)
+    assert fake.container_running is False
+
+
+def test_stop_stopped_container_is_noop(tmp_path: Path) -> None:
+    fake = DockerFake()
+    fake.container_state = "exited"
+    fake.container_running = False
+    manager = DemoDbManager(settings=_settings(tmp_path), runner=fake)
+
+    result = manager.stop()
+
+    assert result["ok"] is True
+    assert result["action"] == "noop"
+    assert not any("stop" in call for call in fake.calls)
+
+
+def test_stop_absent_container_is_noop(tmp_path: Path) -> None:
+    fake = DockerFake()
+    fake.container_id = None
+    manager = DemoDbManager(settings=_settings(tmp_path), runner=fake)
+
+    result = manager.stop()
+
+    assert result["ok"] is True
+    assert result["action"] == "noop"
+
+
+def test_start_stopped_container(tmp_path: Path) -> None:
+    fake = DockerFake()
+    fake.container_state = "exited"
+    fake.container_running = False
+    manager = DemoDbManager(settings=_settings(tmp_path), runner=fake)
+
+    result = manager.start()
+
+    assert result["ok"] is True
+    assert result["action"] == "started"
+    assert any("start" in call for call in fake.calls)
+    assert fake.container_running is True
+
+
+def test_start_running_container_is_noop(tmp_path: Path) -> None:
+    fake = DockerFake()
+    manager = DemoDbManager(settings=_settings(tmp_path), runner=fake)
+
+    result = manager.start()
+
+    assert result["ok"] is True
+    assert result["action"] == "noop"
+    assert not any("start" in call for call in fake.calls)
+
+
+def test_start_absent_container_errors(tmp_path: Path) -> None:
+    fake = DockerFake()
+    fake.container_id = None
+    manager = DemoDbManager(settings=_settings(tmp_path), runner=fake)
+
+    result = manager.start()
+
+    assert result["ok"] is False
+    assert result["action"] == "start_failed"
+    assert "demo_db_up" in result["error"]
+
+
+def test_restart_existing_container(tmp_path: Path) -> None:
+    fake = DockerFake()
+    manager = DemoDbManager(settings=_settings(tmp_path), runner=fake)
+
+    result = manager.restart()
+
+    assert result["ok"] is True
+    assert result["action"] == "restarted"
+    assert any("restart" in call for call in fake.calls)
+
+
+def test_restart_absent_container_errors(tmp_path: Path) -> None:
+    fake = DockerFake()
+    fake.container_id = None
+    manager = DemoDbManager(settings=_settings(tmp_path), runner=fake)
+
+    result = manager.restart()
+
+    assert result["ok"] is False
+    assert result["action"] == "restart_failed"
+    assert "demo_db_up" in result["error"]
+
+
+def test_down_preserves_volume_by_default(tmp_path: Path) -> None:
+    fake = DockerFake()
+    manager = DemoDbManager(settings=_settings(tmp_path), runner=fake)
+
+    result = manager.down()
+
+    assert result["ok"] is True
+    assert result["action"] == "down"
+    assert result["remove_volumes"] is False
+    assert result["volume"]["present"] is True
+    down_call = next(call for call in fake.calls if "down" in call)
+    assert "-v" not in down_call
+    assert "preserved" in result["warning"]
+
+
+def test_down_removes_volume_when_requested(tmp_path: Path) -> None:
+    fake = DockerFake()
+    manager = DemoDbManager(settings=_settings(tmp_path), runner=fake)
+
+    result = manager.down(remove_volumes=True)
+
+    assert result["ok"] is True
+    assert result["action"] == "down"
+    assert result["remove_volumes"] is True
+    assert result["volume"]["present"] is False
+    down_call = next(call for call in fake.calls if "down" in call)
+    assert "-v" in down_call
+    assert "removed" in result["warning"]
+
+
+def test_down_absent_project_is_idempotent(tmp_path: Path) -> None:
+    fake = DockerFake()
+    fake.container_id = None
+    fake.volume_mountpoint = None
+    manager = DemoDbManager(settings=_settings(tmp_path), runner=fake)
+
+    result = manager.down()
+
+    assert result["ok"] is True
+    assert result["action"] == "down"
+
+
+def test_mutations_disabled_blocks_build(tmp_path: Path) -> None:
+    settings = _settings(tmp_path).model_copy(update={"allow_mutations": False})
+    fake = DockerFake()
+    manager = DemoDbManager(settings=settings, runner=fake)
+
+    result = manager.build()
+
+    assert result["ok"] is False
+    assert "disabled" in result["error"]
+    assert fake.calls == []
+
+
+def test_mutations_disabled_still_allows_status(tmp_path: Path) -> None:
+    settings = _settings(tmp_path).model_copy(update={"allow_mutations": False})
+    fake = DockerFake()
+    manager = DemoDbManager(settings=settings, runner=fake)
+
+    result = manager.status()
+
+    assert result["ok"] is True
+    assert result["compose_valid"] is True

@@ -316,8 +316,9 @@ class DemoDbManager:
         self.settings = settings or DemoDbSettings()
         self._runner = runner or run_command
         self._environ = environ
-        # Reserved for mutating lifecycle operations added in later parts.
-        self._lock = threading.Lock()
+        # Serialize mutating lifecycle operations. RLock allows up() to call
+        # build() while holding the same lock.
+        self._lock = threading.RLock()
 
     def validate(self) -> None:
         """Validate that the Compose project is present and readable."""
@@ -487,6 +488,205 @@ class DemoDbManager:
             "error": None if result.ok else _command_error(result),
         }
 
+    def build(self, force: bool = False) -> dict[str, Any]:
+        """Build the demo database image if it is missing or force is set."""
+
+        try:
+            self._ensure_mutations_enabled()
+            with self._lock:
+                image_name, error = self._image_name()
+                if image_name is None:
+                    return {"ok": False, "action": "build_failed", "error": error}
+
+                image = self._image_status(image_name)
+                if image["present"] and not force:
+                    return {
+                        "ok": True,
+                        "action": "skipped",
+                        "reason": "Image already exists.",
+                        "image": image,
+                    }
+
+                result = self.run_compose(
+                    ["build"],
+                    timeout_seconds=float(self.settings.build_timeout_seconds),
+                )
+                image_after = self._image_status(image_name)
+                payload: dict[str, Any] = {
+                    "ok": result.ok and image_after["present"],
+                    "action": "built" if result.ok else "build_failed",
+                    "image": image_after,
+                    **self._command_fields(result),
+                }
+                if result.ok and not image_after["present"]:
+                    payload["ok"] = False
+                    payload["error"] = "Build completed but the image was not found."
+                return payload
+        except DemoDbError as exc:
+            return {"ok": False, "action": "build_failed", "error": str(exc)}
+
+    def up(self, recreate: bool = False) -> dict[str, Any]:
+        """Create or start the demo database container, building if needed."""
+
+        try:
+            self._ensure_mutations_enabled()
+            with self._lock:
+                image_name, error = self._image_name()
+                if image_name is None:
+                    return {"ok": False, "action": "up_failed", "error": error}
+
+                image = self._image_status(image_name)
+                if not image["present"]:
+                    build_result = self.build()
+                    if not build_result.get("ok"):
+                        return {
+                            "ok": False,
+                            "action": "up_failed",
+                            "error": "Image build failed.",
+                            "stderr_tail": build_result.get("stderr_tail", ""),
+                            "build": build_result,
+                        }
+                    built_image = build_result.get("image")
+                    if isinstance(built_image, dict):
+                        image = built_image
+
+                args = ["up", "-d", "--no-build"]
+                if recreate:
+                    args.append("--force-recreate")
+                result = self.run_compose(
+                    args,
+                    timeout_seconds=float(self.settings.lifecycle_timeout_seconds),
+                )
+                return {
+                    "ok": result.ok,
+                    "action": "up" if result.ok else "up_failed",
+                    "recreate": recreate,
+                    "image": image,
+                    **self._command_fields(result),
+                }
+        except DemoDbError as exc:
+            return {"ok": False, "action": "up_failed", "error": str(exc)}
+
+    def stop(self) -> dict[str, Any]:
+        """Stop the demo database container without removing it."""
+
+        try:
+            self._ensure_mutations_enabled()
+            with self._lock:
+                container = self._container_status(self.settings.service)
+                if not container.get("present"):
+                    return {
+                        "ok": True,
+                        "action": "noop",
+                        "reason": "Container does not exist.",
+                    }
+                if not container.get("running"):
+                    return {
+                        "ok": True,
+                        "action": "noop",
+                        "reason": "Container is already stopped.",
+                    }
+                result = self.run_compose(
+                    ["stop", self.settings.service],
+                    timeout_seconds=float(self.settings.lifecycle_timeout_seconds),
+                )
+                return self._lifecycle_result(result, "stopped", "stop_failed")
+        except DemoDbError as exc:
+            return {"ok": False, "action": "stop_failed", "error": str(exc)}
+
+    def start(self) -> dict[str, Any]:
+        """Start an existing stopped demo database container."""
+
+        try:
+            self._ensure_mutations_enabled()
+            with self._lock:
+                container = self._container_status(self.settings.service)
+                if not container.get("present"):
+                    return {
+                        "ok": False,
+                        "action": "start_failed",
+                        "error": "Container does not exist. Use demo_db_up to create it.",
+                    }
+                if container.get("running"):
+                    return {
+                        "ok": True,
+                        "action": "noop",
+                        "reason": "Container is already running.",
+                    }
+                result = self.run_compose(
+                    ["start", self.settings.service],
+                    timeout_seconds=float(self.settings.lifecycle_timeout_seconds),
+                )
+                return self._lifecycle_result(result, "started", "start_failed")
+        except DemoDbError as exc:
+            return {"ok": False, "action": "start_failed", "error": str(exc)}
+
+    def restart(self) -> dict[str, Any]:
+        """Restart an existing demo database container."""
+
+        try:
+            self._ensure_mutations_enabled()
+            with self._lock:
+                container = self._container_status(self.settings.service)
+                if not container.get("present"):
+                    return {
+                        "ok": False,
+                        "action": "restart_failed",
+                        "error": "Container does not exist. Use demo_db_up to create it.",
+                    }
+                result = self.run_compose(
+                    ["restart", self.settings.service],
+                    timeout_seconds=float(self.settings.lifecycle_timeout_seconds),
+                )
+                return self._lifecycle_result(result, "restarted", "restart_failed")
+        except DemoDbError as exc:
+            return {"ok": False, "action": "restart_failed", "error": str(exc)}
+
+    def down(self, remove_volumes: bool = False) -> dict[str, Any]:
+        """Stop and remove the stack, optionally deleting the data volume."""
+
+        try:
+            self._ensure_mutations_enabled()
+            with self._lock:
+                model, compose_error = self._compose_model()
+                if model is None:
+                    return {
+                        "ok": False,
+                        "action": "down_failed",
+                        "error": compose_error or "Compose config is invalid.",
+                    }
+
+                service_model = _service_model(model, self.settings.service)
+                _, volume_name = _data_volume(model, service_model)
+                args = ["down"]
+                if remove_volumes:
+                    args.append("-v")
+
+                result = self.run_compose(
+                    args,
+                    timeout_seconds=float(self.settings.lifecycle_timeout_seconds),
+                )
+                volume_after = self._volume_status(volume_name)
+                payload = self._lifecycle_result(result, "down", "down_failed")
+                payload["remove_volumes"] = remove_volumes
+                payload["volume"] = volume_after
+                if result.ok:
+                    if remove_volumes:
+                        if volume_after["present"]:
+                            payload["warning"] = (
+                                "Docker Compose completed, but the database volume still exists."
+                            )
+                        else:
+                            payload["warning"] = (
+                                "The demo database volume was removed. "
+                                "The next up will restore from backup."
+                            )
+                    else:
+                        payload["warning"] = "The demo database volume was preserved."
+                return payload
+        except DemoDbError as exc:
+            return {"ok": False, "action": "down_failed", "error": str(exc)}
+
     def _docker_version(self) -> tuple[str | None, str | None]:
         try:
             result = self.run_docker(
@@ -637,6 +837,48 @@ class DemoDbManager:
         if result.returncode == 1:
             return False
         return None
+
+    def _ensure_mutations_enabled(self) -> None:
+        if not self.settings.allow_mutations:
+            raise DemoDbError(
+                "Docker mutations are disabled. Set "
+                "OMP_MCP_ALLOW_DOCKER_MUTATIONS=1 to enable them."
+            )
+
+    def _image_name(self) -> tuple[str | None, str | None]:
+        model, error = self._compose_model()
+        if model is None:
+            return None, error
+        service_model = _service_model(model, self.settings.service)
+        image_name = service_model.get("image")
+        if not isinstance(image_name, str) or not image_name:
+            return (
+                None,
+                f"Service {self.settings.service!r} has no image in Compose config.",
+            )
+        return image_name, None
+
+    def _command_fields(self, result: CommandResult) -> dict[str, Any]:
+        return {
+            "returncode": result.returncode,
+            "timed_out": result.timed_out,
+            "duration_seconds": round(result.duration_seconds, 3),
+            "stdout_tail": tail_text(result.stdout, max_lines=50, max_chars=8000),
+            "stderr_tail": tail_text(result.stderr, max_lines=50, max_chars=8000),
+            "error": None if result.ok else _command_error(result),
+        }
+
+    def _lifecycle_result(
+        self,
+        result: CommandResult,
+        success_action: str,
+        failure_action: str,
+    ) -> dict[str, Any]:
+        return {
+            "ok": result.ok,
+            "action": success_action if result.ok else failure_action,
+            **self._command_fields(result),
+        }
 
     def _secret_values(self) -> tuple[str, ...]:
         return secret_values(self._environ)

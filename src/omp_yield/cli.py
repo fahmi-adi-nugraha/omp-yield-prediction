@@ -15,6 +15,7 @@ from omp_yield import __version__
 from omp_yield.cleaning import latest_snapshot, write_cleaning_reports
 from omp_yield.config import Settings
 from omp_yield.db import Database, OmpDatabaseError
+from omp_yield.demo_db import DemoDbManager
 from omp_yield.extract import (
     extract_snapshot,
     load_extraction_config,
@@ -32,6 +33,11 @@ app = typer.Typer(
 )
 db_app = typer.Typer(help="Read-only access to the OMP demo database.", no_args_is_help=True)
 app.add_typer(db_app, name="db")
+demo_db_app = typer.Typer(
+    help="Manage the local demo database Docker stack.",
+    no_args_is_help=True,
+)
+app.add_typer(demo_db_app, name="demo-db")
 
 
 def _version_callback(value: bool) -> None:
@@ -82,6 +88,34 @@ def _json_output(frame: pl.DataFrame) -> None:
 def _handle_error(exc: Exception) -> None:
     console.print(f"[red]Error:[/red] {exc}")
     raise typer.Exit(code=1) from exc
+
+
+def _demo_db_manager() -> DemoDbManager:
+    return DemoDbManager()
+
+
+def _exit_on_demo_db_error(result: dict[str, Any]) -> None:
+    if result.get("ok"):
+        return
+    console.print(f"[red]Error:[/red] {result.get('error', 'unknown error')}")
+    stderr_tail = result.get("stderr_tail")
+    if stderr_tail:
+        console.print(str(stderr_tail))
+    raise typer.Exit(code=1)
+
+
+def _print_demo_db_result(result: dict[str, Any]) -> None:
+    _exit_on_demo_db_error(result)
+    table = Table(show_header=True, header_style="bold")
+    table.add_column("field")
+    table.add_column("value")
+    for key in ("action", "reason", "warning", "duration_seconds"):
+        if key in result:
+            table.add_row(key, str(result[key]))
+    for key in ("image", "container", "volume", "build"):
+        if key in result:
+            table.add_row(key, json.dumps(result[key], default=str))
+    console.print(table)
 
 
 @db_app.command("ping")
@@ -152,6 +186,119 @@ def db_query(
         _json_output(frame)
     else:
         _print_frame(frame)
+
+
+@demo_db_app.command("status")
+def demo_db_status() -> None:
+    """Show Docker, image, container, volume, and setup state."""
+
+    result = _demo_db_manager().status()
+    table = Table(show_header=True, header_style="bold")
+    table.add_column("field")
+    table.add_column("value")
+    for key in (
+        "ok",
+        "ready",
+        "docker_available",
+        "docker_version",
+        "docker_error",
+        "compose_valid",
+        "compose_error",
+        "project_name",
+        "service",
+        "build_dir",
+        "compose_file",
+    ):
+        table.add_row(key, str(result.get(key)))
+    for key in ("image", "container", "volume"):
+        table.add_row(key, json.dumps(result.get(key), default=str))
+    table.add_row("setup_done", str(result.get("setup_done")))
+    console.print(table)
+    if not result.get("ok"):
+        raise typer.Exit(code=1)
+
+
+@demo_db_app.command("build")
+def demo_db_build(
+    force: bool = typer.Option(
+        False,
+        "--force",
+        help="Rebuild even if the image already exists.",
+    ),
+) -> None:
+    """Build the demo database image if needed."""
+
+    _print_demo_db_result(_demo_db_manager().build(force=force))
+
+
+@demo_db_app.command("up")
+def demo_db_up(
+    recreate: bool = typer.Option(
+        False,
+        "--recreate",
+        help="Force container recreation.",
+    ),
+) -> None:
+    """Create or start the demo database container."""
+
+    _print_demo_db_result(_demo_db_manager().up(recreate=recreate))
+
+
+@demo_db_app.command("stop")
+def demo_db_stop() -> None:
+    """Stop the demo database container without removing it."""
+
+    _print_demo_db_result(_demo_db_manager().stop())
+
+
+@demo_db_app.command("start")
+def demo_db_start() -> None:
+    """Start an existing stopped demo database container."""
+
+    _print_demo_db_result(_demo_db_manager().start())
+
+
+@demo_db_app.command("restart")
+def demo_db_restart() -> None:
+    """Restart the demo database container."""
+
+    _print_demo_db_result(_demo_db_manager().restart())
+
+
+@demo_db_app.command("down")
+def demo_db_down(
+    remove_volumes: bool = typer.Option(
+        False,
+        "--remove-volumes",
+        help="Delete the demo database volume. The next up will restore it.",
+    ),
+) -> None:
+    """Remove the demo database stack, optionally deleting its volume."""
+
+    _print_demo_db_result(_demo_db_manager().down(remove_volumes=remove_volumes))
+
+
+@demo_db_app.command("logs")
+def demo_db_logs(
+    tail: int = typer.Option(
+        100,
+        "--tail",
+        "-n",
+        min=1,
+        max=1000,
+        help="Number of trailing log lines.",
+    ),
+) -> None:
+    """Show the tail of the demo database Compose logs."""
+
+    result = _demo_db_manager().logs(tail=tail)
+    _exit_on_demo_db_error(result)
+    lines = result.get("lines", [])
+    if not lines:
+        console.print("[yellow]No log lines returned.[/yellow]")
+        return
+    for line in lines:
+        console.print(str(line))
 
 
 @app.command("extract")

@@ -295,6 +295,33 @@ uv run omp-yield clean
 uv run omp-yield info
 ```
 
+### Demo database Docker stack
+
+The local demo database can be managed through the CLI or the `omp-yield` MCP
+server:
+
+```bash
+uv run omp-yield demo-db status
+uv run omp-yield demo-db build
+uv run omp-yield demo-db up
+uv run omp-yield demo-db logs --tail 100
+uv run omp-yield demo-db stop
+uv run omp-yield demo-db start
+uv run omp-yield demo-db restart
+uv run omp-yield demo-db down
+uv run omp-yield demo-db down --remove-volumes
+```
+
+MCP tools: `demo_db_status`, `demo_db_logs`, `demo_db_build`, `demo_db_up`,
+`demo_db_stop`, `demo_db_start`, `demo_db_restart`, and `demo_db_down`.
+
+All operations are scoped to the `docker-build/` Compose project. `down`
+preserves the database volume by default; `down --remove-volumes` deletes it
+and the next `up` restores from the backup. The tools operate on the active
+Docker context, and mutating tools can be disabled with
+`OMP_MCP_ALLOW_DOCKER_MUTATIONS=0`. Docker must be available to the process
+running the CLI or MCP server.
+
 The extraction table list is in `config/extraction.yaml`. Snapshots are written
 under `data/raw/<snapshot_id>/` and are intentionally gitignored.
 

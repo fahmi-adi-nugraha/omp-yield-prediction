@@ -55,6 +55,23 @@ opencode mcp list
 
 The local MCP server must connect and expose the four read-only DB tools.
 
+## Extension — demo DB lifecycle tools
+
+The harness was extended after the phase completed with scoped Docker Compose
+lifecycle tools for the local `docker-build/` demo database stack.
+
+- `src/omp_yield/demo_db.py` — settings, command runner, redaction, status,
+  logs, build, up, stop, start, restart, and down.
+- `src/omp_yield/mcp_server.py` — `demo_db_*` MCP tools with annotations and an
+  async boundary around blocking Docker calls.
+- `src/omp_yield/cli.py` — matching `omp-yield demo-db ...` commands.
+- `tests/test_demo_db.py`, `tests/test_mcp_contract.py`, `tests/test_cli.py`.
+- `docs/phase-minus-1-harness/README.md` and `README.md`.
+
+Safety: operations are scoped to the `docker-build` Compose project, secrets
+are redacted, `down --remove-volumes` is explicit and destructive, and mutating
+tools can be disabled with `OMP_MCP_ALLOW_DOCKER_MUTATIONS=0`.
+
 ## Next
 
 Phase 0 — create the least-privilege database account.

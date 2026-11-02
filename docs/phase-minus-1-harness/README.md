@@ -42,6 +42,47 @@ MCP tools:
 - `db_schema`
 - `db_query`
 
+### Demo database lifecycle tools
+
+The MCP server also exposes scoped Docker Compose lifecycle tools for the
+local `docker-build/` stack:
+
+- `demo_db_status`
+- `demo_db_logs`
+- `demo_db_build`
+- `demo_db_up`
+- `demo_db_stop`
+- `demo_db_start`
+- `demo_db_restart`
+- `demo_db_down`
+
+Matching CLI commands:
+
+```bash
+uv run omp-yield demo-db status
+uv run omp-yield demo-db build [--force]
+uv run omp-yield demo-db up [--recreate]
+uv run omp-yield demo-db logs [--tail 100]
+uv run omp-yield demo-db stop
+uv run omp-yield demo-db start
+uv run omp-yield demo-db restart
+uv run omp-yield demo-db down [--remove-volumes]
+```
+
+Safety rules:
+
+- Every command is scoped to the `docker-build` Compose project.
+- `down` without `--remove-volumes` preserves the database volume.
+- `down --remove-volumes` is destructive; the next `up` performs a full
+  restore from the `.bak` file.
+- Mutating tools can be disabled with
+  `OMP_MCP_ALLOW_DOCKER_MUTATIONS=0`.
+- The tools operate on the active Docker context and require Docker socket
+  access from the MCP server process.
+
+`up` returns immediately after the container starts. Use `demo_db_logs` to
+watch the restore and `db_ping` to confirm database readiness.
+
 ## Verification performed
 
 ### Connectivity
