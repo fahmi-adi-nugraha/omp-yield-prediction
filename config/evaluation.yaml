@@ -1,0 +1,114 @@
+version: 1
+status: approved
+seed: 42
+target: Y_TOTAL_ton
+keys:
+  - NAME
+  - UNIT
+  - BLOCK
+  - YEAR
+min_year: 2019
+max_year: 2025
+mature_periods:
+  - SAYP
+  - PYP
+  - DYP
+
+yield_prediction:
+  primary:
+    name: chronological_primary
+    train_years: [2019, 2020, 2021, 2022, 2023]
+    validation_years: [2024]
+    test_years: [2025]
+    final_train_years: [2019, 2020, 2021, 2022, 2023, 2024]
+    final_test_years: [2025]
+  grouped:
+    name: grouped_block_80_10_10
+    validation_size: 0.10
+    test_size: 0.10
+    seed: 42
+  cv:
+    group_kfold_splits: 5
+    time_series_splits: 3
+
+forecast:
+  rolling_origins:
+    - train_through: 2022
+      validation_year: 2023
+    - train_through: 2023
+      validation_year: 2024
+    - train_through: 2024
+      validation_year: 2025
+  final_train_through: 2024
+  forecast_years: [2026, 2027, 2028]
+  experimental_forecast_years: [2029, 2030]
+
+metrics:
+  point_accuracy:
+    - rmse
+    - mae
+    - mape
+    - smape
+    - r2
+    - bias
+  forecast:
+    - mase
+    - rmse
+    - mape
+    - bias
+    - interval_coverage
+  estate_level:
+    - rmse
+    - mae
+    - bias
+
+baselines:
+  yield_prediction:
+    - global_mean
+    - last_year_yield
+    - three_year_average
+    - linear_trend
+  forecast:
+    - last_year_yield
+    - three_year_average
+    - linear_trend
+    - company_budget
+
+contract:
+  target_min: 0.0
+  target_max: null
+  bounds:
+    pre_area_ha:
+      min: 0.0
+      max: 10000.0
+    pre_tree_age:
+      min: 0.0
+      max: 60.0
+    pre_stand_per_ha:
+      min: 0.0
+      max: 1000.0
+    pre_stand_mature:
+      min: 0.0
+      max: 1000000.0
+    pre_mature_fraction:
+      min: 0.0
+      max: 1.1
+  ordinal_domains:
+    pre_growth_period_code: [0, 1, 2]
+    pre_harvester_access_code: [0, 1, 2]
+  allowed_growth_periods:
+    - SAYP
+    - PYP
+    - DYP
+  allowed_harvester_access:
+    - None
+    - Incomplete
+    - Full
+  allowed_pruning:
+    - Correct
+    - Neglected
+    - Over
+    - Under
+  missing_tokens:
+    - ""
+    - "No data"

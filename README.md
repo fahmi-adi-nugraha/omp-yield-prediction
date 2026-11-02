@@ -17,12 +17,12 @@ configs, tests, and reports, and respect every approval gate. The plan is the
 source of truth for phase status, scope, deliverables, technical decisions, and
 artifact locations.
 
-Current phase document: `plan/phase-04-feature-engineering.md`
+Current phase document: `plan/phase-05-splits-contracts.md`
 
-Next phase document: `plan/phase-05-splits-contracts.md`
+Next phase document: `plan/phase-06-model-selection.md`
 
-**Current phase:** Phase 4 complete — the modeling table and feature schema are
-built. Next: Phase 5 — data contracts, splits, and the evaluation protocol.
+**Current phase:** Phase 5 complete — splits, data contracts, and the evaluation
+protocol are frozen. Next: Phase 6 — model selection.
 
 ## What this project builds
 
@@ -143,8 +143,8 @@ Planned transformations include:
 - Harvest interval, rounds, losses, and bunch-weight history
 - Estate/division aggregates built only from prior or cutoff-safe data
 
-Phase 4 is complete. The approved feature, management-lever, and transform
-configs are the source of truth for Phase 5 modeling and validation.
+Phase 5 is complete. The approved evaluation config, split definitions, and data
+contract are the source of truth for Phase 6 model selection.
 
 ## Proposed models and training
 
@@ -296,6 +296,9 @@ uv run omp-yield info
 
 # Build the Phase 4 modeling table, feature schema, and report
 uv run omp-yield features
+
+# Validate the data contract and write Phase 5 split memberships
+uv run omp-yield splits
 ```
 
 ### Demo database Docker stack
@@ -343,9 +346,12 @@ Start here:
 - `docs/phase-3-cleaning/README.md` — cleaning and feature-decision summary
 - `docs/phase-3-cleaning/cleaning_report.md` — detailed cleaning report
 - `docs/phase-4-feature-engineering/README.md` — modeling-table and transform summary
+- `docs/phase-5-splits-contracts/README.md` — split and evaluation-protocol summary
+- `docs/data_contract.md` — generated modeling-table data contract
 - `config/features.yaml` — approved feature decisions
 - `config/management_levers.yaml` — approved management levers
 - `config/transforms.yaml` — approved cutoff, transform, and encoding parameters
+- `config/evaluation.yaml` — approved split, metric, baseline, and contract rules
 - `reports/00_access.md` — Phase 0 access report
 - `reports/01_db_inventory.html` — interactive inventory notebook
 - `reports/02_extract_report.md` — Phase 2 extraction and verification report
@@ -360,4 +366,5 @@ Start here:
 - Phase 2 — raw extraction and immutable snapshots: complete
 - Phase 3 — cleaning, profiling, leakage audit, and feature decisions: approved
 - Phase 4 — feature engineering and modeling table: complete
-- Phase 5 — data contracts, splits, and evaluation protocol: next
+- Phase 5 — data contracts, splits, and evaluation protocol: complete
+- Phase 6 — model selection: next

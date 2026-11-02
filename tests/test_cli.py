@@ -146,3 +146,10 @@ def test_features_help() -> None:
 
     assert result.exit_code == 0
     assert "modeling table" in result.output.lower()
+
+
+def test_splits_help() -> None:
+    result = CliRunner().invoke(app, ["splits", "--help"])
+
+    assert result.exit_code == 0
+    assert "split" in result.output.lower()

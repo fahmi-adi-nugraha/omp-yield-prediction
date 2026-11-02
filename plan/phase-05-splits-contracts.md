@@ -1,6 +1,6 @@
 # Phase 5 — Splits, Data Contracts, and Evaluation Protocol
 
-Status: **planned**
+Status: **complete**
 
 ## Overview
 
@@ -63,6 +63,19 @@ Metrics:
 - Test set membership is fixed and used once.
 - Contract validation fails on duplicate keys, negative target, or unexpected
   categories.
+
+## Completion summary
+
+- Primary chronological split: 1,356 train rows (2019–2023), 404 validation rows
+  (2024), 498 test rows (2025). Final refit: 1,760 train rows (2019–2024), 498
+  test rows (2025).
+- Grouped block split: 404/51/51 blocks and 1,770/234/254 rows.
+- Five grouped CV folds and three expanding-window time-series folds.
+- Three rolling forecast origins: 2022→2023, 2023→2024, 2024→2025.
+- `data/processed/splits.json` contains membership and SHA256 hashes.
+- `docs/data_contract.md` records 32 passing contract checks.
+- `tests/test_splits.py` covers temporal order, grouped block isolation, CV
+  isolation, rolling-origin leakage, contract failures, and determinism.
 
 ## Next
 

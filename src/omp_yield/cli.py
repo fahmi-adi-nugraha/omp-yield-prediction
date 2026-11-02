@@ -24,6 +24,7 @@ from omp_yield.extract import (
 )
 from omp_yield.features import write_modeling_outputs
 from omp_yield.inventory import write_inventory_reports
+from omp_yield.splits import write_splits_outputs
 from omp_yield.sql import UnsafeQueryError
 
 console = Console()
@@ -410,6 +411,93 @@ def features_command(
     table.add_row("feature_schema_parquet", str(result.schema_parquet_path))
     table.add_row("report", str(result.report_path))
     console.print(table)
+
+
+@app.command("splits")
+def splits_command(
+    table: Annotated[
+        Path,
+        typer.Option("--table", help="Phase 4 modeling table."),
+    ] = Path("data/processed/modeling_table.parquet"),
+    schema: Annotated[
+        Path,
+        typer.Option("--schema", help="Phase 4 feature schema CSV."),
+    ] = Path("data/processed/feature_schema.csv"),
+    config: Annotated[
+        Path,
+        typer.Option("--config", help="Evaluation protocol YAML."),
+    ] = Path("config/evaluation.yaml"),
+    output: Annotated[
+        Path,
+        typer.Option("--output", help="Split membership JSON output."),
+    ] = Path("data/processed/splits.json"),
+    contract_report: Annotated[
+        Path,
+        typer.Option("--contract-report", help="Contract check CSV output."),
+    ] = Path("data/processed/contract_report.csv"),
+    contract_doc: Annotated[
+        Path,
+        typer.Option("--contract-doc", help="Generated data contract Markdown."),
+    ] = Path("docs/data_contract.md"),
+    snapshot: Annotated[
+        Path | None,
+        typer.Option("--snapshot", help="Phase 2 snapshot for source-date checks."),
+    ] = None,
+) -> None:
+    """Validate the data contract and write Phase 5 split memberships."""
+
+    try:
+        snapshot_dir = snapshot or latest_snapshot(Path("data/raw"))
+        result = write_splits_outputs(
+            table_path=table,
+            schema_path=schema,
+            config_path=config,
+            splits_path=output,
+            contract_report_path=contract_report,
+            contract_doc_path=contract_doc,
+            snapshot_dir=snapshot_dir,
+        )
+    except (FileNotFoundError, RuntimeError, ValueError) as exc:
+        _handle_error(exc)
+        return
+
+    split = result["splits"]
+    table_view = Table(show_header=True, header_style="bold")
+    table_view.add_column("split")
+    table_view.add_column("train")
+    table_view.add_column("validation")
+    table_view.add_column("test")
+    table_view.add_row(
+        "primary",
+        str(split["primary"]["train"]["count"]),
+        str(split["primary"]["validation"]["count"]),
+        str(split["primary"]["test"]["count"]),
+    )
+    table_view.add_row(
+        "grouped",
+        str(split["grouped"]["train"]["count"]),
+        str(split["grouped"]["validation"]["count"]),
+        str(split["grouped"]["test"]["count"]),
+    )
+    table_view.add_row(
+        "refit",
+        str(split["refit"]["train"]["count"]),
+        "-",
+        str(split["refit"]["test"]["count"]),
+    )
+    console.print(table_view)
+    console.print(
+        f"Group folds: {len(split['cv']['group_kfold'])}; "
+        f"time-series folds: {len(split['cv']['time_series'])}; "
+        f"rolling origins: {len(split['rolling_origins'])}"
+    )
+    console.print(
+        f"Contract: {'ok' if result['contract_report'].ok else 'FAIL'} "
+        f"({result['contract_report'].summary['checks']} checks)"
+    )
+    console.print(f"Splits: {result['splits_path']}")
+    console.print(f"Contract report: {result['contract_report_path']}")
+    console.print(f"Contract doc: {result['contract_doc_path']}")
 
 
 @app.command("verify-snapshot")

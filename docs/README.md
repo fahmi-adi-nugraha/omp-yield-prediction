@@ -15,6 +15,7 @@ Implementation roadmap: `../plan/README.md`.
 | `phase-2-extraction/` | Raw extraction snapshot summary and reproducibility notes |
 | `phase-3-cleaning/` | Cleaning, leakage, feature decisions, and interim data summary |
 | `phase-4-feature-engineering/` | Modeling table, transforms, feature schema, and diagnostics |
+| `phase-5-splits-contracts/` | Evaluation splits, data contract, metrics, and baselines |
 
 ## Phase -1
 
@@ -72,6 +73,15 @@ Phase 4 data artifacts live under `data/processed/`; the report is generated.
 - `../data/processed/feature_schema.csv` — feature metadata and cutoff membership
 - `../reports/04_feature_engineering.html` — feature-engineering and ablation report
 
+## Phase 5
+
+- `phase-5-splits-contracts/README.md` — split, contract, and evaluation protocol
+- `data_contract.md` — generated data-contract reference
+- `../config/evaluation.yaml` — approved split, metric, baseline, and contract rules
+- `../src/omp_yield/splits.py` — temporal, grouped, CV, and rolling-origin splitters
+- `../data/processed/splits.json` — generated train/validation/test membership
+- `../data/processed/contract_report.csv` — generated contract check results
+
 ## Current status
 
 - Phase -1 — complete
@@ -80,7 +90,8 @@ Phase 4 data artifacts live under `data/processed/`; the report is generated.
 - Phase 2 — complete
 - Phase 3 — approved
 - Phase 4 — complete
-- Phase 5 — next
+- Phase 5 — complete
+- Phase 6 — next
 
 ## Credential files
 

@@ -20,6 +20,7 @@ Phase documentation: `../docs/README.md`.
 - Phase 2 — complete; extraction report at `02_extract_report.md`
 - Phase 3 — approved
 - Phase 4 — complete; report at `04_feature_engineering.html`
-- Phase 5 — next
+- Phase 5 — complete; no standalone HTML report (contract at `../docs/data_contract.md`)
+- Phase 6 — next
 
 Later reports are listed as planned deliverables and are not generated yet.

@@ -30,7 +30,7 @@ As of 2026-11-02:
 | Phase 2 — Raw extraction and immutable snapshots | Complete | `phase-02-extraction.md` |
 | Phase 3 — Cleaning, leakage audit, feature decisions | Approved | `phase-03-cleaning.md` |
 | Phase 4 — Feature engineering and modeling table | Complete | `phase-04-feature-engineering.md` |
-| Phase 5 — Splits, contracts, evaluation protocol | Planned | `phase-05-splits-contracts.md` |
+| Phase 5 — Splits, contracts, evaluation protocol | Complete | `phase-05-splits-contracts.md` |
 | Phase 6 — Model selection | Planned | `phase-06-model-selection.md` |
 | Phase 7 — Hyperparameter search | Planned | `phase-07-hyperparameter-search.md` |
 | Phase 8 — Final training and evaluation | Planned | `phase-08-final-training.md` |
@@ -39,10 +39,10 @@ As of 2026-11-02:
 | Phase 11 — Packaging, reproducibility, operations | Planned | `phase-11-packaging.md` |
 | Phase 12 — Freeze, release, handover | Planned | `phase-12-freeze.md` |
 
-**Current gate:** Phase 4 is complete. `config/features.yaml`,
-`config/management_levers.yaml`, and `config/transforms.yaml` are the approved
-source of truth for Phase 5. Do not change approved features, levers, or cutoff
-transforms without a new review.
+**Current gate:** Phase 5 is complete. `config/evaluation.yaml`, the split
+membership in `data/processed/splits.json`, and `docs/data_contract.md` are the
+frozen protocol for Phase 6. Do not change split definitions, metrics, or the
+data contract without a new review.
 
 ## Project goals
 
@@ -110,7 +110,7 @@ document. The table below is the quick roadmap.
 | 2 | Immutable raw snapshot | Parquet snapshot, manifest, checksums, extraction report | Complete |
 | 3 | Cleaning and feature decisions | cleaning report, approved features/levers, interim Parquet | Approved |
 | 4 | Feature engineering | transforms, derived features, modeling table | Complete |
-| 5 | Validation protocol | splits, data contracts, metrics, baselines | Planned |
+| 5 | Validation protocol | splits, data contracts, metrics, baselines | Complete |
 | 6 | Model selection | model comparison report and recommendation | Planned |
 | 7 | Tuning | random-search trials, best parameters, tuning report | Planned |
 | 8 | Final training | fitted models, test metrics, forecast backtest, model card | Planned |
