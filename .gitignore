@@ -41,3 +41,6 @@ htmlcov/
 
 # Marimo session cache
 notebooks/__marimo__/
+
+# Temporary planning artifacts
+docker_mcp_plan_tmp

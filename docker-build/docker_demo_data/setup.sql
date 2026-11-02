@@ -1,6 +1,6 @@
 -- Restore the database from the backup file
 RESTORE DATABASE omp_as_demo
-FROM DISK = '/var/opt/mssql/backup/OMP_ASDemo_20260618_01.bak'
+FROM DISK = '/var/opt/mssql/backup/omp_as_demo-20261021-fresh-v0306.bak'
 WITH MOVE 'OMP_CurrDev' TO '/var/opt/mssql/data/omp_as_demo.mdf',
      MOVE 'OMP_CurrDev_log'  TO '/var/opt/mssql/data/omp_as_demo.ldf',
      REPLACE;

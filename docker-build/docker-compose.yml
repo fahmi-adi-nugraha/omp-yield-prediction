@@ -1,0 +1,14 @@
+services:
+  db:
+    image: omp-as-demo:v306
+    build:
+      context: ./docker_demo_data/
+    container_name: omp-as-demo-db
+    env_file: .env
+    ports:
+      - ${OMP_DOCKER_DB_EXT_PORT}:1433
+    volumes:
+      - mssql-2025-omp-as-demo-db:/var/opt/mssql
+
+volumes:
+  mssql-2025-omp-as-demo-db:
