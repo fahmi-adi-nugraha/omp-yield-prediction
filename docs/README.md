@@ -14,6 +14,7 @@ Implementation roadmap: `../plan/README.md`.
 | `phase-1-inventory/` | Database inventory, data dictionary, ERD, and CSV artifacts |
 | `phase-2-extraction/` | Raw extraction snapshot summary and reproducibility notes |
 | `phase-3-cleaning/` | Cleaning, leakage, feature decisions, and interim data summary |
+| `phase-4-feature-engineering/` | Modeling table, transforms, feature schema, and diagnostics |
 
 ## Phase -1
 
@@ -60,6 +61,17 @@ files live under `data/interim/phase-3/`.
 - `../config/management_levers.yaml` — approved management levers
 - `../reports/03_cleaning_report.html` — interactive Marimo cleaning notebook
 
+## Phase 4
+
+Phase 4 data artifacts live under `data/processed/`; the report is generated.
+
+- `phase-4-feature-engineering/README.md` — modeling-table and transform summary
+- `phase-4-feature-engineering/feature_engineering_summary.md` — full feature and derivation reference
+- `../config/transforms.yaml` — approved cutoff, transform, and encoding parameters
+- `../data/processed/modeling_table.parquet` — block-year modeling table
+- `../data/processed/feature_schema.csv` — feature metadata and cutoff membership
+- `../reports/04_feature_engineering.html` — feature-engineering and ablation report
+
 ## Current status
 
 - Phase -1 — complete
@@ -67,7 +79,8 @@ files live under `data/interim/phase-3/`.
 - Phase 1 — complete
 - Phase 2 — complete
 - Phase 3 — approved
-- Phase 4 — next
+- Phase 4 — complete
+- Phase 5 — next
 
 ## Credential files
 

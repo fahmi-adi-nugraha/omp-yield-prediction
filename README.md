@@ -17,12 +17,12 @@ configs, tests, and reports, and respect every approval gate. The plan is the
 source of truth for phase status, scope, deliverables, technical decisions, and
 artifact locations.
 
-Current phase document: `plan/phase-03-cleaning.md`
+Current phase document: `plan/phase-04-feature-engineering.md`
 
-Next phase document: `plan/phase-04-feature-engineering.md`
+Next phase document: `plan/phase-05-splits-contracts.md`
 
-**Current phase:** Phase 3 approved — feature and management-lever decisions
-approved. Next: Phase 4 — feature engineering and the final modeling table.
+**Current phase:** Phase 4 complete — the modeling table and feature schema are
+built. Next: Phase 5 — data contracts, splits, and the evaluation protocol.
 
 ## What this project builds
 
@@ -143,8 +143,8 @@ Planned transformations include:
 - Harvest interval, rounds, losses, and bunch-weight history
 - Estate/division aggregates built only from prior or cutoff-safe data
 
-Phase 3 is approved. The feature and management-lever configs are frozen for
-Phase 4, which builds the final modeling table and transforms.
+Phase 4 is complete. The approved feature, management-lever, and transform
+configs are the source of truth for Phase 5 modeling and validation.
 
 ## Proposed models and training
 
@@ -293,6 +293,9 @@ uv run omp-yield clean
 
 # Show non-secret configuration
 uv run omp-yield info
+
+# Build the Phase 4 modeling table, feature schema, and report
+uv run omp-yield features
 ```
 
 ### Demo database Docker stack
@@ -339,12 +342,15 @@ Start here:
 - `docs/phase-2-extraction/README.md` — raw snapshot summary
 - `docs/phase-3-cleaning/README.md` — cleaning and feature-decision summary
 - `docs/phase-3-cleaning/cleaning_report.md` — detailed cleaning report
+- `docs/phase-4-feature-engineering/README.md` — modeling-table and transform summary
 - `config/features.yaml` — approved feature decisions
 - `config/management_levers.yaml` — approved management levers
+- `config/transforms.yaml` — approved cutoff, transform, and encoding parameters
 - `reports/00_access.md` — Phase 0 access report
 - `reports/01_db_inventory.html` — interactive inventory notebook
 - `reports/02_extract_report.md` — Phase 2 extraction and verification report
 - `reports/03_cleaning_report.html` — interactive cleaning notebook
+- `reports/04_feature_engineering.html` — feature-engineering and ablation report
 
 ## Current status
 
@@ -353,4 +359,5 @@ Start here:
 - Phase 1 — database inventory and data dictionary: complete
 - Phase 2 — raw extraction and immutable snapshots: complete
 - Phase 3 — cleaning, profiling, leakage audit, and feature decisions: approved
-- Phase 4 — feature engineering and modeling table: next
+- Phase 4 — feature engineering and modeling table: complete
+- Phase 5 — data contracts, splits, and evaluation protocol: next

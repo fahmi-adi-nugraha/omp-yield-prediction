@@ -139,3 +139,10 @@ def test_demo_db_logs(monkeypatch: pytest.MonkeyPatch) -> None:
     assert result.exit_code == 0
     assert "line one" in result.output
     assert fake.logs_tail == 5
+
+
+def test_features_help() -> None:
+    result = CliRunner().invoke(app, ["features", "--help"])
+
+    assert result.exit_code == 0
+    assert "modeling table" in result.output.lower()

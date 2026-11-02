@@ -22,6 +22,7 @@ from omp_yield.extract import (
     verify_snapshot,
     write_extraction_report,
 )
+from omp_yield.features import write_modeling_outputs
 from omp_yield.inventory import write_inventory_reports
 from omp_yield.sql import UnsafeQueryError
 
@@ -350,6 +351,64 @@ def extract(
     table.add_row("rows", f"{result.manifest['summary']['row_count']:,}")
     table.add_row("manifest_sha256", result.manifest_sha256)
     table.add_row("report", str(report_path))
+    console.print(table)
+
+
+@app.command("features")
+def features_command(
+    snapshot: Annotated[
+        Path | None,
+        typer.Option("--snapshot", help="Phase 2 snapshot directory. Defaults to latest."),
+    ] = None,
+    config_dir: Annotated[
+        Path,
+        typer.Option("--config-dir", help="Approved feature/transform config directory."),
+    ] = Path("config"),
+    output: Annotated[
+        Path,
+        typer.Option("--output", help="Modeling table output path."),
+    ] = Path("data/processed/modeling_table.parquet"),
+    schema_csv: Annotated[
+        Path,
+        typer.Option("--schema-csv", help="Feature schema CSV output path."),
+    ] = Path("data/processed/feature_schema.csv"),
+    schema_parquet: Annotated[
+        Path,
+        typer.Option("--schema-parquet", help="Feature schema Parquet output path."),
+    ] = Path("data/processed/feature_schema.parquet"),
+    report: Annotated[
+        Path,
+        typer.Option("--report", help="Feature-engineering HTML report path."),
+    ] = Path("reports/04_feature_engineering.html"),
+) -> None:
+    """Build the Phase 4 modeling table, feature schema, and report."""
+
+    try:
+        snapshot_dir = snapshot or latest_snapshot(Path("data/raw"))
+        result = write_modeling_outputs(
+            snapshot_dir,
+            config_dir=config_dir,
+            output_path=output,
+            schema_csv_path=schema_csv,
+            schema_parquet_path=schema_parquet,
+            report_path=report,
+        )
+    except (FileNotFoundError, RuntimeError, ValueError) as exc:
+        _handle_error(exc)
+        return
+
+    table = Table(show_header=True, header_style="bold")
+    table.add_column("artifact")
+    table.add_column("value")
+    table.add_row("snapshot", str(result.snapshot_dir))
+    table.add_row("rows", f"{result.summary['rows']:,}")
+    table.add_row("feature_columns", str(result.summary["feature_columns"]))
+    table.add_row("pre_season_features", str(result.summary["pre_season_features"]))
+    table.add_row("mid_season_features", str(result.summary["mid_season_features"]))
+    table.add_row("modeling_table", str(result.output_path))
+    table.add_row("feature_schema_csv", str(result.schema_csv_path))
+    table.add_row("feature_schema_parquet", str(result.schema_parquet_path))
+    table.add_row("report", str(result.report_path))
     console.print(table)
 
 

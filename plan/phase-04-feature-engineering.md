@@ -1,6 +1,6 @@
 # Phase 4 — Feature Engineering and Modeling Table
 
-Status: **planned — next**
+Status: **complete**
 
 ## Overview
 
@@ -79,6 +79,18 @@ weather/pest/budget/ABW aliases. Do not look for these names as table columns.
 - Modeling table key `(NAME, UNIT, BLOCK, YEAR)` is unique.
 - All approved `review` items are resolved.
 - Tests cover lag direction, cutoff filtering, and missing-value handling.
+
+## Completion summary
+
+- Modeling table: `data/processed/modeling_table.parquet` — 2,258 rows, 132
+  features, unique `(NAME, UNIT, BLOCK, YEAR)` key.
+- Feature schema: `data/processed/feature_schema.csv` and `.parquet`.
+- Transform config: `config/transforms.yaml` with a default mid-season cutoff
+  of 30 June.
+- Report: `reports/04_feature_engineering.html` with leakage checks,
+  missingness, distributions, VIF, and chronological feature-group ablation.
+- Tests: `tests/test_features.py` covers lag direction, cutoff filtering,
+  missing values, categorical encoding, and the real-snapshot contract.
 
 ## Next
 

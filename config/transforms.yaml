@@ -1,0 +1,413 @@
+version: 1
+status: approved
+target: Y_TOTAL_ton
+keys:
+  - NAME
+  - UNIT
+  - BLOCK
+  - YEAR
+mature_periods:
+  - SAYP
+  - PYP
+  - DYP
+mid_season_cutoff: "06-30"
+
+views:
+  pre_season: "Data available through 31 Dec of t-1."
+  mid_season: "Current-year records with date <= the configured mid-season cutoff."
+
+missing_values:
+  - ""
+  - "No data"
+
+categorical:
+  ordinal:
+    Growth_Period:
+      feature: growth_period_code
+      mapping:
+        SAYP: 0
+        PYP: 1
+        DYP: 2
+    HarvesterAccess:
+      feature: harvester_access_code
+      mapping:
+        None: 0
+        Incomplete: 1
+        Full: 2
+  one_hot:
+    LandClass:
+      - LC1_Marihat_135
+      - LC1_Marihat_143
+      - LC1_Other_135
+      - LC1_Other_143
+      - LC2_Marihat_135
+      - LC2_Marihat_143
+      - LC2_Other_135
+      - LC2_Other_143
+      - LC3_Marihat_135
+      - LC3_Marihat_143
+      - LC3_Other_135
+      - LC3_Other_143
+    SOILTYPE:
+      - Acrisol
+      - Andosol
+      - Gleysol
+    TOPOGRAPHY:
+      - Flat
+      - Hilly
+      - Sloping
+      - Steep
+    PREV_CROP:
+      - 2nd forest
+      - Coconut
+      - Prim forest
+      - Scrub/beluka
+    LANDCLEARING:
+      - Full Man
+      - Full Mech
+      - Manfell Mechrow
+    Erosion:
+      - Moderate
+      - No erosion
+      - Severe
+      - Slight
+    Soil_Consv:
+      - Bunding
+      - None
+      - Platform
+      - Silt traps
+      - Terrace
+    GroundCover:
+      - "< 50 % LCP"
+      - "> 50 % LCP"
+      - Bare soil
+      - Hard weeds
+      - Soft weeds
+    Drainage:
+      - Poorly drained
+      - Seasonal flood
+      - Waterlogged
+      - Well drained
+    Pruning:
+      - Correct
+      - Neglected
+      - Over
+      - Under
+    MillName:
+      - Mill C
+      - Mill N
+      - Mill S
+    TC_PMAT:
+      - ASD
+      - Marihat
+      - Mixed
+      - Socfindo
+
+marker_fert:
+  source: markerFert
+  available_at: pre_season
+  product_count_feature: marker_fert_product_count
+  known_feature: marker_fert_known
+  indicators:
+    urea: Urea
+    kcl: KCL
+    rp: RP
+    kieserite: Kieserite
+    borate: Borate
+    efb: EFB
+    compound: "12:12:17"
+
+derived:
+  - name: planting_year
+    base_feature: D_PLANTED
+    group: context
+    role: context
+    available_at: pre_season
+    adjustable: false
+    source: OILPALM
+    derivation: "Year extracted from D_PLANTED."
+  - name: mature_fraction
+    base_feature: palmStandMature_p
+    group: context
+    role: context
+    available_at: pre_season
+    adjustable: false
+    source: OILPALM
+    derivation: "palmStandMature_p / palmStand_p; null when palmStand_p <= 0."
+  - name: yield_lag1
+    base_feature: yield_lag1
+    group: history
+    role: history
+    available_at: pre_season
+    adjustable: false
+    source: derived
+    derivation: "Y_TOTAL_ton shifted 1 year within block."
+  - name: yield_lag2
+    base_feature: yield_lag1
+    group: history
+    role: history
+    available_at: pre_season
+    adjustable: false
+    source: derived
+    derivation: "Y_TOTAL_ton shifted 2 years within block."
+  - name: yield_roll3_mean
+    base_feature: yield_lag1
+    group: history
+    role: history
+    available_at: pre_season
+    adjustable: false
+    source: derived
+    derivation: "Mean of the prior 3 years of Y_TOTAL_ton, excluding the current year."
+  - name: bunch_weight_lag1
+    base_feature: bunch_weight_lag1
+    group: history
+    role: history
+    available_at: pre_season
+    adjustable: false
+    source: derived
+    derivation: "Prior-year Y_KGB; Y_KGB = 1000 * Y_TOTAL_ton / Y_TOTAL_bunches."
+  - name: harvest_interval_lag1
+    base_feature: harvest_interval_lag1
+    group: management
+    role: management
+    available_at: pre_season
+    adjustable: true
+    source: derived
+    derivation: "Prior-year Y_AVG_harvest_int; the current-year value is target-derived and excluded."
+  - name: harvest_rounds_lag1
+    base_feature: harvest_rounds_lag1
+    group: history
+    role: history
+    available_at: pre_season
+    adjustable: false
+    source: derived
+    derivation: "Prior-year Y_TOTAL_rounds."
+  - name: harvest_loss_rate_lag1
+    base_feature: harvest_loss_rate_lag1
+    group: history
+    role: history
+    available_at: pre_season
+    adjustable: false
+    source: tbl_HRR_harvests
+    derivation: "Prior-year (discarded + unpollinated bunches) / total bunches from tbl_HRR_harvests."
+  - name: division_yield_lag1_mean
+    base_feature: yield_lag1
+    group: history
+    role: history
+    available_at: pre_season
+    adjustable: false
+    source: derived
+    derivation: "Prior-year mean target by UNIT; cutoff-safe division aggregate."
+  - name: estate_yield_lag1_mean
+    base_feature: yield_lag1
+    group: history
+    role: history
+    available_at: pre_season
+    adjustable: false
+    source: derived
+    derivation: "Prior-year mean target by NAME; cutoff-safe estate aggregate."
+  - name: nutrient_balance_NK
+    base_feature: nutActInorgN_kg_p
+    group: management
+    role: management
+    available_at: pre_season
+    adjustable: true
+    source: tbl_FN_nutActRec
+    derivation: "(inorganic N + organic N) / (inorganic K2O + organic K2O); null when K2O <= 0."
+  - name: rain_annual_mm_lag1
+    base_feature: rain_annual_mm
+    group: weather
+    role: weather
+    available_at: pre_season
+    adjustable: false
+    source: tbl_CW_weatherAndWater
+    derivation: "Prior-year R_Total Rainfall by weather station."
+  - name: dry_months_lag1
+    base_feature: dry_months
+    group: weather
+    role: weather
+    available_at: pre_season
+    adjustable: false
+    source: tbl_CW_weatherAndWater
+    derivation: "Prior-year R_NO_dry_month by weather station."
+  - name: water_deficit_lag1
+    base_feature: water_deficit
+    group: weather
+    role: weather
+    available_at: pre_season
+    adjustable: false
+    source: tbl_CW_weatherAndWater
+    derivation: "Prior-year R_waterdeficit by weather station."
+  - name: rain_anomaly_lag1
+    base_feature: rain_annual_mm
+    group: weather
+    role: weather
+    available_at: pre_season
+    adjustable: false
+    source: tbl_CW_weatherAndWater
+    derivation: "Prior-year rainfall minus the station's expanding prior-year climatology."
+  - name: rain_roll3_mean_lag1
+    base_feature: rain_annual_mm
+    group: weather
+    role: weather
+    available_at: pre_season
+    adjustable: false
+    source: tbl_CW_weatherAndWater
+    derivation: "Mean rainfall over the 3 weather years ending in t-1."
+  - name: soil_cec_som_ratio
+    base_feature: soil_cec
+    group: soil
+    role: soil
+    available_at: pre_season
+    adjustable: false
+    source: tbl_FN_soilAnalysis
+    derivation: "soil_cec / soil_som; null when soil_som <= 0."
+  - name: ganoderma_cumulative_area
+    base_feature: ganoderma_affected_area
+    group: pest
+    role: pest
+    available_at: pre_season
+    adjustable: false
+    source: tbl_PD_surveys
+    derivation: "Maximum Ganoderma affected area observed through t-1."
+  - name: marker_fert_product_count
+    base_feature: markerFert
+    group: context
+    role: context
+    available_at: pre_season
+    adjustable: false
+    source: OILPALM
+    derivation: "Number of semicolon-separated products in markerFert."
+  - name: marker_fert_known
+    base_feature: markerFert
+    group: context
+    role: context
+    available_at: pre_season
+    adjustable: false
+    source: OILPALM
+    derivation: "1 when markerFert is present and not 'No data'."
+  - name: marker_fert_has_urea
+    base_feature: markerFert
+    group: context
+    role: context
+    available_at: pre_season
+    adjustable: false
+    source: OILPALM
+    derivation: "1 when markerFert mentions Urea."
+  - name: marker_fert_has_kcl
+    base_feature: markerFert
+    group: context
+    role: context
+    available_at: pre_season
+    adjustable: false
+    source: OILPALM
+    derivation: "1 when markerFert mentions KCL."
+  - name: marker_fert_has_rp
+    base_feature: markerFert
+    group: context
+    role: context
+    available_at: pre_season
+    adjustable: false
+    source: OILPALM
+    derivation: "1 when markerFert mentions RP."
+  - name: marker_fert_has_kieserite
+    base_feature: markerFert
+    group: context
+    role: context
+    available_at: pre_season
+    adjustable: false
+    source: OILPALM
+    derivation: "1 when markerFert mentions Kieserite."
+  - name: marker_fert_has_borate
+    base_feature: markerFert
+    group: context
+    role: context
+    available_at: pre_season
+    adjustable: false
+    source: OILPALM
+    derivation: "1 when markerFert mentions Borate."
+  - name: marker_fert_has_efb
+    base_feature: markerFert
+    group: context
+    role: context
+    available_at: pre_season
+    adjustable: false
+    source: OILPALM
+    derivation: "1 when markerFert mentions EFB."
+  - name: marker_fert_has_compound
+    base_feature: markerFert
+    group: context
+    role: context
+    available_at: pre_season
+    adjustable: false
+    source: OILPALM
+    derivation: "1 when markerFert mentions a 12:12:17 compound product."
+  - name: pruning_known
+    base_feature: Pruning
+    group: management
+    role: management
+    available_at: pre_season
+    adjustable: true
+    source: OILPALM
+    derivation: "1 when Pruning is one of Correct, Neglected, Over, or Under."
+  - name: harvester_access_known
+    base_feature: HarvesterAccess
+    group: management
+    role: management
+    available_at: pre_season
+    adjustable: true
+    source: OILPALM
+    derivation: "1 when HarvesterAccess is one of None, Incomplete, or Full."
+  - name: LA_NK_ratio
+    base_feature: LA_N
+    group: leaf
+    role: leaf
+    available_at: mid_season
+    adjustable: false
+    source: OILPALM
+    derivation: "LA_N / LA_K; null when LA_K <= 0 or either input is missing."
+  - name: LA_NP_ratio
+    base_feature: LA_N
+    group: leaf
+    role: leaf
+    available_at: mid_season
+    adjustable: false
+    source: OILPALM
+    derivation: "LA_N / LA_P; null when LA_P <= 0 or either input is missing."
+  - name: LA_KMg_ratio
+    base_feature: LA_K
+    group: leaf
+    role: leaf
+    available_at: mid_season
+    adjustable: false
+    source: OILPALM
+    derivation: "LA_K / LA_Mg; null when LA_Mg <= 0 or either input is missing."
+  - name: LA_CaMg_ratio
+    base_feature: LA_Ca
+    group: leaf
+    role: leaf
+    available_at: mid_season
+    adjustable: false
+    source: OILPALM
+    derivation: "LA_Ca / LA_Mg; null when LA_Mg <= 0 or either input is missing."
+
+leakage:
+  forbidden_current_year_prefixes:
+    - "Y_"
+  allowed_derived_history:
+    - yield_lag1
+    - yield_lag2
+    - yield_roll3_mean
+    - bunch_weight_lag1
+    - harvest_interval_lag1
+    - harvest_rounds_lag1
+    - harvest_loss_rate_lag1
+
+ablation:
+  train_through_year: 2023
+  validation_years:
+    - 2024
+    - 2025
+
+vif:
+  max_features: 30
